@@ -1,0 +1,150 @@
+import { Box, Grid, Typography, Button, useTheme } from '@mui/material';
+import { motion } from 'framer-motion';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { when: 'beforeChildren', staggerChildren: 0.3, duration: 0.8 },
+  },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+export default function Hero() {
+  const theme = useTheme();
+
+  return (
+    <Box
+      component={motion.section}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      sx={{
+        position: 'relative',
+        overflow: 'hidden',
+        // Gradient + imagen de fondo (colocar hero-bg.jpg en public/images/)
+        background: `linear-gradient(135deg, ${theme.palette.primary.main}CC 0%, ${theme.palette.secondary.main}CC 100%), 
+                     url('/images/hero-bg.jpg') center/cover no-repeat`,
+        color: '#fff',
+        pt: { xs: 8, md: 12 },
+        pb: { xs: 10, md: 16 },
+      }}
+    >
+      {/* Decorativo: forma inferior con clip-path */}
+      <Box
+        component={motion.div}
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 1 }}
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          minWidth: '100vw',
+          height: { xs: 80, md: 120 },
+          bgcolor: theme.palette.background.default,
+          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)',
+          border: 'none',
+          boxShadow: '0 -2px 10px rgba(0,0,0,0.2)',
+
+        }}
+      />
+
+      <Grid container alignItems="center" sx={{ position: 'relative', zIndex: 1 }}>
+        {/* TEXTO */}
+        <Grid item xs={6} md={6}>
+          <motion.div variants={itemVariants}>
+            <Typography
+              variant="h1"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                fontWeight: 700,
+                textShadow: '2px 2px 6px rgba(0,0,0,0.3)',
+                p: 4
+              }}
+            >
+              Domina tu barbería con {' '}
+              <Box component="span" sx={{ color: theme.palette.warning.main }}>
+                BarberFlow
+              </Box>
+            </Typography>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <Typography
+              variant="h6"
+              sx={{ mb: 4, maxWidth: 500, opacity: 0.85, fontWeight: 400, p: 4 }}
+            >
+              Gestiona reservas, personal e inventario desde un panel intuitivo y moderno. ¡Haz crecer tu negocio!
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            style={{ display: 'flex', gap: theme.spacing(2), padding: theme.spacing(0, 4) }}
+          >
+            <Button
+              variant="contained"
+              color="warning"
+              size="large"
+              sx={{ px: 4, }}
+              component={motion.button}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Comienza Gratis
+            </Button>
+            <Button
+              variant="outlined"
+              color="inherit"
+              size="large"
+              sx={{ px: 4, borderWidth: 2 }}
+              component={motion.button}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Ver Demo
+            </Button>
+          </motion.div>
+        </Grid>
+
+        {/* ILUSTRACIÓN */}
+        <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', px: { xs: 2, sm: 4, md: 6 }}}
+        >
+          <motion.img
+            src="/images/illustration-barber.png"
+            alt="Ilustración BarberFlow"
+            variants={itemVariants}
+            style={{
+              width: '50%',
+              maxWidth: 500,
+              height: 'auto',
+            }}
+          />
+        </Grid>
+      </Grid>
+
+      {/* Indicador de Scroll */}
+      <Box
+        component={motion.div}
+        animate={{ y: [0, 10, 0] }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        sx={{
+          position: 'relative',
+          bottom: { xs: 16, md: 32 },
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 1,
+        }}
+      >
+        <ArrowDownwardIcon sx={{ fontSize: 36, opacity: 0.7 }} />
+      </Box>
+    </Box>
+  );
+}
