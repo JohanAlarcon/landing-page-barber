@@ -29,7 +29,7 @@ export default function Hero() {
         position: 'relative',
         overflow: 'hidden',
         background: `linear-gradient(135deg, ${theme.palette.primary.main}CC 0%, ${theme.palette.secondary.main}CC 50%), 
-                     url('/images/hero-bg.jpg') center/cover no-repeat`,
+                     url('${process.env.PUBLIC_URL}/images/hero-bg.jpg') center/cover no-repeat`,
         color: '#fff'
       }}
     >
@@ -114,7 +114,7 @@ export default function Hero() {
         {/* ILUSTRACIÓN */}
         <Grid item size={{ xs: 12, md: 6 }} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <motion.img
-            src="/images/illustration-barber.png"
+            src={`${process.env.PUBLIC_URL}/images/illustration-barber.png`}
             alt="Ilustración StyleCloud - Sistema de gestión para salones"
             variants={itemVariants}
             style={{
