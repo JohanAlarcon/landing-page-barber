@@ -68,9 +68,9 @@ export default function Footer() {
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               Contacto
             </Typography>
-            <Typography variant="body2">hola@stylecloud.com</Typography>
+            <Typography variant="body2">johandarioalarcon@gmail.com</Typography>
             <Typography variant="body2" sx={{ mt: 1 }}>
-              +1 234 567 890
+              3176824754
             </Typography>
             <Typography variant="body2" sx={{ mt: 2, fontSize: '0.75rem', opacity: 0.8 }}>
               ¿Quieres ver el panel? Solicita credenciales de acceso.
