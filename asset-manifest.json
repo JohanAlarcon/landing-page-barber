@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/landing-page-barber/static/css/main.e6c13ad2.css",
+    "main.js": "/landing-page-barber/static/js/main.d08c32b9.js",
+    "static/js/453.fe7bca1a.chunk.js": "/landing-page-barber/static/js/453.fe7bca1a.chunk.js",
+    "index.html": "/landing-page-barber/index.html",
+    "main.e6c13ad2.css.map": "/landing-page-barber/static/css/main.e6c13ad2.css.map",
+    "main.d08c32b9.js.map": "/landing-page-barber/static/js/main.d08c32b9.js.map",
+    "453.fe7bca1a.chunk.js.map": "/landing-page-barber/static/js/453.fe7bca1a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.d08c32b9.js"
+  ]
+}
