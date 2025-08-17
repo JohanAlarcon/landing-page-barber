@@ -1,30 +1,34 @@
-// src/components/Features.jsx
-import React from 'react';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import BuildIcon from '@mui/icons-material/Build';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 const features = [
   {
     icon: <BuildIcon fontSize="large" />,
     title: 'Panel Administrativo',
     description:
-      'Control total de tu barbería: inventario, personal y reportes en un solo lugar.',
+      'Administra inventario, equipo, ventas y reportes desde un solo lugar.',
   },
   {
     icon: <ScheduleIcon fontSize="large" />,
-    title: 'Gestión de Turnos',
+    title: 'Gestión de citas',
     description:
-      'Tus clientes reservan online, reciben confirmaciones y recordatorios automáticos.',
+      'Tus clientes reservan online, reciben confirmaciones.',
   },
   {
     icon: <BarChartIcon fontSize="large" />,
-    title: 'Estadísticas Inteligentes',
+    title: 'Reportes Avanzados',
     description:
-      'Visualiza ventas, servicios estrella y métricas clave para potenciar tu negocio.',
+      'Visualiza ingresos, servicios y rendimiento para decidir con datos.',
   },
+  {
+    icon: <MonetizationOnIcon fontSize="large" />,
+    title: 'Control de ventas',
+    description: 'Registra servicios y productos y sigue tus ventas al instante.',
+  }
 ];
 
 const containerVariants = {
@@ -56,7 +60,7 @@ export default function Features() {
       viewport={{ once: true, amount: 0.3 }}
       sx={{
         position: 'relative',
-        py: { xs: 8, md: 9 },
+        py: { xs: 5, md: 9 },
         px: { xs: 2, sm: 4, md: 6 },
         backgroundColor: theme.palette.background.paper,
         overflow: 'hidden',
@@ -93,26 +97,24 @@ export default function Features() {
         variant="h4"
         align="center"
         gutterBottom
-        sx={{
-          fontWeight: 600,
-          mb: { xs: 4, md: 6 },
-          color: theme.palette.text.primary,
-        }}
+        sx={{ fontWeight: 600, mb: { xs: 4, md: 6 }, color: theme.palette.text.primary}}
       >
         Características destacadas
       </Typography>
 
-      <Grid container spacing={{ xs: 2, sm: 4, md: 6 }}>
+      <Grid container spacing={{ xs: 2, sm: 4, md: 6, xl: 3 }} justifyContent="center">
         {features.map((feature, idx) => (
-          <Grid item xs={12} sm={6} md={4} key={idx}>
+          <Grid item xs={12} sm={4} md={4} key={idx} display="flex" justifyContent="center">
             <motion.div
               variants={itemVariants}
               whileHover={{ translateY: -8, boxShadow: theme.shadows[6], borderRadius: '50%' }}
               whileTap={{ scale: 0.97 }}
+              style={{ width: '100%' }}
             >
               <Box
                 sx={{
-                  height: '100%',
+                  width: { xs: 350, sm: 400, md: 450, lg: 550, xl: 650 },
+                  minHeight: 260,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',

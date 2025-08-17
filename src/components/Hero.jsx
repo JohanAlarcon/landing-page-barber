@@ -1,6 +1,7 @@
 import { Box, Grid, Typography, Button, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { handleDemoClick, handleVideoClick } from '../helpers';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -9,6 +10,7 @@ const containerVariants = {
     transition: { when: 'beforeChildren', staggerChildren: 0.3, duration: 0.8 },
   },
 };
+
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -26,37 +28,21 @@ export default function Hero() {
       sx={{
         position: 'relative',
         overflow: 'hidden',
-        // Gradient + imagen de fondo (colocar hero-bg.jpg en public/images/)
-        background: `linear-gradient(135deg, ${theme.palette.primary.main}CC 0%, ${theme.palette.secondary.main}CC 100%), 
+        background: `linear-gradient(135deg, ${theme.palette.primary.main}CC 0%, ${theme.palette.secondary.main}CC 50%), 
                      url('/images/hero-bg.jpg') center/cover no-repeat`,
-        color: '#fff',
-        pt: { xs: 8, md: 12 },
-        pb: { xs: 10, md: 16 },
+        color: '#fff'
       }}
     >
-      {/* Decorativo: forma inferior con clip-path */}
       <Box
         component={motion.div}
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 1 }}
-        sx={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          minWidth: '100vw',
-          height: { xs: 80, md: 120 },
-          bgcolor: theme.palette.background.default,
-          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)',
-          border: 'none',
-          boxShadow: '0 -2px 10px rgba(0,0,0,0.2)',
-
-        }}
+        sx={{ position: 'absolute', height: { xs: 80, md: 120 }, bgcolor: theme.palette.background.default, clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)', border: 'none', boxShadow: '0 -2px 10px rgba(0,0,0,0.2)' }}
       />
 
-      <Grid container alignItems="center" sx={{ position: 'relative', zIndex: 1 }}>
-        {/* TEXTO */}
-        <Grid item xs={6} md={6}>
+      <Grid container spacing={2}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           <motion.div variants={itemVariants}>
             <Typography
               variant="h1"
@@ -69,57 +55,67 @@ export default function Hero() {
                 p: 4
               }}
             >
-              Domina tu barbería con {' '}
+              Administra tu salón con {' '}
               <Box component="span" sx={{ color: theme.palette.warning.main }}>
-                BarberFlow
+                StyleCloud
               </Box>
             </Typography>
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <Typography
-              variant="h6"
-              sx={{ mb: 4, maxWidth: 500, opacity: 0.85, fontWeight: 400, p: 4 }}
-            >
-              Gestiona reservas, personal e inventario desde un panel intuitivo y moderno. ¡Haz crecer tu negocio!
+            <Typography variant="h6" sx={{ mb: 4, maxWidth: 500, opacity: 0.85, fontWeight: 400, p: 4 }}>
+              Citas, ventas y reportes en un solo lugar para hacer crecer tu barbería, peluquería o salón de belleza.
             </Typography>
           </motion.div>
 
           <motion.div
             variants={itemVariants}
-            style={{ display: 'flex', gap: theme.spacing(2), padding: theme.spacing(0, 4) }}
+            style={{ display: 'flex', gap: theme.spacing(2), padding: theme.spacing(0, 4), flexDirection: 'column', alignItems: 'flex-start' }}
           >
-            <Button
-              variant="contained"
-              color="warning"
-              size="large"
-              sx={{ px: 4, }}
-              component={motion.button}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Comienza Gratis
-            </Button>
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="large"
-              sx={{ px: 4, borderWidth: 2 }}
-              component={motion.button}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Ver Demo
-            </Button>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+              <Button
+                variant="contained"
+                color="warning"
+                size="large"
+                sx={{ px: 4 }}
+                component={motion.button}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleDemoClick}
+              >
+                Ver Demo de Citas
+              </Button>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="large"
+                sx={{ px: 4, borderWidth: 2 }}
+                component={motion.button}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleVideoClick}
+              >
+                Ver Video de Presentación
+              </Button>
+            </Box>
+            
+            {/* Notas contextuales */}
+            <Box sx={{ mt: 2, opacity: 0.8 }}>
+              <Typography variant="caption" sx={{ display: 'block', fontSize: { xs: '0.95rem', md: '0.875rem' } }}>
+                • Demo pública: gestión de citas
+              </Typography>
+              <Typography variant="caption" sx={{ display: 'block', fontSize: { xs: '0.95rem', md: '0.875rem' } }}>
+                • Panel completo: solicita credenciales
+              </Typography>
+            </Box>
           </motion.div>
         </Grid>
 
         {/* ILUSTRACIÓN */}
-        <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', px: { xs: 2, sm: 4, md: 6 }}}
-        >
+        <Grid item size={{ xs: 12, md: 6 }} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <motion.img
             src="/images/illustration-barber.png"
-            alt="Ilustración BarberFlow"
+            alt="Ilustración StyleCloud - Sistema de gestión para salones"
             variants={itemVariants}
             style={{
               width: '50%',
@@ -130,7 +126,6 @@ export default function Hero() {
         </Grid>
       </Grid>
 
-      {/* Indicador de Scroll */}
       <Box
         component={motion.div}
         animate={{ y: [0, 10, 0] }}

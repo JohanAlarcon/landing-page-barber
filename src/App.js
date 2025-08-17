@@ -1,12 +1,4 @@
-// src/App.jsx
-import React from 'react';
-import {
-  Box,
-  Container,
-  CssBaseline,
-  GlobalStyles,
-  useTheme,
-} from '@mui/material';
+import {Box,CssBaseline,GlobalStyles,useTheme} from '@mui/material';
 
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -19,7 +11,6 @@ export default function App() {
 
   return (
     <>
-      {/* Normalize y estilos globales */}
       <CssBaseline />
       <GlobalStyles
         styles={{
@@ -36,12 +27,9 @@ export default function App() {
       />
 
       <Box component="main">
-        {/* Hero: full-width, fondo con gradiente+imagen */}
         <Box id="hero" sx={{ width: '100%' }}>
           <Hero />
         </Box>
-
-        {/* Features: fondo claro y padding extra */}
         <Features />
 
         {/* CTA: full-width, gradiente oscuro */}

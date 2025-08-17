@@ -1,9 +1,7 @@
-// src/components/CTA.jsx
-import React from 'react';
 import { Box, Typography, Button, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
+import { handleDemoClick, handleVideoClick } from '../helpers';
 
-// Variants para animaciones
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.9 },
   visible: {
@@ -64,7 +62,7 @@ export default function CTA() {
           gutterBottom
           sx={{ fontWeight: 600, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
         >
-          ¿Listo para llevar tu barbería al próximo nivel?
+          ¿Listo para llevar tu salón al siguiente nivel?
         </Typography>
         <Typography
           variant="subtitle1"
@@ -75,7 +73,7 @@ export default function CTA() {
             opacity: 0.9,
           }}
         >
-          Disfruta de 14 días GRATIS de BarberFlow: gestión, reservas y reportes sin complicaciones.
+          Prueba la demo pública de citas desde la web y conoce el flujo real de reservas. ¿Quieres ver ventas y reportes en el panel administrativo? Solicita credenciales y te habilitamos un acceso de prueba para explorar todo sin instalar nada.
         </Typography>
       </motion.div>
 
@@ -97,16 +95,18 @@ export default function CTA() {
           color="warning"
           size="large"
           sx={{ px: 4 }}
+          onClick={handleDemoClick}
         >
-          Empieza tu prueba
+          Ver demo de citas
         </Button>
         <Button
           variant="outlined"
           color="inherit"
           size="large"
           sx={{ px: 4, borderWidth: 2 }}
+          onClick={handleVideoClick}
         >
-          Solicitar demo
+          Ver video de presentación
         </Button>
       </Box>
 

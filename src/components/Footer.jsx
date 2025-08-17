@@ -4,6 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { handleDemoClick, handleVideoClick } from '../helpers';
 
 const footerVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -67,9 +68,12 @@ export default function Footer() {
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               Contacto
             </Typography>
-            <Typography variant="body2">info@barberflow.com</Typography>
+            <Typography variant="body2">hola@stylecloud.com</Typography>
             <Typography variant="body2" sx={{ mt: 1 }}>
               +1 234 567 890
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 2, fontSize: '0.75rem', opacity: 0.8 }}>
+              ¿Quieres ver el panel? Solicita credenciales de acceso.
             </Typography>
           </Grid>
 
@@ -78,12 +82,16 @@ export default function Footer() {
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               Síguenos
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+            <Typography variant="body2" sx={{ mb: 2, fontSize: '0.85rem', opacity: 0.9 }}>
+              Novedades, tips y actualizaciones
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1 }}>
               <IconButton
                 color="inherit"
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener"
+                aria-label="Abrir Facebook de StyleCloud"
               >
                 <FacebookIcon />
               </IconButton>
@@ -92,6 +100,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener"
+                aria-label="Abrir Instagram de StyleCloud"
               >
                 <InstagramIcon />
               </IconButton>
@@ -100,29 +109,76 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener"
+                aria-label="Abrir LinkedIn de StyleCloud"
               >
                 <LinkedInIcon />
               </IconButton>
               <IconButton
                 color="inherit"
-                href="https://wa.me/1234567890"
+                href="https://wa.me/3176824754"
                 target="_blank"
                 rel="noopener"
+                aria-label="Abrir WhatsApp de StyleCloud"
               >
                 <WhatsAppIcon />
               </IconButton>
             </Box>
           </Grid>
+
+          {/* Enlaces de acción */}
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+              Prueba StyleCloud
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={handleDemoClick}
+                sx={{ 
+                  textAlign: 'left', 
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  '&:hover': { opacity: 0.8 }
+                }}
+              >
+                → Ver demo de citas (acceso público)
+              </Link>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={handleVideoClick}
+                sx={{ 
+                  textAlign: 'left', 
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  '&:hover': { opacity: 0.8 }
+                }}
+              >
+                → Ver video de presentación
+              </Link>
+            </Box>
+          </Grid>
         </Grid>
 
-        {/* Copyright */}
-        <Typography
-          variant="body2"
-          align="center"
-          sx={{ mt: { xs: 4, md: 6 }, opacity: 0.7 }}
-        >
-          © {year} BarberFlow. Todos los derechos reservados.
-        </Typography>
+        {/* Copyright y nota legal */}
+        <Box sx={{ mt: { xs: 4, md: 6 }, textAlign: 'center' }}>
+          <Typography variant="body2" sx={{ opacity: 0.7 }}>
+            © {year} StyleCloud. Todos los derechos reservados.
+          </Typography>
+          <Typography variant="caption" sx={{ display: 'block', mt: 1, opacity: 0.6, fontSize: '0.7rem' }}>
+            Demo pública disponible para gestión de citas. El panel completo requiere credenciales.
+          </Typography>
+          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
+            <Link href="#" variant="caption" sx={{ opacity: 0.7, fontSize: '0.7rem' }}>
+              Términos de servicio
+            </Link>
+            <Typography variant="caption" sx={{ opacity: 0.5 }}>·</Typography>
+            <Link href="#" variant="caption" sx={{ opacity: 0.7, fontSize: '0.7rem' }}>
+              Política de privacidad
+            </Link>
+          </Box>
+        </Box>
       </Container>
     </Box>
   );

@@ -7,8 +7,8 @@ const MotionBox = motion(Box);
 
 export default function WhatsAppButton() {
   const theme = useTheme();
-  const phoneNumber = '1234567890';  // Reemplaza con tu número real
-  const message = '¡Hola! Estoy interesado en BarberFlow.';
+  const phoneNumber = '3176824754'; 
+  const message = '¡Hola! Estoy interesado en StyleCloud.';
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
