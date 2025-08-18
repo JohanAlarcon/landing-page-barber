@@ -1,10 +1,12 @@
-import {Box,Container,Grid,Typography,Link,IconButton,TextField,Button,useTheme} from '@mui/material';
+import { Box, Container, Grid, Typography, Link, IconButton, TextField, Button, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { handleDemoClick, handleVideoClick } from '../helpers';
+import { handleDemoClick } from '../helpers';
+import { useState } from 'react';
+import VideoModal from './VideoModal';
 
 const footerVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -18,6 +20,15 @@ const footerVariants = {
 export default function Footer() {
   const theme = useTheme();
   const year = new Date().getFullYear();
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+
+  const handleVideoClick = () => {
+    setVideoModalOpen(true);
+  };
+
+  const handleCloseVideo = () => {
+    setVideoModalOpen(false);
+  };
 
   return (
     <Box
@@ -135,8 +146,8 @@ export default function Footer() {
                 component="button"
                 variant="body2"
                 onClick={handleDemoClick}
-                sx={{ 
-                  textAlign: 'left', 
+                sx={{
+                  textAlign: 'left',
                   textDecoration: 'underline',
                   cursor: 'pointer',
                   '&:hover': { opacity: 0.8 }
@@ -148,8 +159,8 @@ export default function Footer() {
                 component="button"
                 variant="body2"
                 onClick={handleVideoClick}
-                sx={{ 
-                  textAlign: 'left', 
+                sx={{
+                  textAlign: 'left',
                   textDecoration: 'underline',
                   cursor: 'pointer',
                   '&:hover': { opacity: 0.8 }
@@ -180,6 +191,10 @@ export default function Footer() {
           </Box>
         </Box>
       </Container>
+      <VideoModal
+        open={videoModalOpen}
+        onClose={handleCloseVideo}
+      />
     </Box>
   );
 }

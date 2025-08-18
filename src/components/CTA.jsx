@@ -1,6 +1,8 @@
 import { Box, Typography, Button, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
-import { handleDemoClick, handleVideoClick } from '../helpers';
+import { handleDemoClick } from '../helpers';
+import { useState } from 'react';
+import VideoModal from './VideoModal';
 
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.9 },
@@ -23,6 +25,16 @@ const buttonVariants = {
 
 export default function CTA() {
   const theme = useTheme();
+
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+
+  const handleVideoClick = () => {
+    setVideoModalOpen(true);
+  };
+
+  const handleCloseVideo = () => {
+    setVideoModalOpen(false);
+  };
 
   return (
     <Box
@@ -122,6 +134,10 @@ export default function CTA() {
           borderRadius: '50%',
           opacity: 0.12,
         }}
+      />
+      <VideoModal
+        open={videoModalOpen}
+        onClose={handleCloseVideo}
       />
     </Box>
   );

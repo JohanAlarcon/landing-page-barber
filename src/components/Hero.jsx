@@ -1,7 +1,9 @@
 import { Box, Grid, Typography, Button, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { handleDemoClick, handleVideoClick } from '../helpers';
+import { handleDemoClick } from '../helpers';
+import VideoModal from './VideoModal';
+import { useState } from 'react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -18,6 +20,15 @@ const itemVariants = {
 
 export default function Hero() {
   const theme = useTheme();
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+
+  const handleVideoClick = () => {
+    setVideoModalOpen(true);
+  };
+
+  const handleCloseVideo = () => {
+    setVideoModalOpen(false);
+  };
 
   return (
     <Box
@@ -98,7 +109,7 @@ export default function Hero() {
                 Ver Video de Presentación
               </Button>
             </Box>
-            
+
             {/* Notas contextuales */}
             <Box sx={{ mt: 2, opacity: 0.8 }}>
               <Typography variant="caption" sx={{ display: 'block', fontSize: { xs: '0.95rem', md: '0.875rem' } }}>
@@ -140,6 +151,11 @@ export default function Hero() {
       >
         <ArrowDownwardIcon sx={{ fontSize: 36, opacity: 0.7 }} />
       </Box>
+      <VideoModal
+        open={videoModalOpen}
+        onClose={handleCloseVideo}
+      />
     </Box>
+
   );
 }
