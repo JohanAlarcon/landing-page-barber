@@ -53,7 +53,6 @@ export default function Features() {
 
   return (
     <Box
-      component={motion.section}
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
