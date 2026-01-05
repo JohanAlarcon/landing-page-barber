@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "https://johanalarcon.github.io/landing-page-barber/static/css/main.e6c13ad2.css",
-    "main.js": "https://johanalarcon.github.io/landing-page-barber/static/js/main.f5715abf.js",
+    "main.js": "https://johanalarcon.github.io/landing-page-barber/static/js/main.e5de106e.js",
     "static/js/453.fe7bca1a.chunk.js": "https://johanalarcon.github.io/landing-page-barber/static/js/453.fe7bca1a.chunk.js",
     "index.html": "https://johanalarcon.github.io/landing-page-barber/index.html",
     "main.e6c13ad2.css.map": "https://johanalarcon.github.io/landing-page-barber/static/css/main.e6c13ad2.css.map",
-    "main.f5715abf.js.map": "https://johanalarcon.github.io/landing-page-barber/static/js/main.f5715abf.js.map",
+    "main.e5de106e.js.map": "https://johanalarcon.github.io/landing-page-barber/static/js/main.e5de106e.js.map",
     "453.fe7bca1a.chunk.js.map": "https://johanalarcon.github.io/landing-page-barber/static/js/453.fe7bca1a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.f5715abf.js"
+    "static/js/main.e5de106e.js"
   ]
 }
