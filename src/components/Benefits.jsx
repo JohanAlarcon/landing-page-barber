@@ -42,7 +42,7 @@ export default function Benefits() {
                                 alt="Barbero profesional trabajando"
                                 sx={{
                                     width: '100%',
-                                    maxHeight: { md: 400 },
+                                    maxHeight: { md: 440 },
                                     objectFit: 'cover',
                                     borderRadius: 4,
                                     boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
@@ -61,7 +61,7 @@ export default function Benefits() {
                         </motion.div>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item size={{ xs: 12, md: 7 }}>
                         {benefits.map((benefit, index) => (
                             <motion.div
                                 key={index}

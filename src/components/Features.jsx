@@ -34,20 +34,6 @@ const features = [
     description: 'Personaliza tu menú de servicios, duraciones y precios por barbero si es necesario.',
   }
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
-};
-
 export default function Features() {
   const theme = useTheme();
 
@@ -84,7 +70,7 @@ export default function Features() {
           spacing={{ xs: 4, lg: 6 }}
         >
           {features.map((feature, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
+            <Grid item key={idx} size={{ xs: 12, md: 6 }}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
