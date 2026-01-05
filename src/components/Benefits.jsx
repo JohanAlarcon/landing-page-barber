@@ -38,7 +38,7 @@ export default function Benefits() {
                         >
                             <Box
                                 component="img"
-                                src={`${process.env.PUBLIC_URL}/images/barber-action.jpg`}
+                                src={`${process.env.PUBLIC_URL}/images/barber-action.webp`}
                                 alt="Barbero profesional trabajando"
                                 sx={{
                                     width: '100%',
@@ -46,7 +46,7 @@ export default function Benefits() {
                                     boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
                                     filter: 'grayscale(20%) contrast(1.1)'
                                 }}
-                                onError={(e) => { e.target.style.display = 'none' }} // Fallback if image missing
+
                             />
                             {/* Fallback block if image missing */}
                             <Box sx={{

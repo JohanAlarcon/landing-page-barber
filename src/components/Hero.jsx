@@ -37,7 +37,7 @@ export default function Hero() {
         overflow: 'hidden',
         pt: { xs: 12, md: 0 }, // Mobile padding for fixed navbar
         background: `linear-gradient(180deg, rgba(18,18,18,0.7) 0%, rgba(18,18,18,1) 100%), 
-                     url('${process.env.PUBLIC_URL}/images/hero-bg.jpg') center/cover no-repeat`,
+                     url('${process.env.PUBLIC_URL}/images/hero-bg.webp') center/cover no-repeat`,
         // Fallback color if image fails
         backgroundColor: '#121212'
       }}
@@ -130,7 +130,7 @@ export default function Hero() {
           <Grid item xs={12} md={5} lg={6} sx={{ display: { xs: 'none', md: 'block' } }}>
             {/* Optional: Add a floating UI mockup image here later */}
             <motion.img
-              src={`${process.env.PUBLIC_URL}/images/illustration-barber.png`}
+              src={`${process.env.PUBLIC_URL}/images/illustration-barber.webp`}
               alt="Dashboard Mockup"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
