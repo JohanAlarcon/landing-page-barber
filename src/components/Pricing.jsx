@@ -102,7 +102,7 @@ export default function Pricing() {
                                             : '1px solid rgba(255,255,255,0.05)',
                                         transform: plan.highlight ? { md: 'scale(1.05)' } : 'none',
                                         zIndex: plan.highlight ? 2 : 1,
-                                        maxWidth: '420px',
+                                        maxWidth: '360px',
                                         mx: 'auto',
                                         height: '100%',
                                         display: 'flex',

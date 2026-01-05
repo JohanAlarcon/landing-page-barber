@@ -82,15 +82,16 @@ export default function Features() {
         <Grid
           container
           spacing={{ xs: 4, lg: 6 }}
-          component={motion.div}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
         >
           {features.map((feature, idx) => (
             <Grid item xs={12} sm={6} md={4} key={idx}>
-              <motion.div variants={itemVariants} style={{ height: '100%' }}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                style={{ height: '100%' }}
+              >
                 <Paper
                   elevation={0}
                   sx={{

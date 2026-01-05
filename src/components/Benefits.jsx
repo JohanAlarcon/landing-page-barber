@@ -42,7 +42,7 @@ export default function Benefits() {
                                 alt="Barbero profesional trabajando"
                                 sx={{
                                     width: '100%',
-                                    maxHeight: { md: 600 },
+                                    maxHeight: { md: 400 },
                                     objectFit: 'cover',
                                     borderRadius: 4,
                                     boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
