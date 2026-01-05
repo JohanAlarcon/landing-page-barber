@@ -103,7 +103,7 @@ export default function Navbar() {
                     </Typography>
 
                     {/* Desktop Menu */}
-                    <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3, alignItems: 'center' }}>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: { md: 4, lg: 6 }, alignItems: 'center' }}>
                         {navItems.map((item) => (
                             <Button
                                 key={item.label}

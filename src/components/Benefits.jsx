@@ -28,8 +28,8 @@ export default function Benefits() {
     return (
         <Box id="benefits" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#1a1a1a' }}>
             <Container maxWidth="lg">
-                <Grid container spacing={4} alignItems="center">
-                    <Grid item xs={12} md={5}>
+                <Grid container spacing={{ xs: 6, md: 8 }} alignItems="center">
+                    <Grid item xs={12} md={6}>
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -42,6 +42,8 @@ export default function Benefits() {
                                 alt="Barbero profesional trabajando"
                                 sx={{
                                     width: '100%',
+                                    maxHeight: { md: 600 },
+                                    objectFit: 'cover',
                                     borderRadius: 4,
                                     boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
                                     filter: 'grayscale(20%) contrast(1.1)'
@@ -59,7 +61,7 @@ export default function Benefits() {
                         </motion.div>
                     </Grid>
 
-                    <Grid item xs={12} md={7}>
+                    <Grid item xs={12} md={6}>
                         {benefits.map((benefit, index) => (
                             <motion.div
                                 key={index}

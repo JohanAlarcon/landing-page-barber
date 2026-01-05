@@ -81,7 +81,7 @@ export default function Features() {
 
         <Grid
           container
-          spacing={4}
+          spacing={{ xs: 4, lg: 6 }}
           component={motion.div}
           variants={containerVariants}
           initial="hidden"
@@ -90,28 +90,28 @@ export default function Features() {
         >
           {features.map((feature, idx) => (
             <Grid item xs={12} sm={6} md={4} key={idx}>
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} style={{ height: '100%' }}>
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 4,
+                    p: { xs: 4, lg: 5 },
                     height: '100%',
                     background: 'rgba(255,255,255,0.03)',
                     border: '1px solid rgba(255,255,255,0.05)',
                     borderRadius: 4,
-                    transition: 'all 0.3s ease',
+                    transition: 'all 0.4s ease',
                     '&:hover': {
-                      background: 'rgba(255,255,255,0.05)',
-                      transform: 'translateY(-8px)',
+                      background: 'rgba(255,255,255,0.06)',
+                      transform: { xs: 'translateY(-8px)', lg: 'translateY(-12px) scale(1.02)' },
                       borderColor: theme.palette.primary.main,
-                      boxShadow: `0 12px 30px -10px rgba(0,0,0,0.5)`
+                      boxShadow: `0 20px 40px -10px rgba(0,0,0,0.6)`
                     }
                   }}
                 >
                   <Box
                     sx={{
-                      width: 60,
-                      height: 60,
+                      width: { xs: 60, lg: 70 },
+                      height: { xs: 60, lg: 70 },
                       borderRadius: '50%',
                       bgcolor: 'rgba(212, 175, 55, 0.1)',
                       color: theme.palette.primary.main,

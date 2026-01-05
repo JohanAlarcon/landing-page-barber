@@ -56,7 +56,8 @@ export default function Hero() {
                   fontWeight: 700,
                   letterSpacing: 2,
                   mb: 2,
-                  textTransform: 'uppercase'
+                  textTransform: 'uppercase',
+                  fontSize: { md: '1.1rem', lg: '1.25rem' }
                 }}
               >
                 Sistema de Gestión Profesional
@@ -67,11 +68,12 @@ export default function Hero() {
               <Typography
                 variant="h1"
                 sx={{
-                  fontSize: { xs: '3rem', md: '4.5rem', lg: '5.5rem' },
+                  fontSize: { xs: '3rem', md: '4.5rem', lg: '5.5rem', xl: '6.5rem' },
                   lineHeight: 1.1,
                   fontWeight: 700,
                   mb: 3,
-                  color: '#fff'
+                  color: '#fff',
+                  maxWidth: { lg: '800px' }
                 }}
               >
                 DOMINA TU NEGOCIO CON{' '}
@@ -89,7 +91,8 @@ export default function Hero() {
                   maxWidth: 600,
                   color: 'text.secondary',
                   fontWeight: 400,
-                  fontSize: { xs: '1rem', md: '1.25rem' }
+                  fontSize: { xs: '1rem', md: '1.25rem', lg: '1.4rem' },
+                  lineHeight: 1.6
                 }}
               >
                 Controla cortes diarios, citas online y caja desde una sola plataforma.
@@ -109,7 +112,7 @@ export default function Hero() {
                 size="large"
                 endIcon={<ArrowForwardIcon />}
                 onClick={handleDemoClick}
-                sx={{ py: 1.5, px: 4, fontSize: '1.1rem' }}
+                sx={{ py: 1.8, px: 5, fontSize: { md: '1.1rem', lg: '1.2rem' } }}
               >
                 Ver Demo Online
               </Button>
@@ -119,7 +122,7 @@ export default function Hero() {
                 size="large"
                 startIcon={<PlayArrowIcon />}
                 onClick={() => setVideoModalOpen(true)}
-                sx={{ py: 1.5, px: 4, fontSize: '1.1rem', color: '#fff', borderColor: '#fff' }}
+                sx={{ py: 1.8, px: 5, fontSize: { md: '1.1rem', lg: '1.2rem' }, color: '#fff', borderColor: '#fff' }}
               >
                 Ver Video
               </Button>
@@ -127,7 +130,7 @@ export default function Hero() {
           </Grid>
 
           {/* Empty column for spacing or image if we want one on the right */}
-          <Grid item xs={12} md={5} lg={6} sx={{ display: { xs: 'none', md: 'block' } }}>
+          <Grid item xs={12} md={5} lg={6} sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
             {/* Optional: Add a floating UI mockup image here later */}
             <motion.img
               src={`${process.env.PUBLIC_URL}/images/illustration-barber.webp`}
@@ -135,7 +138,13 @@ export default function Hero() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              style={{ width: '100%', maxWidth: '600px', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))' }}
+              style={{
+                width: '100%',
+                maxWidth: '750px',
+                height: 'auto',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))'
+              }}
             />
           </Grid>
         </Grid>
