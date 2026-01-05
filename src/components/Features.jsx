@@ -1,51 +1,51 @@
-import { Box, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Typography, useTheme, Container, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
-import BuildIcon from '@mui/icons-material/Build';
-import ScheduleIcon from '@mui/icons-material/Schedule';
+import ContentCutIcon from '@mui/icons-material/ContentCut';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import GroupIcon from '@mui/icons-material/Group';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const features = [
   {
-    icon: <BuildIcon fontSize="large" />,
-    title: 'Panel Administrativo',
-    description:
-      'Administra inventario, equipo, ventas y reportes desde un solo lugar.',
+    icon: <CalendarMonthIcon fontSize="large" />,
+    title: 'Agenda Inteligente',
+    description: 'Evita inasistencias con recordatorios automáticos. Tus clientes reservan 24/7 sin interrumpirte.',
   },
   {
-    icon: <ScheduleIcon fontSize="large" />,
-    title: 'Gestión de citas',
-    description:
-      'Tus clientes reservan online, reciben confirmaciones.',
+    icon: <PointOfSaleIcon fontSize="large" />,
+    title: 'Control de Caja',
+    description: 'Monitorea el efectivo, tarjeta y transferencias. Cierra caja al final del día sin errores.',
+  },
+  {
+    icon: <GroupIcon fontSize="large" />,
+    title: 'Gestión de Equipo',
+    description: 'Calcula comisiones automáticamente y mide el rendimiento de cada barbero individualmente.',
   },
   {
     icon: <BarChartIcon fontSize="large" />,
-    title: 'Reportes Avanzados',
-    description:
-      'Visualiza ingresos, servicios y rendimiento para decidir con datos.',
+    title: 'Reportes Visuales',
+    description: 'Entiende tus números con gráficos claros. Conoce tus horas pico y servicios más rentables.',
   },
   {
-    icon: <MonetizationOnIcon fontSize="large" />,
-    title: 'Control de ventas',
-    description: 'Registra servicios y productos y sigue tus ventas al instante.',
+    icon: <ContentCutIcon fontSize="large" />,
+    title: 'Gestión de Servicios',
+    description: 'Personaliza tu menú de servicios, duraciones y precios por barbero si es necesario.',
   }
 ];
 
 const containerVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { when: 'beforeChildren', staggerChildren: 0.2, duration: 0.6 },
-  },
+    transition: { staggerChildren: 0.1 }
+  }
 };
+
 const itemVariants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.5 },
-  },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
 };
 
 export default function Features() {
@@ -53,109 +53,88 @@ export default function Features() {
 
   return (
     <Box
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      id="features"
       sx={{
-        position: 'relative',
-        py: { xs: 5, md: 9 },
-        px: { xs: 2, sm: 4, md: 6 },
-        backgroundColor: theme.palette.background.paper,
-        overflow: 'hidden',
+        py: { xs: 8, md: 12 },
+        backgroundColor: theme.palette.background.default,
+        position: 'relative'
       }}
     >
-      {/* Forma decorativa superior */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: -50,
-          left: -80,
-          width: 200,
-          height: 200,
-          bgcolor: theme.palette.primary.light,
-          borderRadius: '50%',
-          opacity: 0.15,
-        }}
-      />
-      {/* Forma decorativa inferior */}
-      <Box
-        sx={{
-          position: 'absolute',
-          bottom: -40,
-          right: -60,
-          width: 160,
-          height: 160,
-          bgcolor: theme.palette.warning.main,
-          borderRadius: '50%',
-          opacity: 0.15,
-        }}
-      />
+      <Container maxWidth="lg">
+        <Typography
+          variant="h6"
+          align="center"
+          color="primary"
+          gutterBottom
+          sx={{ fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}
+        >
+          Características
+        </Typography>
+        <Typography
+          variant="h2"
+          align="center"
+          gutterBottom
+          sx={{ mb: 8, color: '#fff' }}
+        >
+          Todo lo que necesitas para crecer
+        </Typography>
 
-      <Typography
-        variant="h4"
-        align="center"
-        gutterBottom
-        sx={{ fontWeight: 600, mb: { xs: 4, md: 6 }, color: theme.palette.text.primary}}
-      >
-        Características destacadas
-      </Typography>
-
-      <Grid container spacing={{ xs: 2, sm: 4, md: 6, xl: 3 }} justifyContent="center">
-        {features.map((feature, idx) => (
-          <Grid item xs={12} sm={4} md={4} key={idx} display="flex" justifyContent="center">
-            <motion.div
-              variants={itemVariants}
-              whileHover={{ translateY: -8, boxShadow: theme.shadows[6], borderRadius: '50%' }}
-              whileTap={{ scale: 0.97 }}
-              style={{ width: '100%' }}
-            >
-              <Box
-                sx={{
-                  width: { xs: 350, sm: 400, md: 450, lg: 550, xl: 650 },
-                  minHeight: 260,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  p: 2 ,
-                  bgcolor: theme.palette.common.white,
-                  borderRadius: 2,
-                  boxShadow: 1,
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                <Box
+        <Grid
+          container
+          spacing={4}
+          component={motion.div}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {features.map((feature, idx) => (
+            <Grid item xs={12} sm={6} md={4} key={idx}>
+              <motion.div variants={itemVariants}>
+                <Paper
+                  elevation={0}
                   sx={{
-                    mb: 2,
-                    p: 1.5,
-                    borderRadius: '50%',
-                    bgcolor: theme.palette.primary.main,
-                    color: '#fff',
-                    display: 'inline-flex',
+                    p: 4,
+                    height: '100%',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    borderRadius: 4,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      background: 'rgba(255,255,255,0.05)',
+                      transform: 'translateY(-8px)',
+                      borderColor: theme.palette.primary.main,
+                      boxShadow: `0 12px 30px -10px rgba(0,0,0,0.5)`
+                    }
                   }}
                 >
-                  {feature.icon}
-                </Box>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  sx={{ fontWeight: 600, minHeight: 64 }}
-                >
-                  {feature.title}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ lineHeight: 1.6 }}
-                >
-                  {feature.description}
-                </Typography>
-              </Box>
-            </motion.div>
-          </Grid>
-        ))}
-      </Grid>
+                  <Box
+                    sx={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: '50%',
+                      bgcolor: 'rgba(212, 175, 55, 0.1)',
+                      color: theme.palette.primary.main,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      mb: 3
+                    }}
+                  >
+                    {feature.icon}
+                  </Box>
+                  <Typography variant="h5" gutterBottom sx={{ color: '#fff', fontWeight: 600 }}>
+                    {feature.title}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {feature.description}
+                  </Typography>
+                </Paper>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </Box>
   );
 }

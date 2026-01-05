@@ -1,6 +1,7 @@
-import { Box, Grid, Typography, Button, useTheme } from '@mui/material';
+import { Box, Grid, Typography, Button, useTheme, Container, Stack } from '@mui/material';
 import { motion } from 'framer-motion';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { handleDemoClick } from '../helpers';
 import VideoModal from './VideoModal';
 import { useState } from 'react';
@@ -9,26 +10,18 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { when: 'beforeChildren', staggerChildren: 0.3, duration: 0.8 },
+    transition: { when: 'beforeChildren', staggerChildren: 0.2, duration: 0.8 },
   },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 export default function Hero() {
   const theme = useTheme();
   const [videoModalOpen, setVideoModalOpen] = useState(false);
-
-  const handleVideoClick = () => {
-    setVideoModalOpen(true);
-  };
-
-  const handleCloseVideo = () => {
-    setVideoModalOpen(false);
-  };
 
   return (
     <Box
@@ -38,124 +31,120 @@ export default function Hero() {
       animate="visible"
       sx={{
         position: 'relative',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
         overflow: 'hidden',
-        background: `linear-gradient(135deg, ${theme.palette.primary.main}CC 0%, ${theme.palette.secondary.main}CC 50%), 
+        pt: { xs: 12, md: 0 }, // Mobile padding for fixed navbar
+        background: `linear-gradient(180deg, rgba(18,18,18,0.7) 0%, rgba(18,18,18,1) 100%), 
                      url('${process.env.PUBLIC_URL}/images/hero-bg.jpg') center/cover no-repeat`,
-        color: '#fff'
+        // Fallback color if image fails
+        backgroundColor: '#121212'
       }}
     >
-      <Box
-        component={motion.div}
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1 }}
-        sx={{ position: 'absolute', height: { xs: 80, md: 120 }, bgcolor: theme.palette.background.default, clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0% 100%)', border: 'none', boxShadow: '0 -2px 10px rgba(0,0,0,0.2)' }}
-      />
+      {/* Overlay Oscuro Adicional para asegurar legibilidad */}
+      <Box sx={{ position: 'absolute', inset: 0, bgcolor: 'rgba(0,0,0,0.6)' }} />
 
-      <Grid container spacing={2}>
-        <Grid item size={{ xs: 12, md: 6 }}>
-          <motion.div variants={itemVariants}>
-            <Typography
-              variant="h1"
-              component="h1"
-              gutterBottom
-              sx={{
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
-                fontWeight: 700,
-                textShadow: '2px 2px 6px rgba(0,0,0,0.3)',
-                p: 4
-              }}
+      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2 }}>
+        <Grid container spacing={6} alignItems="center">
+          <Grid item xs={12} md={7} lg={6}>
+            <motion.div variants={itemVariants}>
+              <Typography
+                variant="h6"
+                color="primary"
+                sx={{
+                  fontWeight: 700,
+                  letterSpacing: 2,
+                  mb: 2,
+                  textTransform: 'uppercase'
+                }}
+              >
+                Sistema de Gestión Profesional
+              </Typography>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <Typography
+                variant="h1"
+                sx={{
+                  fontSize: { xs: '3rem', md: '4.5rem', lg: '5.5rem' },
+                  lineHeight: 1.1,
+                  fontWeight: 700,
+                  mb: 3,
+                  color: '#fff'
+                }}
+              >
+                DOMINA TU NEGOCIO CON{' '}
+                <Box component="span" sx={{ color: theme.palette.primary.main }}>
+                  STYLECLOUD
+                </Box>
+              </Typography>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <Typography
+                variant="h6"
+                sx={{
+                  mb: 5,
+                  maxWidth: 600,
+                  color: 'text.secondary',
+                  fontWeight: 400,
+                  fontSize: { xs: '1rem', md: '1.25rem' }
+                }}
+              >
+                Controla cortes diarios, citas online y caja desde una sola plataforma.
+                Optimiza el tiempo de tus barberos y ofrécele a tus clientes una experiencia premium.
+              </Typography>
+            </motion.div>
+
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={3}
+              component={motion.div}
+              variants={itemVariants}
             >
-              Administra tu salón con {' '}
-              <Box component="span" sx={{ color: theme.palette.warning.main }}>
-                StyleCloud
-              </Box>
-            </Typography>
-          </motion.div>
-
-          <motion.div variants={itemVariants}>
-            <Typography variant="h6" sx={{ mb: 4, maxWidth: 500, opacity: 0.85, fontWeight: 400, p: 4 }}>
-              Citas, ventas y reportes en un solo lugar para hacer crecer tu barbería, peluquería o salón de belleza.
-            </Typography>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            style={{ display: 'flex', gap: theme.spacing(2), padding: theme.spacing(0, 4), flexDirection: 'column', alignItems: 'flex-start' }}
-          >
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
               <Button
                 variant="contained"
-                color="warning"
+                color="primary"
                 size="large"
-                sx={{ px: 4 }}
-                component={motion.button}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                endIcon={<ArrowForwardIcon />}
                 onClick={handleDemoClick}
+                sx={{ py: 1.5, px: 4, fontSize: '1.1rem' }}
               >
-                Ver Demo de Citas
+                Ver Demo Online
               </Button>
               <Button
                 variant="outlined"
-                color="inherit"
+                color="secondary"
                 size="large"
-                sx={{ px: 4, borderWidth: 2 }}
-                component={motion.button}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleVideoClick}
+                startIcon={<PlayArrowIcon />}
+                onClick={() => setVideoModalOpen(true)}
+                sx={{ py: 1.5, px: 4, fontSize: '1.1rem', color: '#fff', borderColor: '#fff' }}
               >
-                Ver Video de Presentación
+                Ver Video
               </Button>
-            </Box>
+            </Stack>
+          </Grid>
 
-            {/* Notas contextuales */}
-            <Box sx={{ mt: 2, opacity: 0.8 }}>
-              <Typography variant="caption" sx={{ display: 'block', fontSize: { xs: '0.95rem', md: '0.875rem' } }}>
-                • Demo pública: gestión de citas
-              </Typography>
-              <Typography variant="caption" sx={{ display: 'block', fontSize: { xs: '0.95rem', md: '0.875rem' } }}>
-                • Panel completo: solicita credenciales
-              </Typography>
-            </Box>
-          </motion.div>
+          {/* Empty column for spacing or image if we want one on the right */}
+          <Grid item xs={12} md={5} lg={6} sx={{ display: { xs: 'none', md: 'block' } }}>
+            {/* Optional: Add a floating UI mockup image here later */}
+            <motion.img
+              src={`${process.env.PUBLIC_URL}/images/illustration-barber.png`}
+              alt="Dashboard Mockup"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              style={{ width: '100%', maxWidth: '600px', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))' }}
+            />
+          </Grid>
         </Grid>
+      </Container>
 
-        {/* ILUSTRACIÓN */}
-        <Grid item size={{ xs: 12, md: 6 }} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <motion.img
-            src={`${process.env.PUBLIC_URL}/images/illustration-barber.png`}
-            alt="Ilustración StyleCloud - Sistema de gestión para salones"
-            variants={itemVariants}
-            style={{
-              width: '50%',
-              maxWidth: 500,
-              height: 'auto',
-            }}
-          />
-        </Grid>
-      </Grid>
-
-      <Box
-        component={motion.div}
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        sx={{
-          position: 'relative',
-          bottom: { xs: 16, md: 32 },
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 1,
-        }}
-      >
-        <ArrowDownwardIcon sx={{ fontSize: 36, opacity: 0.7 }} />
-      </Box>
       <VideoModal
         open={videoModalOpen}
-        onClose={handleCloseVideo}
+        onClose={() => setVideoModalOpen(false)}
       />
     </Box>
-
   );
 }

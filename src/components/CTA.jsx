@@ -1,144 +1,80 @@
-import { Box, Typography, Button, useTheme } from '@mui/material';
+import { Box, Typography, Button, useTheme, Container } from '@mui/material';
 import { motion } from 'framer-motion';
 import { handleDemoClick } from '../helpers';
-import { useState } from 'react';
-import VideoModal from './VideoModal';
-
-const containerVariants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { when: 'beforeChildren', staggerChildren: 0.2, duration: 0.8 },
-  },
-};
-const textVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-const buttonVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  hover: { scale: 1.05 },
-  tap: { scale: 0.95 },
-};
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function CTA() {
   const theme = useTheme();
 
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
-
-  const handleVideoClick = () => {
-    setVideoModalOpen(true);
-  };
-
-  const handleCloseVideo = () => {
-    setVideoModalOpen(false);
-  };
-
   return (
     <Box
-      component={motion.section}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.5 }}
       sx={{
-        position: 'relative',
-        overflow: 'hidden',
-        textAlign: 'center',
         py: { xs: 10, md: 14 },
-        px: { xs: 2, sm: 4, md: 6 },
-        background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
-        color: theme.palette.primary.contrastText,
+        textAlign: 'center',
+        background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, #B8860B 100%)`, // Gold Gradient
+        color: '#000',
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
-      {/* Forma decorativa superior */}
+      {/* Pattern Overlay */}
       <Box
         sx={{
           position: 'absolute',
-          top: -80,
-          left: '-20%',
-          width: '140%',
-          height: 200,
-          bgcolor: theme.palette.primary.light,
-          borderRadius: '50%',
-          opacity: 0.12,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          opacity: 0.1,
+          backgroundImage: `radial-gradient(#000 10%, transparent 11%)`,
+          backgroundSize: '20px 20px'
         }}
       />
 
-      {/* Texto */}
-      <motion.div variants={textVariants}>
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: 600, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
+      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 2 }}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          ¿Listo para llevar tu salón al siguiente nivel?
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          sx={{
-            maxWidth: 600,
-            mx: 'auto',
-            mb: { xs: 4, md: 6 },
-            opacity: 0.9,
-          }}
-        >
-          Prueba la demo pública de citas desde la web y conoce el flujo real de reservas. ¿Quieres ver ventas y reportes en el panel administrativo? Solicita credenciales y te habilitamos un acceso de prueba para explorar todo sin instalar nada.
-        </Typography>
-      </motion.div>
+          <Typography
+            variant="h3"
+            gutterBottom
+            sx={{ fontWeight: 800, mb: 3 }}
+          >
+            ¿Listo para Transformar tu Barbería?
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{ mb: 6, opacity: 0.9, fontWeight: 500 }}
+          >
+            Únete a la nueva era de barberías digitales. Deja el papel y lápiz en el pasado.
+            Prueba StyleCloudBarber hoy mismo sin compromisos.
+          </Typography>
 
-      {/* Botones */}
-      <Box
-        component={motion.div}
-        variants={buttonVariants}
-        whileHover="hover"
-        whileTap="tap"
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' },
-          gap: 2,
-          justifyContent: 'center',
-        }}
-      >
-        <Button
-          variant="contained"
-          color="warning"
-          size="large"
-          sx={{ px: 4 }}
-          onClick={handleDemoClick}
-        >
-          Ver demo de citas
-        </Button>
-        <Button
-          variant="outlined"
-          color="inherit"
-          size="large"
-          sx={{ px: 4, borderWidth: 2 }}
-          onClick={handleVideoClick}
-        >
-          Ver video de presentación
-        </Button>
-      </Box>
-
-      {/* Forma decorativa inferior */}
-      <Box
-        sx={{
-          position: 'absolute',
-          bottom: -60,
-          right: '-10%',
-          width: 180,
-          height: 180,
-          bgcolor: theme.palette.warning.main,
-          borderRadius: '50%',
-          opacity: 0.12,
-        }}
-      />
-      <VideoModal
-        open={videoModalOpen}
-        onClose={handleCloseVideo}
-      />
+          <Button
+            variant="contained"
+            color="secondary" // White button on Gold background
+            size="large"
+            endIcon={<ArrowForwardIcon />}
+            onClick={handleDemoClick}
+            sx={{
+              py: 2,
+              px: 6,
+              fontSize: '1.2rem',
+              color: theme.palette.primary.main,
+              bgcolor: '#000', // Black button for contrast
+              '&:hover': {
+                bgcolor: '#222',
+                scale: 1.05
+              }
+            }}
+          >
+            Obtener Acceso Ahora
+          </Button>
+        </motion.div>
+      </Container>
     </Box>
   );
 }
