@@ -133,17 +133,16 @@ export default function Hero() {
           <Grid item xs={12} md={5} lg={6} sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
             {/* Optional: Add a floating UI mockup image here later */}
             <motion.img
-              src={`${process.env.PUBLIC_URL}/images/illustration-barber.webp`}
+              src={`${process.env.PUBLIC_URL}/images/software/imagen_ia_1.webp`}
               alt="Dashboard Mockup"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               style={{
                 width: '100%',
-                maxWidth: '750px',
+                maxWidth: '550px',
                 height: 'auto',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))'
+                borderRadius: '16px',
               }}
             />
           </Grid>

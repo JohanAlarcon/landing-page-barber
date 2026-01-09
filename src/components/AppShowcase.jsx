@@ -5,12 +5,14 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const images = [
+    { src: `${process.env.PUBLIC_URL}/images/software/imagen_ia_2.webp`, alt: 'Panel de Control Principal' },
+    { src: `${process.env.PUBLIC_URL}/images/software/imagen_ia_3.webp`, alt: 'Panel de Control Principal' },
     { src: `${process.env.PUBLIC_URL}/images/software/imagen1.webp`, alt: 'Panel de Control Principal' },
     { src: `${process.env.PUBLIC_URL}/images/software/imagen2.webp`, alt: 'Gestión de Citas' },
     { src: `${process.env.PUBLIC_URL}/images/software/imagen3.webp`, alt: 'Calendario Interactivo' },
     { src: `${process.env.PUBLIC_URL}/images/software/imagen4.webp`, alt: 'Reportes Financieros' },
     { src: `${process.env.PUBLIC_URL}/images/software/imagen5.webp`, alt: 'Base de Datos de Clientes' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen6.webp`, alt: 'Configuración de Servicios' }
+    { src: `${process.env.PUBLIC_URL}/images/software/imagen6.webp`, alt: 'Configuración de Servicios' },
 ];
 
 export default function AppShowcase() {

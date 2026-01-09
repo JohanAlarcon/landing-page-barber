@@ -38,7 +38,7 @@ export default function Benefits() {
                         >
                             <Box
                                 component="img"
-                                src={`${process.env.PUBLIC_URL}/images/barber-action.webp`}
+                                src={`${process.env.PUBLIC_URL}/images/software/imagen_ia_4.webp`}
                                 alt="Barbero profesional trabajando"
                                 sx={{
                                     width: '100%',
@@ -46,7 +46,6 @@ export default function Benefits() {
                                     objectFit: 'cover',
                                     borderRadius: 4,
                                     boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-                                    filter: 'grayscale(20%) contrast(1.1)'
                                 }}
 
                             />

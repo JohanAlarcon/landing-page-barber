@@ -7,7 +7,7 @@ import { handleDemoClick } from '../helpers';
 const plans = [
     {
         title: 'Gestión de Cortes',
-        price: '$70.000',
+        price: '$80.000',
         period: '/mes',
         description: 'Ideal para quienes solo necesitan control administrativo en el salón.',
         features: [
@@ -35,7 +35,7 @@ const plans = [
     },
     {
         title: 'Gestión de Citas',
-        price: '$70.000',
+        price: '$80.000',
         period: '/mes',
         description: 'Perfecto para organizar tu agenda y evitar huecos vacíos.',
         features: [

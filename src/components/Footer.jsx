@@ -1,6 +1,4 @@
 import { Box, Container, Grid, Typography, Link, IconButton, useTheme } from '@mui/material';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export default function Footer() {
