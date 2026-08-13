@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 840" width="640" height="840" role="img"
+  aria-label="Conversación con el chatbot de ReservaBot agendando una cita">
+  <title>ReservaBot · Conversación que agenda una cita</title>
+  <defs>
+    <linearGradient id="hp-head" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22DE7A" stop-opacity="0.28" />
+      <stop offset="1" stop-color="#22DE7A" stop-opacity="0.08" />
+    </linearGradient>
+    <radialGradient id="hp-glow" cx="0.2" cy="0.1" r="0.7">
+      <stop offset="0" stop-color="#22DE7A" stop-opacity="0.09" />
+      <stop offset="1" stop-color="#22DE7A" stop-opacity="0" />
+    </radialGradient>
+    <style>
+      .t { font-family: Montserrat, 'Segoe UI', Arial, sans-serif; }
+      .msg { font-size: 19px; font-weight: 500; }
+      .in { fill: #E4EDF5; }
+      .out { fill: #EAFFF4; }
+    </style>
+  </defs>
+
+  <!-- Marco del teléfono -->
+  <rect x="16" y="16" width="608" height="808" rx="52" fill="#0A1826" stroke="#22354A" stroke-width="2" />
+  <rect x="16" y="16" width="608" height="808" rx="52" fill="url(#hp-glow)" />
+
+  <!-- Cabecera del chat -->
+  <path d="M18 66a50 50 0 0 1 50-50h504a50 50 0 0 1 50 50v66H18z" fill="url(#hp-head)" />
+  <line x1="18" y1="132" x2="622" y2="132" stroke="#FFFFFF" stroke-opacity="0.08" />
+  <circle cx="80" cy="98" r="27" fill="#22DE7A" />
+  <path d="M69 98 L77 106 L92 90" fill="none" stroke="#08131F" stroke-width="5" stroke-linecap="round"
+    stroke-linejoin="round" />
+  <text class="t" x="122" y="94" font-size="21" font-weight="800" fill="#F2F7FA">ReservaBot</text>
+  <circle cx="128" cy="112" r="4.5" fill="#22DE7A" />
+  <text class="t" x="142" y="118" font-size="14" fill="#93AABD">en línea</text>
+
+  <!-- Conversación -->
+  <g>
+    <!-- Cliente -->
+    <path d="M46 168h300a18 18 0 0 1 18 18v40a18 18 0 0 1-18 18H46a12 12 0 0 1-12-12v-52a12 12 0 0 1 12-12z"
+      fill="#FFFFFF" fill-opacity="0.08" />
+    <text class="t msg in" x="58" y="207">Hola 👋 Quiero manicure hoy</text>
+
+    <!-- Bot -->
+    <path d="M594 256H286a18 18 0 0 0-18 18v40a18 18 0 0 0 18 18h308a12 12 0 0 0 12-12v-52a12 12 0 0 0-12-12z"
+      fill="#12B45F" />
+    <text class="t msg out" x="286" y="295">¡Claro! Tengo 3:00 pm y 5:30 pm ✨</text>
+
+    <!-- Cliente -->
+    <path d="M46 344h140a18 18 0 0 1 18 18v34a18 18 0 0 1-18 18H46a12 12 0 0 1-12-12v-46a12 12 0 0 1 12-12z"
+      fill="#FFFFFF" fill-opacity="0.08" />
+    <text class="t msg in" x="58" y="380">3:00 pm</text>
+
+    <!-- Bot: confirmación -->
+    <path d="M594 432H286a18 18 0 0 0-18 18v76a18 18 0 0 0 18 18h308a12 12 0 0 0 12-12v-88a12 12 0 0 0-12-12z"
+      fill="#12B45F" />
+    <path d="M298 466 L306 474 L322 456" fill="none" stroke="#EAFFF4" stroke-width="5" stroke-linecap="round"
+      stroke-linejoin="round" />
+    <text class="t" x="336" y="473" font-size="19" font-weight="800" fill="#EAFFF4">Cita confirmada</text>
+    <text class="t msg out" x="298" y="508">Hoy 3:00 pm · Manicure</text>
+
+    <!-- Bot: recordatorio -->
+    <path d="M594 556H322a18 18 0 0 0-18 18v40a18 18 0 0 0 18 18h272a12 12 0 0 0 12-12v-52a12 12 0 0 0-12-12z"
+      fill="#12B45F" />
+    <text class="t msg out" x="322" y="595">Te recordaré 2 h antes ⏰</text>
+
+    <!-- Cliente -->
+    <path d="M46 644h150a18 18 0 0 1 18 18v34a18 18 0 0 1-18 18H46a12 12 0 0 1-12-12v-46a12 12 0 0 1 12-12z"
+      fill="#FFFFFF" fill-opacity="0.08" />
+    <text class="t msg in" x="58" y="680">¡Gracias! 🙌</text>
+  </g>
+
+  <!-- Barra de escritura -->
+  <rect x="34" y="740" width="470" height="56" rx="28" fill="#FFFFFF" fill-opacity="0.06" />
+  <text class="t" x="62" y="775" font-size="17" fill="#6B8399">Escribe un mensaje…</text>
+  <circle cx="562" cy="768" r="28" fill="#22DE7A" />
+  <path d="M551 768 L573 768 M565 760 L573 768 L565 776" fill="none" stroke="#04241A" stroke-width="4"
+    stroke-linecap="round" stroke-linejoin="round" />
+</svg>
