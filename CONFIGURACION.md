@@ -157,7 +157,33 @@ ancho del contenedor.
 
 ---
 
-## 6. Cambiar el dominio
+## 6. SEO (funciona solo)
+
+Al ejecutar `npm run build`, npm dispara además `scripts/seo.js`, que lee el
+mismo `.env` y escribe dentro de `build/`:
+
+- El **contenido para buscadores**. La web es una SPA: sin este paso, un
+  rastreador que no ejecute JavaScript vería 52 caracteres. El script genera
+  un bloque con el titular, las secciones, las funciones, el precio y las
+  preguntas — el mismo texto que lee el visitante.
+- Los **datos estructurados** (organización, sitio, aplicación con su precio,
+  los 6 videos y las preguntas frecuentes).
+- El **sitemap.xml** con la fecha de la compilación y el **robots.txt**.
+
+No hay nada que mantener a mano: si cambias un precio o una pregunta en el
+`.env`, el SEO se regenera en el siguiente build.
+
+> ⚠️ **No añadas valoraciones inventadas.** El script deja preparado el sitio
+> donde va `aggregateRating`, pero vacío a propósito: publicar estrellas que no
+> vienen de reseñas reales incumple las políticas de Google y puede costar una
+> penalización manual del dominio. Cuando tengas reseñas de verdad, ahí van.
+
+Después de publicar, date de alta en **Google Search Console**, verifica el
+dominio y envía `https://reservabot.online/sitemap.xml`.
+
+---
+
+## 7. Cambiar el dominio
 
 El dominio vive en **4 sitios**. Si algún día lo cambias otra vez, tócalos todos:
 
@@ -176,7 +202,7 @@ Después, en el **registrador del dominio** apunta el DNS a GitHub Pages y en
 
 ---
 
-## 7. Archivos del proyecto
+## 8. Archivos del proyecto
 
 ```
 .env                       ← toda la configuración

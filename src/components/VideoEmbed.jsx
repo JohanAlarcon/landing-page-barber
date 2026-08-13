@@ -171,6 +171,7 @@ export default function VideoEmbed({ video, accent, placeholderText }) {
         <video
           src={embedUrl}
           poster={video.poster || undefined}
+          aria-label={video.title}
           controls
           autoPlay
           playsInline

@@ -57,6 +57,8 @@ export default function Navbar() {
 
             {/* Enlaces de escritorio */}
             <Stack
+              component="nav"
+              aria-label="Navegación principal"
               direction="row"
               spacing={0.5}
               sx={{ display: { xs: 'none', lg: 'flex' }, alignItems: 'center' }}

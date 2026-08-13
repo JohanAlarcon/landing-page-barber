@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CO">
 
 <head>
   <meta charset="utf-8" />
@@ -7,22 +7,21 @@
   <meta name="theme-color" content="#08131F" />
 
   <!--
-    Estas etiquetas son el valor por defecto para los buscadores y para
-    los enlaces compartidos. La aplicación las sobreescribe al cargar con
-    lo que haya en el archivo .env (REACT_APP_SEO_*).
+    El dominio sale de REACT_APP_SITE_URL del .env: se sustituye al compilar.
+    Los datos estructurados NO están aquí: los genera scripts/seo.js después
+    de compilar, leyendo el mismo .env, para que nunca se desincronicen.
   -->
   <meta name="description"
     content="Tu barbería o salón de uñas agenda solo, 24/7. ReservaBot atiende a tus clientes con un chatbot inteligente: reserva, confirma y recuerda cada cita. Primer mes gratis y luego $40.000/mes, precio único." />
-  <meta name="keywords"
-    content="software de reservas, agenda para barbería, app para salón de uñas, chatbot de citas, sistema de citas, reservas online, ReservaBot" />
   <meta name="author" content="ReservaBot" />
-  <meta name="robots" content="index, follow" />
 
-  <!--
-    El dominio sale de REACT_APP_SITE_URL del .env: se sustituye al compilar.
-    Las imágenes para redes DEBEN ser URLs absolutas (Facebook y WhatsApp
-    no resuelven rutas relativas al generar la vista previa del enlace).
-  -->
+  <!-- Permite a Google mostrar fragmentos largos, imágenes grandes y vista previa de video -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+  <!-- Evita que iOS convierta cifras en enlaces de teléfono y rompa el diseño -->
+  <meta name="format-detection" content="telephone=no" />
+
   <!-- Open Graph -->
   <meta property="og:site_name" content="ReservaBot" />
   <meta property="og:title" content="ReservaBot · Tu recepcionista que nunca duerme" />
@@ -32,6 +31,9 @@
   <meta property="og:locale" content="es_CO" />
   <meta property="og:url" content="%REACT_APP_SITE_URL%" />
   <meta property="og:image" content="%REACT_APP_SITE_URL%/images/brand/og-reservabot.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="ReservaBot: tu agenda llena 24/7 sin contestar un solo mensaje" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -39,53 +41,38 @@
   <meta name="twitter:description"
     content="Recepcionista digital 24/7 para barberías y salones de uñas. Menos plantones, más ingresos." />
   <meta name="twitter:image" content="%REACT_APP_SITE_URL%/images/brand/og-reservabot.svg" />
+  <meta name="twitter:image:alt" content="ReservaBot: tu agenda llena 24/7" />
 
+  <!--
+    Las fuentes se cargan sin bloquear el pintado: primero se descarga la hoja
+    como recurso pasivo y solo al terminar se aplica. Mejora el LCP, que es
+    factor de posicionamiento (Core Web Vitals).
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700&display=swap">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700&display=swap">
+  </noscript>
 
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
   <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest">
+
   <link rel="canonical" href="%REACT_APP_SITE_URL%/" />
+  <link rel="alternate" hreflang="es-co" href="%REACT_APP_SITE_URL%/" />
+  <link rel="alternate" hreflang="x-default" href="%REACT_APP_SITE_URL%/" />
 
   <title>ReservaBot · Recepcionista digital 24/7 para barberías y salones de uñas</title>
-
-  <!-- Datos estructurados para buscadores -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "ReservaBot",
-      "alternateName": "ReservaBot · Recepcionista digital 24/7",
-      "headline": "Chatbot de reservas para barberías y salones de uñas",
-      "operatingSystem": "Web",
-      "applicationCategory": "BusinessApplication",
-      "description": "ReservaBot es la recepcionista digital de barberías y salones de uñas: un chatbot inteligente que agenda, confirma y recuerda las citas, con panel de administración y app para el equipo.",
-      "offers": {
-        "@type": "Offer",
-        "price": "40000",
-        "priceCurrency": "COP",
-        "description": "Primer mes gratis, luego $40.000 COP al mes. Precio único sin contratos ni cobro por colaborador."
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "ratingCount": "520"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "ReservaBot"
-      },
-      "image": "%REACT_APP_SITE_URL%/images/brand/og-reservabot.svg"
-    }
-  </script>
 </head>
 
 <body>
+  <!-- scripts/seo.js sustituye este bloque por el contenido real de la página -->
   <noscript>Necesitas habilitar JavaScript para ver esta página.</noscript>
   <div id="root"></div>
 </body>
