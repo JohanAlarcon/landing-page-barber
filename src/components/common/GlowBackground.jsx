@@ -2,16 +2,31 @@ import { Box } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 
 /**
- * Fondo decorativo: manchas de luz difusas + malla de puntos.
+ * Luz de ambiente de una sección.
+ *
+ * Toda la página se ilumina desde UN solo punto fuera de eje (arriba a la
+ * izquierda). Antes había dos manchas circulares espejadas más una malla de
+ * puntos: leído en conjunto, eso es un fondo de plantilla, no una luz.
+ * Aquí hay una sola elipse muy difusa, del mismo lado en todas las secciones,
+ * para que la página tenga una dirección de luz coherente de arriba abajo.
+ *
  * Es puramente visual, no captura clics.
  */
 export default function GlowBackground({
   colors = [],
   intensity = 0.22,
-  grid = true,
+  // Punto de entrada de la luz. En móvil se centra un poco para que no
+  // deje el titular en penumbra al ir todo a una sola columna.
+  origin = { xs: '50% -14%', md: '22% -12%' },
   sx,
 }) {
-  const [first, second] = colors;
+  const [key, fill] = colors;
+  const light = key || fill;
+
+  if (!light) return null;
+
+  const ellipse = (position, color, strength) =>
+    `radial-gradient(ellipse 130% 90% at ${position}, ${alpha(color, strength)} 0%, transparent 62%)`;
 
   return (
     <Box
@@ -22,50 +37,28 @@ export default function GlowBackground({
         overflow: 'hidden',
         pointerEvents: 'none',
         zIndex: 0,
+        // El desenfoque alto evita que se vea el canto del degradado
+        filter: 'blur(70px)',
+        backgroundImage: {
+          xs: ellipse(origin.xs, light, intensity),
+          md: ellipse(origin.md, light, intensity),
+        },
+        transition: 'background-image .6s ease',
         ...sx,
       }}
     >
-      {grid && (
+      {/* Lavado secundario mucho más tenue, SIEMPRE sobre el mismo eje de la
+          luz principal: nunca en la esquina opuesta, que es lo que delataba
+          el fondo generado. */}
+      {fill && fill !== light && (
         <Box
           sx={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `radial-gradient(${alpha('#FFFFFF', 0.07)} 1px, transparent 1px)`,
-            backgroundSize: '34px 34px',
-            maskImage: 'radial-gradient(ellipse 90% 70% at 50% 25%, #000 40%, transparent 100%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 25%, #000 40%, transparent 100%)',
-          }}
-        />
-      )}
-
-      {first && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: { xs: '-25%', md: '-30%' },
-            left: { xs: '-30%', md: '-8%' },
-            width: { xs: 380, md: 720 },
-            height: { xs: 380, md: 720 },
-            borderRadius: '50%',
-            background: `radial-gradient(circle, ${alpha(first, intensity)} 0%, transparent 68%)`,
-            filter: 'blur(20px)',
-            transition: 'background 0.6s ease',
-          }}
-        />
-      )}
-
-      {second && (
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: { xs: '-25%', md: '-35%' },
-            right: { xs: '-30%', md: '-10%' },
-            width: { xs: 400, md: 780 },
-            height: { xs: 400, md: 780 },
-            borderRadius: '50%',
-            background: `radial-gradient(circle, ${alpha(second, intensity * 0.85)} 0%, transparent 68%)`,
-            filter: 'blur(20px)',
-            transition: 'background 0.6s ease',
+            backgroundImage: {
+              xs: ellipse('62% 108%', fill, intensity * 0.3),
+              md: ellipse('38% 112%', fill, intensity * 0.3),
+            },
           }}
         />
       )}

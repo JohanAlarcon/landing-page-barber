@@ -65,13 +65,14 @@ export default function Hero() {
         // Deja sitio a la barra fija (cinta promocional + navegación)
         pt: { xs: 16, sm: 17, md: 19, lg: 21 },
         pb: { xs: 8, md: 12 },
+        // Misma luz fuera de eje que el resto de la página, no un foco centrado
         background: `
-          radial-gradient(ellipse 80% 60% at 50% -10%, ${alpha(green, 0.14)}, transparent 60%),
+          radial-gradient(ellipse 90% 65% at 22% -10%, ${alpha(green, 0.1)}, transparent 62%),
           linear-gradient(180deg, ${site.colors.background} 0%, ${site.colors.backgroundDeep} 100%)
         `,
       }}
     >
-      <GlowBackground colors={[green, site.colors.secondary]} intensity={0.2} />
+      <GlowBackground colors={[green, site.colors.secondary]} intensity={0.16} />
 
       <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
         <Grid container spacing={{ xs: 6, md: 5, lg: 8 }} alignItems="center">
@@ -97,16 +98,10 @@ export default function Hero() {
               >
                 {hero.eyebrow && <Pill color={green}>{hero.eyebrow}</Pill>}
                 {freeTrial.enabled && freeTrial.badge && (
-                  <Box
-                    component={motion.div}
-                    animate={{ scale: [1, 1.035, 1] }}
-                    transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
-                  >
-                    <Pill color={green} filled>
-                      <CardGiftcardRoundedIcon sx={{ fontSize: 15 }} />
-                      {freeTrial.badge}
-                    </Pill>
-                  </Box>
+                  <Pill color={green} filled>
+                    <CardGiftcardRoundedIcon sx={{ fontSize: 15 }} />
+                    {freeTrial.badge}
+                  </Pill>
                 )}
               </Stack>
 
@@ -290,24 +285,9 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
               sx={{ position: 'relative', px: { xs: 0, sm: 4, md: 0 } }}
             >
-              {/* Halo detrás del mockup */}
-              <Box
-                aria-hidden
-                sx={{
-                  position: 'absolute',
-                  inset: '-12%',
-                  borderRadius: '50%',
-                  background: `radial-gradient(circle, ${alpha(green, 0.16)}, transparent 65%)`,
-                  filter: 'blur(30px)',
-                }}
-              />
-
-              <Box
-                component={motion.div}
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                sx={{ position: 'relative' }}
-              >
+              {/* El halo circular se retiró: competía con la luz de la sección
+                  y era el típico glow decorativo de plantilla. */}
+              <Box sx={{ position: 'relative' }}>
                 {useChat && <ChatMockup />}
                 {/* Sin conversación configurada se usa la imagen; si tampoco
                     hay imagen no se dibuja nada, en vez de un icono roto. */}
@@ -332,13 +312,9 @@ export default function Hero() {
                 <Box
                   key={float.title}
                   component={motion.div}
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1, y: index === 0 ? [0, -9, 0] : [0, 9, 0] }}
-                  transition={{
-                    opacity: { delay: 0.9 + index * 0.35, duration: 0.5 },
-                    scale: { delay: 0.9 + index * 0.35, duration: 0.5 },
-                    y: { duration: 5 + index, repeat: Infinity, ease: 'easeInOut' },
-                  }}
+                  initial={{ opacity: 0, scale: 0.9, y: 8 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: 0.9 + index * 0.35, duration: 0.5, ease: 'easeOut' }}
                   sx={{
                     display: { xs: 'none', lg: 'flex' },
                     alignItems: 'center',

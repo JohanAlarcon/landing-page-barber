@@ -3,6 +3,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
 import site from '../config/site';
+import { litSurface, seam } from '../styles/surfaces';
 import SectionHeading from './common/SectionHeading';
 import Icon from './common/Icon';
 
@@ -19,15 +20,18 @@ export default function Features() {
       id="features"
       sx={{
         position: 'relative',
-        py: { xs: 8, md: 13 },
-        bgcolor: site.colors.backgroundDeep,
+        py: { xs: 8, md: 14 },
+        background: seam(site.colors.background, site.colors.backgroundDeep),
       }}
     >
       <Container maxWidth="lg">
+        {/* Alineado a la izquierda: rompe el metrónomo de secciones centradas */}
         <SectionHeading
           eyebrow={features.eyebrow}
           title={features.title}
           subtitle={features.subtitle}
+          align="left"
+          maxWidth={640}
         />
 
         <Grid container spacing={{ xs: 2.5, md: 3 }}>
@@ -43,31 +47,17 @@ export default function Features() {
                   height: '100%',
                   p: { xs: 3, md: 3.5 },
                   borderRadius: 4,
-                  bgcolor: alpha('#FFFFFF', 0.035),
-                  border: `1px solid ${alpha('#FFFFFF', 0.07)}`,
-                  transition: 'transform .35s ease, border-color .35s ease, background-color .35s ease',
+                  ...litSurface(),
+                  transition: 'border-top-color .35s ease, background .35s ease',
+                  // No se desplaza: la luz simplemente lo alcanza más
                   '&:hover': {
-                    transform: 'translateY(-6px)',
-                    borderColor: alpha(green, 0.45),
-                    bgcolor: alpha(green, 0.05),
+                    borderTopColor: alpha('#FFFFFF', 0.18),
+                    background: `linear-gradient(180deg, ${alpha('#FFFFFF', 0.075)}, ${alpha('#FFFFFF', 0.02)})`,
                   },
                 }}
               >
-                <Box
-                  sx={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 2.5,
-                    display: 'grid',
-                    placeItems: 'center',
-                    mb: 2.2,
-                    color: green,
-                    bgcolor: alpha(green, 0.12),
-                    border: `1px solid ${alpha(green, 0.22)}`,
-                  }}
-                >
-                  <Icon name={feature.icon} sx={{ fontSize: 27 }} />
-                </Box>
+                {/* Icono desnudo, sin cuadrito teñido: se apoya en el aire */}
+                <Icon name={feature.icon} sx={{ fontSize: 30, color: green, mb: 2.2 }} />
 
                 <Typography variant="h6" sx={{ mb: 1, fontSize: '1.08rem' }}>
                   {feature.title}

@@ -8,6 +8,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import site from '../config/site';
 import { useVertical } from '../context/VerticalContext';
 import { openWhatsApp } from '../helpers';
+import { occlusion } from '../styles/surfaces';
 import SectionHeading from './common/SectionHeading';
 import GlowBackground from './common/GlowBackground';
 import VideoEmbed from './VideoEmbed';
@@ -166,7 +167,7 @@ export default function VideoShowcase() {
         bgcolor: site.colors.background,
       }}
     >
-      <GlowBackground colors={[accent, active.color2]} intensity={0.16} grid={false} />
+      <GlowBackground colors={[accent, active.color2]} intensity={0.16} />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <SectionHeading
@@ -270,7 +271,7 @@ export default function VideoShowcase() {
                         bgcolor: accent,
                         color: '#04131F',
                         fontWeight: 800,
-                        boxShadow: `0 14px 36px -14px ${alpha(accent, 0.9)}`,
+                        boxShadow: occlusion,
                         '&:hover': { bgcolor: accent, filter: 'brightness(1.06)' },
                       }}
                     >

@@ -24,8 +24,8 @@ export default function CTA() {
         py: { xs: 9, md: 14 },
         textAlign: 'center',
         background: `
-          radial-gradient(ellipse 70% 60% at 50% 100%, ${alpha(green, 0.22)}, transparent 60%),
-          radial-gradient(ellipse 50% 50% at 15% 0%, ${alpha(accent, 0.14)}, transparent 60%),
+          radial-gradient(ellipse 90% 70% at 22% -10%, ${alpha(green, 0.15)}, transparent 62%),
+          radial-gradient(ellipse 60% 50% at 38% 112%, ${alpha(accent, 0.08)}, transparent 62%),
           ${site.colors.background}
         `,
         borderTop: `1px solid ${alpha('#FFFFFF', 0.06)}`,
@@ -41,22 +41,24 @@ export default function CTA() {
           spacing={3}
           alignItems="center"
         >
+          {/* Kicker colgado de un filete, no una cápsula: la única insignia
+              rellena de la página es la del hero. */}
           {freeTrial.enabled && freeTrial.badge && (
-            <Box
-              sx={{
-                px: 2.2,
-                py: 0.8,
-                borderRadius: 999,
-                bgcolor: alpha(green, 0.14),
-                border: `1px solid ${alpha(green, 0.4)}`,
-                color: green,
-                fontWeight: 800,
-                fontSize: '0.8rem',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-              }}
-            >
-              {freeTrial.badge}
+            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1.2 }}>
+              <Box sx={{ width: 26, height: 1, bgcolor: green }} />
+              <Box
+                component="span"
+                sx={{
+                  color: green,
+                  fontWeight: 600,
+                  fontSize: '0.72rem',
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {freeTrial.badge}
+              </Box>
+              <Box sx={{ width: 26, height: 1, bgcolor: green }} />
             </Box>
           )}
 

@@ -6,6 +6,7 @@ import FormatQuoteRoundedIcon from '@mui/icons-material/FormatQuoteRounded';
 
 import site from '../config/site';
 import { initialsOf } from '../helpers';
+import { litSurface, seam } from '../styles/surfaces';
 import SectionHeading from './common/SectionHeading';
 
 export default function Testimonials() {
@@ -21,7 +22,7 @@ export default function Testimonials() {
     <Box
       component="section"
       id="testimonials"
-      sx={{ py: { xs: 8, md: 12 }, bgcolor: site.colors.background }}
+      sx={{ py: { xs: 8, md: 11 }, background: seam(site.colors.backgroundDeep, site.colors.background) }}
     >
       <Container maxWidth="lg">
         <SectionHeading eyebrow={testimonials.eyebrow} title={testimonials.title} />
@@ -40,10 +41,12 @@ export default function Testimonials() {
                   height: '100%',
                   p: { xs: 3, md: 3.5 },
                   borderRadius: 4,
-                  bgcolor: alpha('#FFFFFF', 0.035),
-                  border: `1px solid ${alpha('#FFFFFF', 0.07)}`,
-                  transition: 'border-color .3s ease, transform .3s ease',
-                  '&:hover': { borderColor: alpha(green, 0.35), transform: 'translateY(-5px)' },
+                  ...litSurface(),
+                  // Son papel apoyado sobre la mesa: no levitan al pasar el ratón
+                  transition: 'background .3s ease',
+                  '&:hover': {
+                    background: `linear-gradient(180deg, ${alpha('#FFFFFF', 0.075)}, ${alpha('#FFFFFF', 0.02)})`,
+                  },
                 }}
               >
                 <FormatQuoteRoundedIcon

@@ -9,6 +9,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 import site, { formatPrice, monthlyPriceFor } from '../config/site';
 import { openWhatsApp, whatsappPlanMessage } from '../helpers';
+import { litSurface, occlusion, seam } from '../styles/surfaces';
 import SectionHeading from './common/SectionHeading';
 
 /** Interruptor mensual / anual (solo si hay descuento anual configurado). */
@@ -147,9 +148,8 @@ function SinglePlanCard({ plan, billing }) {
         borderRadius: { xs: 4, md: 6 },
         p: { xs: 3, sm: 4, md: 5.5 },
         pt: { xs: 5, md: 5.5 },
-        bgcolor: alpha(green, 0.06),
         border: `1px solid ${alpha(green, 0.45)}`,
-        boxShadow: `0 40px 90px -40px ${alpha(green, 0.7)}`,
+        boxShadow: occlusion,
         background: `
           radial-gradient(circle at 12% 0%, ${alpha(green, 0.14)}, transparent 55%),
           ${alpha(site.colors.surface, 0.55)}
@@ -174,7 +174,7 @@ function SinglePlanCard({ plan, billing }) {
             fontWeight: 900,
             fontSize: { xs: '0.8rem', md: '0.9rem' },
             whiteSpace: 'nowrap',
-            boxShadow: `0 12px 30px -12px ${alpha(green, 0.9)}`,
+            boxShadow: occlusion,
           }}
         >
           <CardGiftcardRoundedIcon sx={{ fontSize: 17 }} />
@@ -282,20 +282,7 @@ function SinglePlanCard({ plan, billing }) {
           <Stack component="ul" spacing={1.5} sx={{ listStyle: 'none', p: 0, m: 0 }}>
             {plan.features.map((feature) => (
               <Stack key={feature} component="li" direction="row" spacing={1.4} alignItems="flex-start">
-                <Box
-                  sx={{
-                    width: 22,
-                    height: 22,
-                    mt: '1px',
-                    flexShrink: 0,
-                    borderRadius: '50%',
-                    display: 'grid',
-                    placeItems: 'center',
-                    bgcolor: alpha(green, 0.16),
-                  }}
-                >
-                  <CheckRoundedIcon sx={{ fontSize: 14, color: green }} />
-                </Box>
+                <CheckRoundedIcon sx={{ fontSize: 17, color: green, mt: '3px', flexShrink: 0 }} />
                 <Typography sx={{ fontSize: '0.98rem', color: alpha('#FFFFFF', 0.88), fontWeight: 500 }}>
                   {feature}
                 </Typography>
@@ -332,14 +319,13 @@ function PlanCard({ plan, billing, index }) {
         p: { xs: 3, md: 3.8 },
         pt: plan.badge ? { xs: 4.5, md: 5 } : { xs: 3, md: 3.8 },
         borderRadius: 5,
-        bgcolor: plan.highlight ? alpha(green, 0.07) : alpha('#FFFFFF', 0.035),
-        border: `1px solid ${plan.highlight ? alpha(green, 0.55) : alpha('#FFFFFF', 0.08)}`,
-        boxShadow: plan.highlight ? `0 30px 70px -35px ${alpha(green, 0.85)}` : 'none',
-        transition: 'transform .35s ease, border-color .35s ease',
-        '&:hover': {
-          transform: 'translateY(-6px)',
-          borderColor: alpha(green, plan.highlight ? 0.75 : 0.35),
-        },
+        ...litSurface(),
+        ...(plan.highlight
+          ? { borderTop: `1px solid ${alpha(green, 0.55)}`, boxShadow: occlusion }
+          : null),
+        // El precio es el ancla más pesada de la página: no levita
+        transition: 'border-top-color .35s ease',
+        '&:hover': { borderTopColor: alpha(green, plan.highlight ? 0.75 : 0.35) },
       }}
     >
       {plan.badge && (
@@ -360,7 +346,7 @@ function PlanCard({ plan, billing, index }) {
             fontWeight: 900,
             fontSize: '0.75rem',
             whiteSpace: 'nowrap',
-            boxShadow: `0 12px 30px -12px ${alpha(green, 0.9)}`,
+            boxShadow: occlusion,
           }}
         >
           <StarRoundedIcon sx={{ fontSize: 15 }} />
@@ -444,20 +430,7 @@ function PlanCard({ plan, billing, index }) {
       <Stack component="ul" spacing={1.3} sx={{ listStyle: 'none', p: 0, m: 0, mb: 3, flexGrow: 1 }}>
         {plan.features.map((feature) => (
           <Stack key={feature} component="li" direction="row" spacing={1.3} alignItems="flex-start">
-            <Box
-              sx={{
-                width: 20,
-                height: 20,
-                mt: '2px',
-                flexShrink: 0,
-                borderRadius: '50%',
-                display: 'grid',
-                placeItems: 'center',
-                bgcolor: alpha(green, 0.16),
-              }}
-            >
-              <CheckRoundedIcon sx={{ fontSize: 13, color: green }} />
-            </Box>
+            <CheckRoundedIcon sx={{ fontSize: 17, color: green, mt: '3px', flexShrink: 0 }} />
             <Typography variant="body2" sx={{ color: alpha('#FFFFFF', 0.85) }}>
               {feature}
             </Typography>
@@ -496,11 +469,10 @@ export default function Pricing() {
       id="pricing"
       sx={{
         position: 'relative',
-        py: { xs: 7, md: 12 },
-        bgcolor: site.colors.backgroundDeep,
+        py: { xs: 8, md: 12 },
         background: `
-          radial-gradient(ellipse 60% 45% at 50% 0%, ${alpha(green, 0.09)}, transparent 65%),
-          ${site.colors.backgroundDeep}
+          radial-gradient(ellipse 80% 55% at 22% -8%, ${alpha(green, 0.09)}, transparent 62%),
+          ${seam(site.colors.background, site.colors.backgroundDeep)}
         `,
       }}
     >

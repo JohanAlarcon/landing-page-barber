@@ -94,7 +94,7 @@ export default function ChatMockup() {
         overflow: 'hidden',
         bgcolor: alpha('#0A1826', 0.96),
         border: `1px solid ${alpha('#FFFFFF', 0.1)}`,
-        boxShadow: `0 40px 90px -30px rgba(0,0,0,.9), 0 0 0 1px ${alpha(green, 0.12)}`,
+        boxShadow: '0 40px 90px -30px rgba(0,0,0,.9)',
         backdropFilter: 'blur(8px)',
       }}
     >
@@ -171,7 +171,7 @@ export default function ChatMockup() {
                     bgcolor: isBot ? theme.palette.primary.dark : alpha('#FFFFFF', 0.08),
                     color: isBot ? '#EAFFF4' : alpha('#FFFFFF', 0.92),
                     border: `1px solid ${alpha('#FFFFFF', isBot ? 0.12 : 0.06)}`,
-                    boxShadow: isBot ? `0 8px 24px -14px ${alpha(green, 0.9)}` : 'none',
+                    boxShadow: 'none',
                   }}
                 >
                   <Typography

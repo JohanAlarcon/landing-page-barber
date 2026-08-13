@@ -1,11 +1,46 @@
 import { Box, Typography } from '@mui/material';
-import { alpha, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
 /**
- * Encabezado reutilizable de sección: etiqueta pequeña + título + bajada.
- * `accent` permite teñirlo con el color de la vertical activa.
+ * Encabezado de sección.
+ *
+ * Antes era una receta cerrada —cápsula con puntito, título centrado, bajada
+ * centrada— instanciada idéntica en las seis secciones: leído en conjunto,
+ * eso es lo que delata una plantilla. Ahora el eyebrow es un kicker colgado
+ * de un filete, la alineación varía entre secciones para romper el metrónomo
+ * y el título admite un acento en cursiva.
+ *
+ * La jerarquía no cambia: el título sigue siendo un h2 y el orden de lectura
+ * (etiqueta → título → bajada) es el mismo.
+ *
+ * Convenciones que se pueden usar desde el .env:
+ *   - `*palabra*` dentro del título → esa palabra va en cursiva.
+ *   - `\n` dentro del título → corte de línea decidido por sentido.
  */
+
+/** Parte el título en tramos normales y tramos acentuados (*así*). */
+const renderTitle = (title) =>
+  String(title)
+    // El .env guarda "\n" como texto; aquí pasa a ser un salto real
+    .replace(/\\n/g, '\n')
+    .split(/(\*[^*]+\*)/g)
+    .filter(Boolean)
+    .map((chunk, index) => {
+      if (chunk.startsWith('*') && chunk.endsWith('*') && chunk.length > 2) {
+        return (
+          <Box
+            key={index}
+            component="em"
+            sx={{ fontStyle: 'italic', fontWeight: 600, letterSpacing: '-0.005em' }}
+          >
+            {chunk.slice(1, -1)}
+          </Box>
+        );
+      }
+      return <Box key={index} component="span">{chunk}</Box>;
+    });
+
 export default function SectionHeading({
   eyebrow,
   title,
@@ -30,7 +65,7 @@ export default function SectionHeading({
         textAlign: { xs: 'center', md: align },
         mx: isCentered ? 'auto' : 0,
         maxWidth: { xs: '100%', md: maxWidth },
-        mb: { xs: 5, md: 7 },
+        mb: { xs: 4.5, md: 6.5 },
         ...sx,
       }}
     >
@@ -39,24 +74,23 @@ export default function SectionHeading({
           sx={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: 1,
-            px: 1.75,
-            py: 0.65,
-            mb: 2.5,
-            borderRadius: 999,
-            bgcolor: alpha(color, 0.12),
-            border: `1px solid ${alpha(color, 0.3)}`,
+            gap: 1.2,
+            mb: 2,
           }}
         >
-          <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: color }} />
+          {/* Filete en lugar de cápsula: la etiqueta cuelga de una línea */}
+          <Box sx={{ width: 26, height: 1, bgcolor: color, flexShrink: 0 }} />
           <Typography
-            variant="overline"
+            component="span"
             sx={{
+              // Inter, no Montserrat: el kicker no compite con el titular
+              fontFamily: theme.typography.fontFamily,
               color,
-              fontWeight: 700,
-              letterSpacing: '0.1em',
-              lineHeight: 1.6,
-              fontSize: { xs: '0.7rem', md: '0.75rem' },
+              fontWeight: 600,
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              lineHeight: 1.4,
+              fontSize: { xs: '0.68rem', md: '0.72rem' },
             }}
           >
             {eyebrow}
@@ -69,10 +103,12 @@ export default function SectionHeading({
           variant="h2"
           sx={{
             fontSize: { xs: '2rem', sm: '2.4rem', md: '2.9rem', lg: '3.15rem' },
+            // Permite decidir el corte de línea desde el .env
+            whiteSpace: 'pre-line',
             mb: subtitle ? 2 : 0,
           }}
         >
-          {title}
+          {renderTitle(title)}
         </Typography>
       )}
 
@@ -81,7 +117,7 @@ export default function SectionHeading({
           variant="subtitle1"
           sx={{
             color: 'text.secondary',
-            maxWidth: 660,
+            maxWidth: 620,
             mx: isCentered ? 'auto' : 0,
             fontSize: { xs: '1rem', md: '1.125rem' },
           }}

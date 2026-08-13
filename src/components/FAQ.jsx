@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 import site from '../config/site';
+import { seam } from '../styles/surfaces';
 import SectionHeading from './common/SectionHeading';
 
 export default function FAQ() {
@@ -19,10 +20,15 @@ export default function FAQ() {
     <Box
       component="section"
       id="faq"
-      sx={{ py: { xs: 8, md: 12 }, bgcolor: site.colors.backgroundDeep }}
+      sx={{
+        py: { xs: 8, md: 13 },
+        background: seam(site.colors.background, site.colors.backgroundDeep),
+      }}
     >
       <Container maxWidth="md">
-        <SectionHeading eyebrow={faq.eyebrow} title={faq.title} />
+        {/* La segunda sección alineada a la izquierda, para que el centrado
+            del cierre (CTA) vuelva a significar algo */}
+        <SectionHeading eyebrow={faq.eyebrow} title={faq.title} align="left" />
 
         {faq.items.map((item, index) => {
           const isOpen = expanded === index;

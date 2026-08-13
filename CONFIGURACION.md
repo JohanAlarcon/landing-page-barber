@@ -141,7 +141,23 @@ el botón flotante de WhatsApp solo se muestra de tablet hacia arriba.
 
 ---
 
-## 5. Cambiar el dominio
+## 5. Dos trucos para los títulos de sección
+
+Los títulos (`REACT_APP_*_TITLE`) admiten dos marcas:
+
+| Escribes en el `.env` | Resultado |
+|---|---|
+| `Una sola app, *tres experiencias*` | *tres experiencias* sale en **cursiva** |
+| `Empieza gratis.\nSigue por menos…` | corta la línea justo ahí |
+
+El acento en cursiva está pensado para **dos o tres secciones como mucho**: si se
+usa en todas pierde el efecto y vuelve a parecer una plantilla. El corte de línea
+sirve para que los titulares largos rompan por sentido y no por donde toque el
+ancho del contenedor.
+
+---
+
+## 6. Cambiar el dominio
 
 El dominio vive en **4 sitios**. Si algún día lo cambias otra vez, tócalos todos:
 
@@ -160,7 +176,7 @@ Después, en el **registrador del dominio** apunta el DNS a GitHub Pages y en
 
 ---
 
-## 6. Archivos del proyecto
+## 7. Archivos del proyecto
 
 ```
 .env                       ← toda la configuración

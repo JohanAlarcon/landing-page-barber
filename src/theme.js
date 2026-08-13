@@ -103,6 +103,30 @@ let theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         '*, *::before, *::after': { boxSizing: 'border-box' },
+
+        /*
+         * Grano de película sobre toda la página.
+         * Es lo que evita que las superficies se vean como plástico
+         * vectorial: une todos los planos (fondos, tarjetas, video) bajo
+         * una misma piel y elimina el banding de los degradados oscuros.
+         * No captura clics, así que puede vivir por encima de todo.
+         */
+        'body::after': {
+          content: '""',
+          position: 'fixed',
+          inset: 0,
+          zIndex: 9999,
+          pointerEvents: 'none',
+          opacity: 0.05,
+          mixBlendMode: 'overlay',
+          // Evita repintados y parpadeo en Safari iOS
+          transform: 'translateZ(0)',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '160px 160px',
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          '@media (max-width:600px)': { opacity: 0.03 },
+        },
         html: {
           scrollBehavior: 'smooth',
           WebkitFontSmoothing: 'antialiased',

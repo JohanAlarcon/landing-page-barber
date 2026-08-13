@@ -3,6 +3,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
 import site from '../config/site';
+import { occlusion } from '../styles/surfaces';
 import SectionHeading from './common/SectionHeading';
 
 export default function HowItWorks() {
@@ -16,7 +17,7 @@ export default function HowItWorks() {
     <Box
       component="section"
       id="how"
-      sx={{ py: { xs: 8, md: 12 }, bgcolor: site.colors.background }}
+      sx={{ py: { xs: 7, md: 11 }, bgcolor: site.colors.background }}
     >
       <Container maxWidth="lg">
         <SectionHeading eyebrow={steps.eyebrow} title={steps.title} />
@@ -60,7 +61,7 @@ export default function HowItWorks() {
                     fontSize: '1.5rem',
                     color: '#04241A',
                     bgcolor: green,
-                    boxShadow: `0 0 0 10px ${alpha(green, 0.1)}, 0 18px 40px -18px ${alpha(green, 0.9)}`,
+                    boxShadow: occlusion,
                   }}
                 >
                   {index + 1}
