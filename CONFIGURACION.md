@@ -141,7 +141,26 @@ el botón flotante de WhatsApp solo se muestra de tablet hacia arriba.
 
 ---
 
-## 5. Archivos del proyecto
+## 5. Cambiar el dominio
+
+El dominio vive en **4 sitios**. Si algún día lo cambias otra vez, tócalos todos:
+
+| Archivo | Qué hay que poner |
+|---|---|
+| `.env` → `REACT_APP_SITE_URL` | `https://midominio.com` (sin barra final) |
+| `package.json` → `homepage` | `https://midominio.com` |
+| `public/CNAME` | `midominio.com` (sin `https://`) ⚠️ si esto falla, el sitio no carga |
+| `public/robots.txt` y `public/sitemap.xml` | la URL completa |
+
+`public/index.html` **no** hay que tocarlo: usa `%REACT_APP_SITE_URL%` y toma
+el valor del `.env` al compilar.
+
+Después, en el **registrador del dominio** apunta el DNS a GitHub Pages y en
+**GitHub → Settings → Pages** pon el dominio nuevo. Ver detalle abajo.
+
+---
+
+## 6. Archivos del proyecto
 
 ```
 .env                       ← toda la configuración

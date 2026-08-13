@@ -18,6 +18,11 @@
   <meta name="author" content="ReservaBot" />
   <meta name="robots" content="index, follow" />
 
+  <!--
+    El dominio sale de REACT_APP_SITE_URL del .env: se sustituye al compilar.
+    Las imágenes para redes DEBEN ser URLs absolutas (Facebook y WhatsApp
+    no resuelven rutas relativas al generar la vista previa del enlace).
+  -->
   <!-- Open Graph -->
   <meta property="og:site_name" content="ReservaBot" />
   <meta property="og:title" content="ReservaBot · Tu recepcionista que nunca duerme" />
@@ -25,15 +30,15 @@
     content="Chatbot inteligente que agenda, confirma y recuerda las citas de tu barbería o salón de uñas. Primer mes gratis." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_CO" />
-  <meta property="og:url" content="https://stylecloud.online" />
-  <meta property="og:image" content="%PUBLIC_URL%/images/brand/og-reservabot.svg" />
+  <meta property="og:url" content="%REACT_APP_SITE_URL%" />
+  <meta property="og:image" content="%REACT_APP_SITE_URL%/images/brand/og-reservabot.svg" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="ReservaBot · Tu recepcionista que nunca duerme" />
   <meta name="twitter:description"
     content="Recepcionista digital 24/7 para barberías y salones de uñas. Menos plantones, más ingresos." />
-  <meta name="twitter:image" content="%PUBLIC_URL%/images/brand/og-reservabot.svg" />
+  <meta name="twitter:image" content="%REACT_APP_SITE_URL%/images/brand/og-reservabot.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +50,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
   <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest">
-  <link rel="canonical" href="https://stylecloud.online/" />
+  <link rel="canonical" href="%REACT_APP_SITE_URL%/" />
 
   <title>ReservaBot · Recepcionista digital 24/7 para barberías y salones de uñas</title>
 
@@ -75,7 +80,7 @@
         "@type": "Organization",
         "name": "ReservaBot"
       },
-      "image": "https://stylecloud.online/images/brand/og-reservabot.svg"
+      "image": "%REACT_APP_SITE_URL%/images/brand/og-reservabot.svg"
     }
   </script>
 </head>

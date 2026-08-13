@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://stylecloud.online/sitemap.xml
+Sitemap: https://reservabot.online/sitemap.xml
