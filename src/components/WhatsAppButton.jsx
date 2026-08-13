@@ -34,8 +34,10 @@ export default function WhatsAppButton() {
         position: 'fixed',
         bottom: { xs: 16, md: 28 },
         right: { xs: 16, md: 28 },
-        zIndex: theme.zIndex.tooltip,
-        display: 'flex',
+        // Por debajo del Drawer (1200): el menú móvil abierto debe taparlo
+        zIndex: theme.zIndex.fab,
+        // En celulares el CTA vive en la barra inferior fija (MobileCtaBar)
+        display: { xs: 'none', sm: 'flex' },
         alignItems: 'center',
         gap: 1.5,
       }}

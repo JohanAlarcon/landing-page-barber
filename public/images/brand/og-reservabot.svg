@@ -60,7 +60,7 @@
     <circle cx="94" cy="492" r="11" fill="#22DE7A" />
     <path d="M88.5 492 L92.5 496 L100 488" fill="none" stroke="#08131F" stroke-width="2.6" stroke-linecap="round"
       stroke-linejoin="round" />
-    <text class="t" x="116" y="498" font-size="20" font-weight="700" fill="#F2F7FA">Reserva por WhatsApp, sola</text>
+    <text class="t" x="116" y="498" font-size="20" font-weight="700" fill="#F2F7FA">Tus clientes reservan solos</text>
 
     <circle cx="94" cy="534" r="11" fill="#22DE7A" />
     <path d="M88.5 534 L92.5 538 L100 530" fill="none" stroke="#08131F" stroke-width="2.6" stroke-linecap="round"

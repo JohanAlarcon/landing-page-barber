@@ -9,13 +9,9 @@ export const openExternal = (url) => {
 /** Abre WhatsApp con un mensaje (usa el del .env si no se pasa ninguno). */
 export const openWhatsApp = (message) => openExternal(whatsappLink(message));
 
-/** Mensaje prearmado para un plan concreto. */
+/** Mensaje prearmado para el plan. */
 export const whatsappPlanMessage = (planName) =>
-  `¡Hola! Quiero el plan *${planName}* de ${site.brand.name} y activar mi primer mes gratis 🚀`;
-
-/** Mensaje prearmado para una vertical (barbería / uñas). */
-export const whatsappVerticalMessage = (verticalLabel) =>
-  `¡Hola! Tengo un negocio de ${verticalLabel} y quiero mi DEMO GRATIS de ${site.brand.name}.`;
+  `¡Hola! Quiero el *${planName}* de ${site.brand.name} y activar mi primer mes gratis 🚀`;
 
 /** Desplazamiento suave hacia un ancla (#id). */
 export const scrollToId = (hash) => {

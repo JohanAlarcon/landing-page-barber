@@ -6,18 +6,16 @@ import { VerticalProvider } from './context/VerticalContext';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import VerticalDemos from './components/VerticalDemos';
-import Features from './components/Features';
+import VideoShowcase from './components/VideoShowcase';
 import HowItWorks from './components/HowItWorks';
-import AppShowcase from './components/AppShowcase';
-import Benefits from './components/Benefits';
-import FreeTrialBanner from './components/FreeTrialBanner';
+import Features from './components/Features';
 import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import MobileCtaBar from './components/MobileCtaBar';
 
 /**
  * Sincroniza los metadatos del documento con lo definido en el .env,
@@ -93,12 +91,9 @@ export default function App() {
 
       <Box component="main">
         <Hero />
-        <VerticalDemos />
-        <Features />
+        <VideoShowcase />
         <HowItWorks />
-        <AppShowcase />
-        <Benefits />
-        <FreeTrialBanner />
+        <Features />
         <Pricing />
         <Testimonials />
         <FAQ />
@@ -107,6 +102,7 @@ export default function App() {
 
       <Footer />
       <WhatsAppButton />
+      <MobileCtaBar />
     </VerticalProvider>
   );
 }

@@ -1,8 +1,8 @@
 # Guía rápida de ReservaBot
 
 Toda la landing se controla desde el archivo **`.env`** de la raíz.
-No hace falta tocar código para cambiar textos, precios, planes, colores,
-videos, imágenes ni el número de WhatsApp.
+No hace falta tocar código para cambiar textos, el precio, colores,
+videos ni el número de WhatsApp.
 
 ---
 
@@ -10,7 +10,7 @@ videos, imágenes ni el número de WhatsApp.
 
 1. Abre `.env`.
 2. Edita el valor que quieras.
-3. **Reinicia** el proyecto (esto es obligatorio, no basta con recargar el navegador):
+3. **Reinicia** el proyecto (obligatorio, no basta con recargar el navegador):
 
 ```bash
 npm start          # para verlo en local
@@ -23,7 +23,7 @@ npm run deploy     # para publicarlo
 | Quiero… | Se escribe así |
 |---|---|
 | Una lista | separada por `|` → `Uno|Dos|Tres` |
-| Un enlace del menú | `Etiqueta::#ancla` → `Precios::#pricing` |
+| Un enlace del menú | `Etiqueta::#ancla` → `Precio::#pricing` |
 | Un sí/no | `true` / `false` (también sirve `si` / `no`) |
 | Ocultar algo | deja la variable **vacía** |
 | Un color | entre comillas → `"#22DE7A"` |
@@ -31,187 +31,129 @@ npm run deploy     # para publicarlo
 
 ---
 
-## 2. Lo que más vas a cambiar
+## 2. El concepto de la página
 
-### Número de WhatsApp
+ReservaBot es una **PWA con chatbot propio**: los clientes reservan en la
+app, no por WhatsApp. WhatsApp aparece en la landing únicamente como **canal
+de ventas**: por ahí se pide el demo, se contrata y se recibe soporte.
+El link del demo **no es público**: todos los botones llevan a WhatsApp.
 
-```env
-REACT_APP_WHATSAPP_NUMBER=573161208714     # con indicativo, sin + ni espacios
-REACT_APP_WHATSAPP_DISPLAY=+57 316 120 8714
-REACT_APP_WHATSAPP_MESSAGE=¡Hola! Quiero mi DEMO GRATIS...
-```
+La página tiene 3 protagonistas (sección "La app en video"):
 
-Este número alimenta **todos** los botones de la página: navbar, hero, planes,
-botón flotante y pie de página.
+| Rol | Quién es | Video |
+|---|---|---|
+| Tus clientes | reservan con el chatbot | `REACT_APP_VERTICAL_*_VIDEO_CLIENT` |
+| Para ti | panel del administrador | `REACT_APP_VERTICAL_*_VIDEO_ADMIN` |
+| Tu equipo | agenda de barberos / manicuristas | `REACT_APP_VERTICAL_*_VIDEO_STAFF` |
 
-### Precios y planes
-
-Cada plan ocupa un bloque `REACT_APP_PLAN_N_*` (hay 4 espacios, el 4º viene apagado).
-El precio se escribe **sin puntos ni símbolo**, solo el número:
-
-```env
-REACT_APP_PLAN_2_NAME=Completo
-REACT_APP_PLAN_2_PRICE=110000            # se muestra como $110.000
-REACT_APP_PLAN_2_PRICE_BEFORE=170000     # precio tachado (vacío = sin tachado)
-REACT_APP_PLAN_2_FEATURES=Punto 1|Punto 2|Punto 3
-REACT_APP_PLAN_2_HIGHLIGHT=true          # tarjeta destacada
-REACT_APP_PLAN_2_BADGE=Más elegido       # etiqueta sobre la tarjeta
-REACT_APP_PLAN_2_ENABLED=true            # false = no aparece
-```
-
-- **Descuento anual**: `REACT_APP_ANNUAL_DISCOUNT_PCT=20`. Ponlo en `0` y
-  desaparece el interruptor Mensual/Anual.
-- **¿Más de 4 planes?** Usa `REACT_APP_PLANS_JSON` con un JSON en una sola línea;
-  si tiene contenido, reemplaza por completo a los planes numerados.
-
-### El primer mes gratis
-
-```env
-REACT_APP_FREE_TRIAL_ENABLED=true    # false lo quita de TODA la página
-REACT_APP_FREE_TRIAL_DAYS=30
-REACT_APP_FREE_TRIAL_BADGE=Primer mes GRATIS
-REACT_APP_FREE_TRIAL_TITLE=...
-REACT_APP_FREE_TRIAL_BULLETS=Sin tarjeta|Configuración incluida|Cancela cuando quieras
-```
-
-La promoción aparece en 6 sitios: cinta superior, hero, sección de demos,
-bloque dedicado, cada tarjeta de precio y el cierre.
-
-### Videos demo (uno por rubro)
-
-Hoy se usan los archivos locales de la carpeta `public/`:
-
-```env
-REACT_APP_VERTICAL_BARBER_VIDEO_URL=/video-barber.mp4
-REACT_APP_VERTICAL_BARBER_VIDEO_TYPE=mp4
-REACT_APP_VERTICAL_BARBER_VIDEO_ASPECT=1080/1692   # vertical de celular
-REACT_APP_VERTICAL_BARBER_VIDEO_POSTER=/images/posters/video-barber.svg
-
-REACT_APP_VERTICAL_NAILS_VIDEO_URL=/video-nails.mp4
-REACT_APP_VERTICAL_NAILS_VIDEO_TYPE=mp4
-REACT_APP_VERTICAL_NAILS_VIDEO_ASPECT=1080/1692
-```
-
-**Cómo cambiar un video**: deja el archivo nuevo en `public/` y apunta la
-variable a `/nombre-del-archivo.mp4` (con la barra al inicio).
-
-**`_VIDEO_ASPECT`** es la proporción `ancho/alto` del archivo. Es importante:
-con ella la landing dibuja el marco exacto, sin franjas negras ni recortes.
-
-| Tipo de video | Valor |
-|---|---|
-| Grabación de celular (la actual) | `1080/1692` |
-| Vertical tipo reel | `9/16` |
-| Horizontal / pantalla de PC | `16/9` |
-
-Cuando el video es vertical, la columna del video se estrecha sola y el
-texto pasa a ocupar más ancho.
-
-**Otras opciones**:
-- URL **vacía** → aparece el espacio reservado con el botón "Pedir demo en vivo".
-- Acepta enlaces de YouTube (`watch?v=`, `youtu.be`, `shorts`) y Vimeo: se
-  convierten solos al formato embebible (usa `TYPE=youtube` o `vimeo`).
-- El video **no se descarga** hasta que el visitante pulsa reproducir, así
-  que la página abre rápido aunque los archivos pesen.
-
-> ⚠️ Los dos videos pesan 26 MB y 32 MB. Funcionan, pero si puedes
-> comprimirlos a 6–10 MB (por ejemplo con HandBrake, calidad 1080p a ~2 Mbps)
-> la experiencia en datos móviles mejora bastante y el despliegue será más liviano.
-
-#### ⚠️ Importante al subir un video nuevo: "faststart"
-
-Un MP4 guarda un índice llamado `moov`. Si ese índice queda **al final** del
-archivo, el navegador tiene que descargar el video entero antes de mostrar
-el primer fotograma: se ve un rectángulo negro y parece que no funciona.
-
-Los dos videos actuales venían así y ya quedaron corregidos. Si exportas uno
-nuevo con la misma herramienta, es muy probable que traiga el mismo problema.
-
-**Cómo arreglarlo:**
-
-- Con **HandBrake**: marca la casilla *Web Optimized* al exportar.
-- Con **ffmpeg**: `ffmpeg -i entrada.mp4 -c copy -movflags +faststart salida.mp4`
-  (`-c copy` significa que no recomprime: misma calidad, solo reordena).
-
-**Cómo saber si un video tiene el problema**, desde la carpeta del proyecto:
-
-```bash
-node -e "const b=require('fs').readFileSync('public/video-nails.mp4');const m=b.indexOf(Buffer.from('moov')),d=b.indexOf(Buffer.from('mdat'));console.log(m<d?'OK: listo para web':'MAL: hay que aplicar faststart')"
-```
-
-### Logo
-
-```env
-REACT_APP_LOGO_URL=/images/brand/logo-reservabot.svg
-REACT_APP_SHOW_LOGO_IMAGE=true       # false = muestra "ReservaBot" en texto
-```
-
-Para usar el logo que ya tienes en Facebook: guárdalo en
-`public/images/brand/` y cambia la ruta. Si el archivo no carga, la página
-cae automáticamente al nombre en texto (no se rompe nada).
-
-### Colores
-
-```env
-REACT_APP_COLOR_PRIMARY="#22DE7A"      # verde de la marca
-REACT_APP_COLOR_BG="#08131F"           # azul noche del fondo
-REACT_APP_VERTICAL_BARBER_COLOR="#38BDF8"   # acento de barberías
-REACT_APP_VERTICAL_NAILS_COLOR="#FF5FA2"    # acento de uñas
-```
-
-Al cambiar de rubro en la sección de demos, la galería y los botones se
-tiñen con el color de ese rubro.
+`*` = `BARBER` o `NAILS`. Cada rol comparte textos entre los dos rubros
+(`REACT_APP_ROLE_CLIENT_*`, `REACT_APP_ROLE_ADMIN_*`, `REACT_APP_ROLE_STAFF_*`).
 
 ---
 
-## 3. Estructura de la página
+## 3. Lo que más vas a cambiar
+
+### Videos
+
+Los archivos viven en `public/multimedia-barber/` y `public/multimedia-nails/`.
+Para cambiar uno: deja el archivo nuevo en esa carpeta y apunta la variable:
+
+```env
+REACT_APP_VERTICAL_BARBER_VIDEO_CLIENT=/multimedia-barber/video-barber.mp4
+REACT_APP_VERTICAL_BARBER_VIDEO_CLIENT_ASPECT=1080/1692
+```
+
+`_ASPECT` es la proporción real `ancho/alto` del archivo (así el marco no
+recorta el video ni deja franjas). Para saberla: clic derecho → Propiedades →
+Detalles, o usa `9/16` si es un vertical de celular estándar.
+
+`_POSTER` (opcional) es la carátula. Vacío = se muestra un fondo degradado
+con el botón de play, que también se ve bien.
+
+#### ⚠️ Al exportar un video nuevo: "faststart"
+
+Un MP4 guarda un índice (`moov`). Si queda al final del archivo, el navegador
+descarga el video completo antes de mostrar nada (pantalla negra). Los 6
+videos actuales ya están corregidos. Para los nuevos:
+
+- **HandBrake**: marca *Web Optimized* al exportar.
+- **ffmpeg**: `ffmpeg -i entrada.mp4 -c copy -movflags +faststart salida.mp4`
+
+Comprobación rápida desde la carpeta del proyecto:
+
+```bash
+node -e "const b=require('fs').readFileSync('public/multimedia-nails/video-nails.mp4');const m=b.indexOf(Buffer.from('moov')),d=b.indexOf(Buffer.from('mdat'));console.log(m<d?'OK: listo para web':'MAL: aplicar faststart')"
+```
+
+> 💡 Los videos pesan entre 3 y 42 MB. Solo se descargan cuando el visitante
+> pulsa play, así que la página abre rápido igual — pero si los comprimes a
+> 5–10 MB (HandBrake, 1080p ~2 Mbps) la reproducción en datos móviles mejora.
+
+### Precio (plan único)
+
+```env
+REACT_APP_PLAN_1_NAME=Plan ReservaBot
+REACT_APP_PLAN_1_PRICE=40000              # se muestra como $40.000
+REACT_APP_PLAN_1_FEATURES=Cosa 1|Cosa 2|Cosa 3
+REACT_APP_PLAN_1_BADGE=Primer mes GRATIS
+REACT_APP_PRICING_GUARANTEES=Primer mes gratis, sin tarjeta|Precio único: no cobramos por colaborador|Sin contratos: te retiras cuando quieras
+```
+
+Con **un solo plan activo**, la página muestra la tarjeta protagonista
+("Mes 1: $0 → luego $40.000/mes"). Si algún día quieres varios planes,
+activa `REACT_APP_PLAN_2_ENABLED=true` y rellena sus datos: el diseño
+cambia solo a columnas.
+
+### Número de WhatsApp (canal de ventas)
+
+```env
+REACT_APP_WHATSAPP_NUMBER=573161208714        # sin + ni espacios
+REACT_APP_WHATSAPP_MESSAGE=...                # mensaje del botón principal
+REACT_APP_WHATSAPP_DEMO_MESSAGE=...           # mensaje del botón "Pide el link del demo"
+```
+
+Alimenta todos los botones: navbar, hero, sección de videos, precio,
+botón flotante (escritorio) y barra fija inferior (celular).
+
+### Primer mes gratis
+
+`REACT_APP_FREE_TRIAL_ENABLED=false` lo quita de toda la página
+(cinta, hero, videos, precio y barra móvil).
+
+---
+
+## 4. Estructura de la página
 
 | Orden | Sección | Se apaga con |
 |---|---|---|
 | 1 | Cinta promocional | `REACT_APP_PROMO_BAR_ENABLED=false` |
-| 2 | Hero (chat animado) | — |
-| 3 | Demos por rubro + videos | `REACT_APP_VERTICAL_*_ENABLED=false` |
-| 4 | Funciones | vaciar los `FEATURE_n_TITLE` |
-| 5 | Cómo funciona | vaciar los `STEP_n_TITLE` |
-| 6 | Galería del sistema | vaciar `VERTICAL_*_GALLERY` |
-| 7 | Beneficios | vaciar los `BENEFIT_n_TITLE` |
-| 8 | Primer mes gratis | `REACT_APP_FREE_TRIAL_ENABLED=false` |
-| 9 | Precios | vaciar/apagar los planes |
-| 10 | Testimonios | `REACT_APP_TESTIMONIALS_ENABLED=false` |
-| 11 | Preguntas frecuentes | vaciar los `FAQ_n_Q` |
-| 12 | Cierre + pie de página | — |
+| 2 | Hero (chatbot animado) | — |
+| 3 | La app en video (roles × rubros) | `REACT_APP_VERTICAL_*_ENABLED=false` |
+| 4 | Cómo funciona (3 pasos) | vaciar los `STEP_n_TITLE` |
+| 5 | Funciones (6) | vaciar los `FEATURE_n_TITLE` |
+| 6 | Precio único | apagar el plan |
+| 7 | Testimonios | `REACT_APP_TESTIMONIALS_ENABLED=false` |
+| 8 | Preguntas frecuentes | vaciar los `FAQ_n_Q` |
+| 9 | Cierre + pie de página | — |
 
-Cada sección desaparece **sola** si se queda sin contenido; no hay que tocar
-`src/App.js`.
+En **celular** además: barra de CTA fija abajo (aparece al hacer scroll) y
+el botón flotante de WhatsApp solo se muestra de tablet hacia arriba.
 
 ---
 
-## 4. Archivos del proyecto
+## 5. Archivos del proyecto
 
 ```
-.env                     ← toda la configuración
-.env.example             ← copia de respaldo con los valores originales
-src/config/site.js       ← único archivo que lee el .env
-src/theme.js             ← construye los colores y tipografías
-src/components/          ← una sección por archivo
-public/images/brand/     ← logo, isotipo e imagen para redes
-public/images/mockups/   ← pantallas del sistema (barbería y uñas)
-public/images/posters/   ← carátulas de los videos demo
+.env                       ← toda la configuración
+.env.example               ← copia de respaldo
+src/config/site.js         ← único archivo que lee el .env
+src/components/            ← una sección por archivo
+public/multimedia-barber/  ← videos de barbería (cliente, admin, barberos)
+public/multimedia-nails/   ← videos de uñas (cliente, admin, manicuristas)
+public/images/brand/       ← logo, isotipo e imagen para redes
+public/images/posters/     ← carátulas de los videos del cliente
 ```
 
-### Imágenes incluidas
-
-Las imágenes nuevas son **SVG vectoriales**, así que se ven nítidas en
-cualquier tamaño y pesan muy poco. Puedes reemplazar cualquiera por una foto
-o captura real cambiando la ruta en el `.env`:
-
-- `brand/logo-reservabot.svg` · `brand/isotipo-reservabot.svg`
-- `brand/og-reservabot.svg` (la imagen que se ve al compartir el enlace)
-- `mockups/hero-app.svg`
-- `mockups/barber-agenda.svg` · `mockups/barber-caja.svg`
-- `mockups/nails-agenda.svg` · `mockups/nails-servicios.svg` · `mockups/nails-clientas.svg`
-- `posters/video-barber.svg` · `posters/video-nails.svg`
-
-> La imagen para redes sociales está en SVG. Facebook y WhatsApp no siempre
-> leen SVG en las vistas previas: cuando puedas, expórtala a JPG/PNG de
-> 1200×630 y apunta `REACT_APP_SEO_OG_IMAGE` al archivo nuevo.
+> La imagen para redes (`og-reservabot.svg`) está en SVG. Facebook y WhatsApp
+> no siempre leen SVG en las vistas previas: cuando puedas, expórtala a
+> JPG/PNG de 1200×630 y apunta `REACT_APP_SEO_OG_IMAGE` al archivo nuevo.

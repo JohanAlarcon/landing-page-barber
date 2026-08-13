@@ -24,8 +24,7 @@ const ENV = process.env || {};
 /*
  * Las variables se inyectan al COMPILAR, no al recargar el navegador.
  * Si el servidor arrancó antes de que existiera el .env, la página se
- * dibuja con los valores por defecto y parece que faltara contenido
- * (por ejemplo el video demo o los nombres de los rubros).
+ * dibuja con los valores por defecto y parece que faltara contenido.
  * Este aviso lo deja claro en la consola en vez de fallar en silencio.
  */
 if (ENV.NODE_ENV !== 'production' && !Object.keys(ENV).some((key) => key.startsWith('REACT_APP_'))) {
@@ -49,7 +48,7 @@ const str = (key, fallback = '') => {
   return value === '' ? fallback : value;
 };
 
-/** Número. Acepta "80000", "80.000" y "80,000". */
+/** Número. Acepta "40000", "40.000" y "40,000". */
 const num = (key, fallback = 0) => {
   const raw = str(key, '');
   if (!raw) return fallback;
@@ -79,7 +78,7 @@ const list = (key, fallback = []) => {
 
 /**
  * Lista de pares "Etiqueta::valor" separados por "|".
- * Ej: "Inicio::#hero|Precios::#pricing"
+ * Ej: "Inicio::#hero|Precio::#pricing"
  */
 const pairs = (key, fallback = []) => {
   const items = list(key, null);
@@ -107,7 +106,7 @@ const json = (key, fallback = null) => {
  * Resuelve la ruta de un recurso.
  * - "https://..."  -> se deja tal cual
  * - "data:..."     -> se deja tal cual
- * - "/images/x.svg"-> se le antepone PUBLIC_URL
+ * - "/videos/x.mp4"-> se le antepone PUBLIC_URL
  */
 export const asset = (path) => {
   if (!path) return '';
@@ -137,7 +136,7 @@ const collect = (count, builder) => {
 const CURRENCY_SYMBOL = str('REACT_APP_CURRENCY_SYMBOL', '$');
 const THOUSANDS = str('REACT_APP_CURRENCY_THOUSANDS', '.');
 
-/** 80000 -> "$80.000" */
+/** 40000 -> "$40.000" */
 export const formatPrice = (value) => {
   const amount = Number(value);
   if (!Number.isFinite(amount) || amount <= 0) return '';
@@ -155,7 +154,7 @@ const brand = {
   name: str('REACT_APP_BRAND_NAME', 'ReservaBot'),
   prefix: str('REACT_APP_BRAND_NAME_PREFIX', 'Reserva'),
   suffix: str('REACT_APP_BRAND_NAME_SUFFIX', 'Bot'),
-  tagline: str('REACT_APP_BRAND_TAGLINE', 'Citas por WhatsApp 24/7'),
+  tagline: str('REACT_APP_BRAND_TAGLINE', 'Recepcionista digital 24/7'),
   slogan: str('REACT_APP_BRAND_SLOGAN', 'Tu recepcionista que nunca duerme'),
   description: str('REACT_APP_BRAND_DESCRIPTION', ''),
   logo: asset(str('REACT_APP_LOGO_URL', '/images/brand/logo-reservabot.svg')),
@@ -193,6 +192,7 @@ const contact = {
   whatsappNumber,
   whatsappDisplay: str('REACT_APP_WHATSAPP_DISPLAY', ''),
   whatsappMessage: str('REACT_APP_WHATSAPP_MESSAGE', '¡Hola! Quiero más información.'),
+  whatsappDemoMessage: str('REACT_APP_WHATSAPP_DEMO_MESSAGE', '¡Hola! Quiero el link del demo del chatbot.'),
   whatsappTooltip: str('REACT_APP_WHATSAPP_TOOLTIP', 'Escríbenos por WhatsApp'),
   whatsappFloatEnabled: bool('REACT_APP_WHATSAPP_FLOAT_ENABLED', true),
   email: str('REACT_APP_EMAIL', ''),
@@ -219,9 +219,6 @@ const freeTrial = {
   enabled: bool('REACT_APP_FREE_TRIAL_ENABLED', true),
   days: num('REACT_APP_FREE_TRIAL_DAYS', 30),
   badge: str('REACT_APP_FREE_TRIAL_BADGE', 'Primer mes GRATIS'),
-  title: str('REACT_APP_FREE_TRIAL_TITLE', ''),
-  subtitle: str('REACT_APP_FREE_TRIAL_SUBTITLE', ''),
-  bullets: list('REACT_APP_FREE_TRIAL_BULLETS', []),
   note: str('REACT_APP_FREE_TRIAL_NOTE', ''),
 };
 
@@ -236,7 +233,7 @@ const promoBar = {
 
 const cta = {
   primaryLabel: str('REACT_APP_CTA_PRIMARY_LABEL', 'Pide tu DEMO GRATIS'),
-  secondaryLabel: str('REACT_APP_CTA_SECONDARY_LABEL', 'Ver demo en vivo'),
+  secondaryLabel: str('REACT_APP_CTA_SECONDARY_LABEL', 'Ver la app en acción'),
   navLabel: str('REACT_APP_CTA_NAV_LABEL', 'Prueba 1 mes gratis'),
   finalTitle: str('REACT_APP_CTA_FINAL_TITLE', ''),
   finalSubtitle: str('REACT_APP_CTA_FINAL_SUBTITLE', ''),
@@ -287,73 +284,80 @@ const stats = collect(4, (i) => {
   return { value, label: str(`REACT_APP_STAT_${i}_LABEL`, '') };
 });
 
-const rating = {
-  value: str('REACT_APP_RATING_VALUE', ''),
-  count: str('REACT_APP_RATING_COUNT', ''),
-  label: str('REACT_APP_RATING_LABEL', ''),
-};
-
 /* ------------------------------------------------------------------ */
-/*  Verticales (barberías / uñas) con su demo y su video               */
+/*  La app en video: roles y verticales                               */
 /* ------------------------------------------------------------------ */
 
 /**
- * Interpreta la proporción del video ("16/9", "1080/1692", "1.78").
+ * Interpreta la proporción del video ("9/16", "1080/1692", "16/9").
  * Devuelve el valor listo para CSS y si el video es vertical.
  */
-const parseAspect = (raw, fallback = '16 / 9') => {
+const parseAspect = (raw, fallback = '9 / 16') => {
   const value = (raw || '').trim();
-  if (!value) return { css: fallback, ratio: 16 / 9, isPortrait: false };
+  if (!value) return { css: fallback, ratio: 9 / 16, isPortrait: true };
 
   const parts = value.split('/');
   const width = Number(parts[0]);
   const height = parts.length > 1 ? Number(parts[1]) : 1;
 
   if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
-    return { css: fallback, ratio: 16 / 9, isPortrait: false };
+    return { css: fallback, ratio: 9 / 16, isPortrait: true };
   }
 
   const ratio = width / height;
   return { css: `${width} / ${height}`, ratio, isPortrait: ratio < 1 };
 };
 
+/**
+ * Los 3 roles del sistema. La etiqueta, el título y los puntos son
+ * compartidos por ambos tipos de negocio; el video es propio de cada uno.
+ */
+const ROLE_DEFAULTS = {
+  client: { label: 'Tus clientes', icon: 'bot' },
+  admin: { label: 'Para ti', icon: 'chart' },
+  staff: { label: 'Tu equipo', icon: 'users' },
+};
+
+const roles = ['client', 'admin', 'staff'].map((id) => {
+  const envKey = id.toUpperCase();
+  return {
+    id,
+    icon: ROLE_DEFAULTS[id].icon,
+    label: str(`REACT_APP_ROLE_${envKey}_LABEL`, ROLE_DEFAULTS[id].label),
+    title: str(`REACT_APP_ROLE_${envKey}_TITLE`, ''),
+    text: str(`REACT_APP_ROLE_${envKey}_TEXT`, ''),
+    bullets: list(`REACT_APP_ROLE_${envKey}_BULLETS`, []),
+  };
+});
+
+/** Video de un rol dentro de una vertical. */
+const buildRoleVideo = (verticalKey, roleKey) => {
+  const base = `REACT_APP_VERTICAL_${verticalKey}_VIDEO_${roleKey}`;
+  const url = asset(str(base, ''));
+  const aspect = parseAspect(str(`${base}_ASPECT`, ''));
+  return {
+    url,
+    type: 'mp4',
+    poster: asset(str(`${base}_POSTER`, '')),
+    aspect: aspect.css,
+    isPortrait: aspect.isPortrait,
+  };
+};
+
 const buildVertical = (id, envKey, fallbackColor) => {
   if (!bool(`REACT_APP_VERTICAL_${envKey}_ENABLED`, true)) return null;
-
-  const gallery = list(`REACT_APP_VERTICAL_${envKey}_GALLERY`, []);
-  const captions = list(`REACT_APP_VERTICAL_${envKey}_GALLERY_CAPTIONS`, []);
-  const aspect = parseAspect(str(`REACT_APP_VERTICAL_${envKey}_VIDEO_ASPECT`, ''));
 
   return {
     id,
     label: str(`REACT_APP_VERTICAL_${envKey}_LABEL`, id),
     emoji: str(`REACT_APP_VERTICAL_${envKey}_EMOJI`, ''),
-    headline: str(`REACT_APP_VERTICAL_${envKey}_HEADLINE`, ''),
-    tagline: str(`REACT_APP_VERTICAL_${envKey}_TAGLINE`, ''),
     color: str(`REACT_APP_VERTICAL_${envKey}_COLOR`, fallbackColor),
     color2: str(`REACT_APP_VERTICAL_${envKey}_COLOR_2`, fallbackColor),
-    bullets: list(`REACT_APP_VERTICAL_${envKey}_BULLETS`, []),
-    demo: {
-      url: str(`REACT_APP_VERTICAL_${envKey}_DEMO_URL`, ''),
-      label: str(`REACT_APP_VERTICAL_${envKey}_DEMO_LABEL`, 'Abrir demo'),
-      user: str(`REACT_APP_VERTICAL_${envKey}_DEMO_USER`, ''),
-      pass: str(`REACT_APP_VERTICAL_${envKey}_DEMO_PASS`, ''),
+    videos: {
+      client: buildRoleVideo(envKey, 'CLIENT'),
+      admin: buildRoleVideo(envKey, 'ADMIN'),
+      staff: buildRoleVideo(envKey, 'STAFF'),
     },
-    video: {
-      // asset() deja intactas las URLs externas y resuelve las rutas locales
-      url: asset(str(`REACT_APP_VERTICAL_${envKey}_VIDEO_URL`, '')),
-      type: str(`REACT_APP_VERTICAL_${envKey}_VIDEO_TYPE`, 'iframe').toLowerCase(),
-      title: str(`REACT_APP_VERTICAL_${envKey}_VIDEO_TITLE`, 'Video demo'),
-      description: str(`REACT_APP_VERTICAL_${envKey}_VIDEO_DESCRIPTION`, ''),
-      poster: asset(str(`REACT_APP_VERTICAL_${envKey}_VIDEO_POSTER`, '')),
-      aspect: aspect.css,
-      isPortrait: aspect.isPortrait,
-    },
-    image: asset(str(`REACT_APP_VERTICAL_${envKey}_IMAGE`, '')),
-    gallery: gallery.map((src, index) => ({
-      src: asset(src),
-      caption: captions[index] || '',
-    })),
   };
 };
 
@@ -371,6 +375,8 @@ const demos = {
   eyebrow: str('REACT_APP_DEMOS_EYEBROW', ''),
   title: str('REACT_APP_DEMOS_TITLE', ''),
   subtitle: str('REACT_APP_DEMOS_SUBTITLE', ''),
+  ctaLabel: str('REACT_APP_DEMOS_CTA_LABEL', 'Pide el link del demo'),
+  ctaNote: str('REACT_APP_DEMOS_CTA_NOTE', ''),
 };
 
 /* ------------------------------------------------------------------ */
@@ -402,22 +408,7 @@ const steps = {
   }),
 };
 
-const benefits = {
-  eyebrow: str('REACT_APP_BENEFITS_EYEBROW', ''),
-  title: str('REACT_APP_BENEFITS_TITLE', ''),
-  image: asset(str('REACT_APP_BENEFITS_IMAGE', '')),
-  items: collect(4, (i) => {
-    const title = str(`REACT_APP_BENEFIT_${i}_TITLE`, '');
-    if (!title) return null;
-    return {
-      icon: str(`REACT_APP_BENEFIT_${i}_ICON`, 'star'),
-      title,
-      text: str(`REACT_APP_BENEFIT_${i}_TEXT`, ''),
-    };
-  }),
-};
-
-/* ---------------------------- Precios ----------------------------- */
+/* ---------------------------- Precio ------------------------------ */
 
 const normalizePlan = (plan, index) => {
   if (!plan || !plan.name) return null;
@@ -461,6 +452,7 @@ const pricing = {
   title: str('REACT_APP_PRICING_TITLE', ''),
   subtitle: str('REACT_APP_PRICING_SUBTITLE', ''),
   footnote: str('REACT_APP_PRICING_FOOTNOTE', ''),
+  guarantees: list('REACT_APP_PRICING_GUARANTEES', []),
   currencySymbol: CURRENCY_SYMBOL,
   currencyCode: str('REACT_APP_CURRENCY_CODE', 'COP'),
   period: str('REACT_APP_PRICE_PERIOD', '/mes'),
@@ -469,7 +461,7 @@ const pricing = {
   monthlyLabel: str('REACT_APP_BILLING_MONTHLY_LABEL', 'Mensual'),
   annualLabel: str('REACT_APP_BILLING_ANNUAL_LABEL', 'Anual'),
   annualNote: str('REACT_APP_BILLING_ANNUAL_NOTE', 'facturado anualmente'),
-  buttonLabel: str('REACT_APP_PLAN_BUTTON_LABEL', 'Empezar gratis'),
+  buttonLabel: str('REACT_APP_PLAN_BUTTON_LABEL', 'Empezar mi mes gratis'),
   freeTrialNote: str('REACT_APP_PLAN_FREE_TRIAL_NOTE', ''),
   plans,
 };
@@ -538,13 +530,12 @@ const site = {
   cta,
   hero,
   stats,
-  rating,
+  roles,
   verticals,
   defaultVertical,
   demos,
   features,
   steps,
-  benefits,
   pricing,
   testimonials,
   faq,

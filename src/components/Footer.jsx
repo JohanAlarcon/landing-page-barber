@@ -61,7 +61,9 @@ export default function Footer() {
       component="footer"
       sx={{
         pt: { xs: 6, md: 8 },
-        pb: 4,
+        // En celulares deja espacio para la barra de CTA fija inferior,
+        // sumando la zona segura de los iPhone con home-indicator
+        pb: { xs: 'calc(128px + env(safe-area-inset-bottom))', sm: 4 },
         bgcolor: site.colors.backgroundDeep,
         borderTop: `1px solid ${alpha('#FFFFFF', 0.07)}`,
       }}

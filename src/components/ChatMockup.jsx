@@ -29,9 +29,9 @@ function TypingDots({ color }) {
 }
 
 /**
- * Simulación de una conversación de WhatsApp donde ReservaBot agenda
- * una cita. Los mensajes salen uno a uno y la secuencia se reinicia
- * en bucle. El contenido se define en el .env (REACT_APP_HERO_CHAT_*).
+ * Simulación del chatbot de ReservaBot agendando una cita.
+ * Los mensajes salen uno a uno y la secuencia se reinicia en bucle.
+ * El contenido se define en el .env (REACT_APP_HERO_CHAT_*).
  */
 export default function ChatMockup() {
   const theme = useTheme();
