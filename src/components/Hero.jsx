@@ -1,158 +1,389 @@
-import { Box, Grid, Typography, Button, useTheme, Container, Stack } from '@mui/material';
+import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { handleDemoClick } from '../helpers';
-import VideoModal from './VideoModal';
-import { useState } from 'react';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import PlayCircleFilledRoundedIcon from '@mui/icons-material/PlayCircleFilledRounded';
+import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { when: 'beforeChildren', staggerChildren: 0.2, duration: 0.8 },
-  },
+import site from '../config/site';
+import { openWhatsApp, scrollToId } from '../helpers';
+import GlowBackground from './common/GlowBackground';
+import ChatMockup from './ChatMockup';
+
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+const item = {
+  hidden: { opacity: 0, y: 26 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
 };
+
+/** Pastilla pequeña reutilizable del hero. */
+function Pill({ children, color, filled = false }) {
+  return (
+    <Box
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 0.9,
+        px: 1.9,
+        py: 0.75,
+        borderRadius: 999,
+        bgcolor: filled ? color : alpha(color, 0.13),
+        color: filled ? '#04241A' : color,
+        border: `1px solid ${alpha(color, filled ? 0 : 0.35)}`,
+        fontWeight: 800,
+        fontSize: { xs: '0.7rem', md: '0.76rem' },
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase',
+        lineHeight: 1.5,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
 
 export default function Hero() {
   const theme = useTheme();
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const green = theme.palette.primary.main;
+  const { hero, freeTrial, cta, stats, contact } = site;
+
+  const useChat = hero.visual !== 'image' && hero.chat.messages.length > 0;
 
   return (
     <Box
-      component={motion.section}
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+      component="section"
+      id="hero"
       sx={{
         position: 'relative',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
         overflow: 'hidden',
-        pt: { xs: 12, md: 0 }, // Mobile padding for fixed navbar
-        background: `linear-gradient(180deg, rgba(18,18,18,0.7) 0%, rgba(18,18,18,1) 100%), 
-                     url('${process.env.PUBLIC_URL}/images/hero-bg.webp') center/cover no-repeat`,
-        // Fallback color if image fails
-        backgroundColor: '#121212'
+        // Deja sitio a la barra fija (cinta promocional + navegación)
+        pt: { xs: 16, sm: 17, md: 19, lg: 21 },
+        pb: { xs: 8, md: 12 },
+        background: `
+          radial-gradient(ellipse 80% 60% at 50% -10%, ${alpha(green, 0.14)}, transparent 60%),
+          linear-gradient(180deg, ${site.colors.background} 0%, ${site.colors.backgroundDeep} 100%)
+        `,
       }}
     >
-      {/* Overlay Oscuro Adicional para asegurar legibilidad */}
-      <Box sx={{ position: 'absolute', inset: 0, bgcolor: 'rgba(0,0,0,0.6)' }} />
+      <GlowBackground colors={[green, site.colors.secondary]} intensity={0.2} />
 
-      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2 }}>
-        <Grid container spacing={6} alignItems="center">
-          <Grid item xs={12} md={7} lg={6}>
-            <motion.div variants={itemVariants}>
-              <Typography
-                variant="h6"
-                color="primary"
-                sx={{
-                  fontWeight: 700,
-                  letterSpacing: 2,
-                  mb: 2,
-                  textTransform: 'uppercase',
-                  fontSize: { md: '1.1rem', lg: '1.25rem' }
-                }}
+      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
+        <Grid container spacing={{ xs: 6, md: 5, lg: 8 }} alignItems="center">
+          {/* ----------------------------- Texto ----------------------------- */}
+          <Grid size={{ xs: 12, md: 7, lg: 6.5 }}>
+            <Stack
+              component={motion.div}
+              variants={container}
+              initial="hidden"
+              animate="visible"
+              spacing={{ xs: 2.5, md: 3 }}
+              sx={{ textAlign: { xs: 'center', md: 'left' }, alignItems: { xs: 'center', md: 'flex-start' } }}
+            >
+              {/* Etiquetas */}
+              <Stack
+                component={motion.div}
+                variants={item}
+                direction="row"
+                spacing={1.2}
+                flexWrap="wrap"
+                useFlexGap
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
               >
-                Sistema de Gestión Profesional
-              </Typography>
-            </motion.div>
+                {hero.eyebrow && <Pill color={green}>{hero.eyebrow}</Pill>}
+                {freeTrial.enabled && freeTrial.badge && (
+                  <Box
+                    component={motion.div}
+                    animate={{ scale: [1, 1.035, 1] }}
+                    transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    <Pill color={green} filled>
+                      <CardGiftcardRoundedIcon sx={{ fontSize: 15 }} />
+                      {freeTrial.badge}
+                    </Pill>
+                  </Box>
+                )}
+              </Stack>
 
-            <motion.div variants={itemVariants}>
+              {/* Titular */}
               <Typography
+                component={motion.h1}
+                variants={item}
                 variant="h1"
                 sx={{
-                  fontSize: { xs: '3rem', md: '4.5rem', lg: '5.5rem', xl: '6.5rem' },
-                  lineHeight: 1.1,
-                  fontWeight: 700,
-                  mb: 3,
-                  color: '#fff',
-                  maxWidth: { lg: '800px' }
+                  fontSize: { xs: '2.7rem', sm: '3.6rem', md: '3.7rem', lg: '4.6rem', xl: '5.1rem' },
+                  fontWeight: 900,
+                  m: 0,
                 }}
               >
-                DOMINA TU NEGOCIO CON{' '}
-                <Box component="span" sx={{ color: theme.palette.primary.main }}>
-                  STYLECLOUD
-                </Box>
+                {hero.title}
+                {hero.titleHighlight && (
+                  <>
+                    <br />
+                    <Box
+                      component="span"
+                      sx={{
+                        color: green,
+                        textShadow: `0 0 60px ${alpha(green, 0.45)}`,
+                      }}
+                    >
+                      {hero.titleHighlight}
+                    </Box>
+                  </>
+                )}
               </Typography>
-            </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <Typography
-                variant="h6"
-                sx={{
-                  mb: 5,
-                  maxWidth: 600,
-                  color: 'text.secondary',
-                  fontWeight: 400,
-                  fontSize: { xs: '1rem', md: '1.25rem', lg: '1.4rem' },
-                  lineHeight: 1.6
-                }}
-              >
-                Controla cortes diarios, citas online y caja desde una sola plataforma.
-                Optimiza el tiempo de tus barberos y ofrécele a tus clientes una experiencia premium.
-              </Typography>
-            </motion.div>
+              {hero.subtitle && (
+                <Typography
+                  component={motion.p}
+                  variants={item}
+                  sx={{
+                    m: 0,
+                    color: 'text.secondary',
+                    fontSize: { xs: '1.1rem', md: '1.3rem' },
+                    fontWeight: 500,
+                    maxWidth: 560,
+                  }}
+                >
+                  {hero.subtitle}
+                </Typography>
+              )}
 
-            <Stack
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={3}
-              component={motion.div}
-              variants={itemVariants}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                endIcon={<ArrowForwardIcon />}
-                onClick={handleDemoClick}
-                sx={{ py: 1.8, px: 5, fontSize: { md: '1.1rem', lg: '1.2rem' } }}
+              {/* Beneficios rápidos */}
+              {hero.bullets.length > 0 && (
+                <Stack component={motion.div} variants={item} spacing={1.2} sx={{ width: '100%', maxWidth: 520 }}>
+                  {hero.bullets.map((text) => (
+                    <Stack
+                      key={text}
+                      direction="row"
+                      spacing={1.4}
+                      alignItems="center"
+                      justifyContent={{ xs: 'center', md: 'flex-start' }}
+                    >
+                      <CheckCircleRoundedIcon sx={{ color: green, fontSize: 22, flexShrink: 0 }} />
+                      <Typography sx={{ fontWeight: 600, fontSize: { xs: '1rem', md: '1.05rem' } }}>
+                        {text}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </Stack>
+              )}
+
+              {/* Indicadores */}
+              {stats.length > 0 && (
+                <Stack
+                  component={motion.div}
+                  variants={item}
+                  direction="row"
+                  spacing={{ xs: 2.5, sm: 4 }}
+                  flexWrap="wrap"
+                  useFlexGap
+                  justifyContent={{ xs: 'center', md: 'flex-start' }}
+                  sx={{ pt: 0.5 }}
+                >
+                  {stats.slice(0, 3).map((stat) => (
+                    <Box key={stat.label} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+                      <Typography
+                        sx={{
+                          fontFamily: theme.typography.h1.fontFamily,
+                          fontWeight: 900,
+                          color: green,
+                          fontSize: { xs: '1.5rem', md: '1.8rem' },
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        {stat.value}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: 'text.secondary',
+                          fontSize: '0.7rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.09em',
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {stat.label}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              )}
+
+              {/* Llamados a la acción */}
+              <Stack
+                component={motion.div}
+                variants={item}
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={2}
+                alignItems="center"
+                sx={{ pt: 1, width: { xs: '100%', sm: 'auto' } }}
               >
-                Ver Demo Online
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="large"
-                startIcon={<PlayArrowIcon />}
-                onClick={() => setVideoModalOpen(true)}
-                sx={{ py: 1.8, px: 5, fontSize: { md: '1.1rem', lg: '1.2rem' }, color: '#fff', borderColor: '#fff' }}
-              >
-                Ver Video
-              </Button>
+                <Button
+                  size="large"
+                  onClick={() => openWhatsApp()}
+                  startIcon={<WhatsAppIcon />}
+                  sx={{
+                    width: { xs: '100%', sm: 'auto' },
+                    bgcolor: '#FFFFFF',
+                    color: site.colors.backgroundDeep,
+                    fontWeight: 800,
+                    fontSize: { xs: '1rem', md: '1.08rem' },
+                    boxShadow: `0 18px 45px -18px ${alpha('#FFFFFF', 0.55)}`,
+                    '&:hover': { bgcolor: '#FFFFFF', boxShadow: `0 22px 55px -18px ${alpha('#FFFFFF', 0.7)}` },
+                  }}
+                >
+                  {cta.primaryLabel}
+                </Button>
+
+                <Button
+                  size="large"
+                  onClick={() => scrollToId('#demos')}
+                  startIcon={<PlayCircleFilledRoundedIcon />}
+                  sx={{
+                    width: { xs: '100%', sm: 'auto' },
+                    color: 'text.primary',
+                    fontWeight: 700,
+                    border: `1px solid ${alpha('#FFFFFF', 0.18)}`,
+                    '&:hover': { bgcolor: alpha('#FFFFFF', 0.06), borderColor: alpha('#FFFFFF', 0.32) },
+                  }}
+                >
+                  {cta.secondaryLabel}
+                </Button>
+              </Stack>
+
+              {contact.whatsappDisplay && (
+                <Typography
+                  component={motion.div}
+                  variants={item}
+                  sx={{ color: 'text.secondary', fontSize: '0.95rem' }}
+                >
+                  o escríbenos al{' '}
+                  <Box
+                    component="span"
+                    onClick={() => openWhatsApp()}
+                    sx={{
+                      color: green,
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      '&:hover': { textDecoration: 'underline' },
+                    }}
+                  >
+                    {contact.whatsappDisplay}
+                  </Box>
+                </Typography>
+              )}
             </Stack>
           </Grid>
 
-          {/* Empty column for spacing or image if we want one on the right */}
-          <Grid item xs={12} md={5} lg={6} sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
-            {/* Optional: Add a floating UI mockup image here later */}
-            <motion.img
-              src={`${process.env.PUBLIC_URL}/images/software/imagen_ia_1.webp`}
-              alt="Dashboard Mockup"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              style={{
-                width: '100%',
-                maxWidth: '550px',
-                height: 'auto',
-                borderRadius: '16px',
-              }}
-            />
+          {/* ----------------------------- Visual ---------------------------- */}
+          <Grid size={{ xs: 12, md: 5, lg: 5.5 }}>
+            <Box
+              component={motion.div}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
+              sx={{ position: 'relative', px: { xs: 0, sm: 4, md: 0 } }}
+            >
+              {/* Halo detrás del mockup */}
+              <Box
+                aria-hidden
+                sx={{
+                  position: 'absolute',
+                  inset: '-12%',
+                  borderRadius: '50%',
+                  background: `radial-gradient(circle, ${alpha(green, 0.16)}, transparent 65%)`,
+                  filter: 'blur(30px)',
+                }}
+              />
+
+              <Box
+                component={motion.div}
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                sx={{ position: 'relative' }}
+              >
+                {useChat && <ChatMockup />}
+                {/* Sin conversación configurada se usa la imagen; si tampoco
+                    hay imagen no se dibuja nada, en vez de un icono roto. */}
+                {!useChat && hero.image && (
+                  <Box
+                    component="img"
+                    src={hero.image}
+                    alt={hero.imageAlt}
+                    sx={{
+                      width: '100%',
+                      display: 'block',
+                      borderRadius: 4,
+                      border: `1px solid ${alpha('#FFFFFF', 0.1)}`,
+                      boxShadow: '0 40px 90px -30px rgba(0,0,0,.9)',
+                    }}
+                  />
+                )}
+              </Box>
+
+              {/* Tarjetas flotantes (solo en pantallas grandes) */}
+              {hero.floats.map((float, index) => (
+                <Box
+                  key={float.title}
+                  component={motion.div}
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1, y: index === 0 ? [0, -9, 0] : [0, 9, 0] }}
+                  transition={{
+                    opacity: { delay: 0.9 + index * 0.35, duration: 0.5 },
+                    scale: { delay: 0.9 + index * 0.35, duration: 0.5 },
+                    y: { duration: 5 + index, repeat: Infinity, ease: 'easeInOut' },
+                  }}
+                  sx={{
+                    display: { xs: 'none', lg: 'flex' },
+                    alignItems: 'center',
+                    gap: 1.3,
+                    position: 'absolute',
+                    ...(index === 0
+                      ? { top: '12%', left: -56 }
+                      : { bottom: '10%', right: -48 }),
+                    px: 2,
+                    py: 1.4,
+                    maxWidth: 250,
+                    borderRadius: 3,
+                    bgcolor: alpha(site.colors.surface, 0.9),
+                    border: `1px solid ${alpha(green, 0.28)}`,
+                    backdropFilter: 'blur(10px)',
+                    boxShadow: '0 24px 50px -24px rgba(0,0,0,.85)',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 34,
+                      height: 34,
+                      borderRadius: '50%',
+                      bgcolor: alpha(green, 0.18),
+                      display: 'grid',
+                      placeItems: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <CheckCircleRoundedIcon sx={{ color: green, fontSize: 19 }} />
+                  </Box>
+                  <Box sx={{ minWidth: 0 }}>
+                    <Typography sx={{ fontWeight: 800, fontSize: '0.82rem', lineHeight: 1.3 }}>
+                      {float.title}
+                    </Typography>
+                    <Typography sx={{ color: 'text.secondary', fontSize: '0.75rem', lineHeight: 1.35 }}>
+                      {float.text}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
           </Grid>
         </Grid>
       </Container>
-
-      <VideoModal
-        open={videoModalOpen}
-        onClose={() => setVideoModalOpen(false)}
-      />
     </Box>
   );
 }

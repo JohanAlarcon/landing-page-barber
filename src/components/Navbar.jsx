@@ -1,158 +1,186 @@
-import { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText, useTheme, useMediaQuery, Container } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
-import { handleDemoClick } from '../helpers';
+import { useState } from 'react';
+import {
+  AppBar, Box, Button, Collapse, Container, Divider, Drawer, IconButton,
+  List, ListItemButton, ListItemText, Stack, Toolbar, Typography,
+} from '@mui/material';
+import { alpha } from '@mui/material/styles';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
-const navItems = [
-    { label: 'Inicio', id: '#hero' },
-    { label: 'Características', id: '#features' },
-    { label: 'Beneficios', id: '#benefits' },
-    { label: 'Precios', id: '#pricing' },
-    { label: 'FAQ', id: '#faq' },
-];
+import site from '../config/site';
+import { openWhatsApp, scrollToId } from '../helpers';
+import Logo from './common/Logo';
+import PromoBar from './PromoBar';
 
 export default function Navbar() {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-    const { scrollY } = useScroll();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
 
-    useMotionValueEvent(scrollY, "change", (latest) => {
-        setScrolled(latest > 50);
-    });
+  useMotionValueEvent(scrollY, 'change', (latest) => setScrolled(latest > 40));
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
+  const go = (href) => {
+    scrollToId(href);
+    setDrawerOpen(false);
+  };
 
-    const handleScrollTo = (id) => {
-        const element = document.querySelector(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            setMobileOpen(false);
-        }
-    };
+  const ctaLabel = site.freeTrial.enabled ? site.cta.navLabel : site.cta.primaryLabel;
 
-    const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', height: '100%', bgcolor: 'background.default', pt: 4 }}>
-            <Typography variant="h5" sx={{ my: 2, color: 'primary.main', fontWeight: 'bold' }}>
-                StyleCloudBarber
-            </Typography>
-            <List>
-                {navItems.map((item) => (
-                    <ListItem key={item.label} button onClick={() => handleScrollTo(item.id)}>
-                        <ListItemText
-                            primary={item.label}
-                            primaryTypographyProps={{
-                                sx: {
-                                    fontWeight: 500,
-                                    color: 'text.primary',
-                                    textAlign: 'center'
-                                }
-                            }}
-                        />
-                    </ListItem>
-                ))}
-                <ListItem sx={{ justifyContent: 'center', mt: 2 }}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        onClick={handleDemoClick}
-                    >
-                        Ver Demo
-                    </Button>
-                </ListItem>
-            </List>
-        </Box>
-    );
+  return (
+    <>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{
+          bgcolor: scrolled ? alpha(site.colors.backgroundDeep, 0.88) : 'transparent',
+          backdropFilter: scrolled ? 'blur(14px)' : 'none',
+          borderBottom: scrolled ? `1px solid ${alpha('#FFFFFF', 0.08)}` : '1px solid transparent',
+          transition: 'background-color .3s ease, border-color .3s ease',
+          backgroundImage: 'none',
+        }}
+      >
+        {/* La cinta promocional se recoge al hacer scroll para ganar espacio */}
+        <Collapse in={!scrolled} timeout={300}>
+          <PromoBar />
+        </Collapse>
 
-    return (
-        <AppBar
-            component={motion.nav}
-            position="fixed"
-            elevation={scrolled ? 4 : 0}
-            sx={{
-                backgroundColor: scrolled ? 'rgba(18, 18, 18, 0.95)' : 'transparent',
-                backdropFilter: scrolled ? 'blur(10px)' : 'none',
-                transition: 'all 0.3s ease',
-                borderBottom: scrolled ? `1px solid ${theme.palette.divider}` : 'none',
-                py: scrolled ? 0.5 : 2
-            }}
-        >
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    {/* Logo Desktop */}
-                    <Typography
-                        variant="h5"
-                        component="div"
-                        sx={{
-                            flexGrow: 1,
-                            display: 'flex',
-                            alignItems: 'center',
-                            fontWeight: 700,
-                            letterSpacing: '-0.5px',
-                            color: 'text.primary',
-                            cursor: 'pointer'
-                        }}
-                        onClick={() => handleScrollTo('#hero')}
-                    >
-                        StyleCloud<Box component="span" sx={{ color: 'primary.main' }}>Barber</Box>
-                    </Typography>
+        <Container maxWidth="xl">
+          <Toolbar
+            disableGutters
+            sx={{ minHeight: { xs: 62, md: 76 }, gap: 2, transition: 'min-height .3s ease' }}
+          >
+            <Logo onClick={() => go('#hero')} />
 
-                    {/* Desktop Menu */}
-                    <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: { md: 4, lg: 6 }, alignItems: 'center' }}>
-                        {navItems.map((item) => (
-                            <Button
-                                key={item.label}
-                                onClick={() => handleScrollTo(item.id)}
-                                sx={{
-                                    color: 'text.primary',
-                                    fontWeight: 500,
-                                    '&:hover': { color: 'primary.main' }
-                                }}
-                            >
-                                {item.label}
-                            </Button>
-                        ))}
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleDemoClick}
-                            sx={{ ml: 2 }}
-                        >
-                            Ver Demo
-                        </Button>
-                    </Box>
+            <Box sx={{ flexGrow: 1 }} />
 
-                    {/* Mobile Menu Button */}
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        sx={{ display: { xs: 'flex', md: 'none' } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                </Toolbar>
-            </Container>
-
-            <Drawer
-                variant="temporary"
-                anchor="right"
-                open={mobileOpen}
-                onClose={handleDrawerToggle}
-                ModalProps={{ keepMounted: true }}
-                sx={{
-                    display: { xs: 'block', md: 'none' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 280 },
-                }}
+            {/* Enlaces de escritorio */}
+            <Stack
+              direction="row"
+              spacing={0.5}
+              sx={{ display: { xs: 'none', lg: 'flex' }, alignItems: 'center' }}
             >
-                {drawer}
-            </Drawer>
-        </AppBar>
-    );
+              {site.navLinks.map((item) => (
+                <Button
+                  key={item.label}
+                  onClick={() => go(item.href)}
+                  sx={{
+                    color: 'text.secondary',
+                    fontWeight: 600,
+                    fontSize: '0.95rem',
+                    px: 2,
+                    '&:hover': { color: 'text.primary', bgcolor: alpha('#FFFFFF', 0.05), transform: 'none' },
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </Stack>
+
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<WhatsAppIcon />}
+              onClick={() => openWhatsApp()}
+              sx={{
+                display: { xs: 'none', sm: 'inline-flex' },
+                ml: { lg: 2 },
+                fontSize: { sm: '0.9rem', md: '0.95rem' },
+                px: { sm: 2.2, md: 3 },
+              }}
+            >
+              {ctaLabel}
+            </Button>
+
+            <IconButton
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Abrir menú"
+              sx={{
+                display: { xs: 'inline-flex', lg: 'none' },
+                color: 'text.primary',
+                border: `1px solid ${alpha('#FFFFFF', 0.12)}`,
+                borderRadius: 2,
+              }}
+            >
+              <MenuRoundedIcon />
+            </IconButton>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Menú móvil */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        ModalProps={{ keepMounted: true }}
+        PaperProps={{
+          sx: {
+            width: { xs: '85%', sm: 340 },
+            bgcolor: site.colors.backgroundDeep,
+            backgroundImage: 'none',
+            borderLeft: `1px solid ${alpha('#FFFFFF', 0.08)}`,
+            p: 2.5,
+          },
+        }}
+      >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+          <Logo />
+          <IconButton onClick={() => setDrawerOpen(false)} aria-label="Cerrar menú" sx={{ color: 'text.primary' }}>
+            <CloseRoundedIcon />
+          </IconButton>
+        </Stack>
+
+        <Divider sx={{ borderColor: alpha('#FFFFFF', 0.08) }} />
+
+        <List sx={{ py: 2 }}>
+          {site.navLinks.map((item) => (
+            <ListItemButton
+              key={item.label}
+              onClick={() => go(item.href)}
+              sx={{ borderRadius: 2, mb: 0.5 }}
+            >
+              <ListItemText
+                primary={item.label}
+                primaryTypographyProps={{ fontWeight: 600, fontSize: '1.05rem' }}
+              />
+            </ListItemButton>
+          ))}
+        </List>
+
+        <Box sx={{ mt: 'auto', pt: 2 }}>
+          {site.freeTrial.enabled && (
+            <Typography
+              variant="body2"
+              sx={{ color: 'primary.main', fontWeight: 700, mb: 1.5, textAlign: 'center' }}
+            >
+              {site.freeTrial.badge}
+            </Typography>
+          )}
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<WhatsAppIcon />}
+            onClick={() => {
+              setDrawerOpen(false);
+              openWhatsApp();
+            }}
+          >
+            {site.cta.primaryLabel}
+          </Button>
+          {site.contact.whatsappDisplay && (
+            <Typography
+              variant="body2"
+              sx={{ mt: 1.5, textAlign: 'center', color: 'text.secondary' }}
+            >
+              {site.contact.whatsappDisplay}
+            </Typography>
+          )}
+        </Box>
+      </Drawer>
+    </>
+  );
 }

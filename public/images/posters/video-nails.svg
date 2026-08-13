@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1692" width="1080" height="1692" role="img"
+  aria-label="Carátula del video demo para salones de uñas">
+  <title>ReservaBot · Video demo para salones de uñas</title>
+  <defs>
+    <linearGradient id="pn-bg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#1D1136" />
+      <stop offset="0.5" stop-color="#0B1420" />
+      <stop offset="1" stop-color="#050D16" />
+    </linearGradient>
+    <radialGradient id="pn-glow" cx="0.5" cy="0.16" r="0.62">
+      <stop offset="0" stop-color="#FF5FA2" stop-opacity="0.3" />
+      <stop offset="1" stop-color="#FF5FA2" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="pn-glow2" cx="0.15" cy="0.88" r="0.55">
+      <stop offset="0" stop-color="#A855F7" stop-opacity="0.26" />
+      <stop offset="1" stop-color="#A855F7" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="pn-dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.8" fill="#FFFFFF" opacity="0.06" />
+    </pattern>
+    <linearGradient id="pn-sw1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF9BC6" /><stop offset="1" stop-color="#FF5FA2" />
+    </linearGradient>
+    <linearGradient id="pn-sw2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#C4B5FD" /><stop offset="1" stop-color="#A855F7" />
+    </linearGradient>
+    <style>
+      .t { font-family: Montserrat, 'Segoe UI', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="1080" height="1692" fill="url(#pn-bg)" />
+  <rect width="1080" height="1692" fill="url(#pn-dots)" />
+  <rect width="1080" height="1692" fill="url(#pn-glow)" />
+  <rect width="1080" height="1692" fill="url(#pn-glow2)" />
+
+  <!-- Marca -->
+  <g transform="translate(390,120)">
+    <rect width="62" height="56" rx="17" fill="#22DE7A" />
+    <path d="M18 29 L26 37 L44 19" fill="none" stroke="#08131F" stroke-width="6.5" stroke-linecap="round"
+      stroke-linejoin="round" />
+    <text class="t" x="80" y="40" font-size="34" font-weight="800" fill="#F2F7FA">Reserva<tspan
+        fill="#22DE7A">Bot</tspan></text>
+  </g>
+
+  <!-- Etiqueta -->
+  <rect x="300" y="256" width="480" height="60" rx="30" fill="#FF5FA2" fill-opacity="0.16" stroke="#FF5FA2"
+    stroke-opacity="0.45" stroke-width="2" />
+  <circle cx="342" cy="286" r="7" fill="#FF5FA2" />
+  <text class="t" x="368" y="295" font-size="22" font-weight="800" letter-spacing="2.5" fill="#FF9BC6">
+    DEMO · SALONES DE UÑAS
+  </text>
+
+  <!-- Titular -->
+  <text class="t" x="540" y="452" font-size="86" font-weight="800" fill="#F2F7FA" text-anchor="middle">
+    Reserva su set
+  </text>
+  <text class="t" x="540" y="556" font-size="86" font-weight="800" fill="#22DE7A" text-anchor="middle">
+    sin llamarte
+  </text>
+
+  <text class="t" x="540" y="628" font-size="30" font-weight="500" fill="#93AABD" text-anchor="middle">
+    Duración real · diseños · abonos
+  </text>
+
+  <!-- Botón de reproducción -->
+  <g>
+    <circle cx="540" cy="880" r="150" fill="#FF5FA2" fill-opacity="0.08" />
+    <circle cx="540" cy="880" r="118" fill="#FF5FA2" fill-opacity="0.16" />
+    <circle cx="540" cy="880" r="88" fill="#FF5FA2" />
+    <path d="M516 838 L590 880 L516 922 Z" fill="#1A0A14" />
+  </g>
+  <text class="t" x="540" y="1046" font-size="30" font-weight="800" fill="#F2F7FA" text-anchor="middle">
+    Ver el video demo
+  </text>
+
+  <!-- Tarjetas de servicios -->
+  <g>
+    <rect x="140" y="1130" width="800" height="130" rx="24" fill="#1D1730" stroke="#31294A" stroke-width="2" />
+    <rect x="140" y="1130" width="8" height="130" rx="4" fill="#FF5FA2" />
+    <rect x="186" y="1163" width="64" height="64" rx="18" fill="url(#pn-sw1)" />
+    <text class="t" x="276" y="1187" font-size="30" font-weight="800" fill="#F2F7FA">Acrílicas + diseño</text>
+    <text class="t" x="276" y="1225" font-size="24" fill="#9E90B8">2 h 30 min · $150.000</text>
+
+    <rect x="140" y="1284" width="800" height="130" rx="24" fill="#1D1730" stroke="#31294A" stroke-width="2" />
+    <rect x="140" y="1284" width="8" height="130" rx="4" fill="#A855F7" />
+    <rect x="186" y="1317" width="64" height="64" rx="18" fill="url(#pn-sw2)" />
+    <text class="t" x="276" y="1341" font-size="30" font-weight="800" fill="#F2F7FA">Semipermanente</text>
+    <text class="t" x="276" y="1379" font-size="24" fill="#9E90B8">1 h 30 min · $65.000</text>
+  </g>
+
+  <!-- Sello del mes gratis -->
+  <g transform="translate(340,1480)">
+    <rect width="400" height="72" rx="36" fill="#22DE7A" />
+    <text class="t" x="200" y="47" font-size="27" font-weight="800" fill="#04241A" text-anchor="middle">
+      PRIMER MES GRATIS
+    </text>
+  </g>
+</svg>

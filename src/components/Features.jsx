@@ -1,123 +1,81 @@
-import { Box, Grid, Typography, useTheme, Container, Paper } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
-import ContentCutIcon from '@mui/icons-material/ContentCut';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import GroupIcon from '@mui/icons-material/Group';
-import InventoryIcon from '@mui/icons-material/Inventory';
 
-const features = [
-  {
-    icon: <CalendarMonthIcon fontSize="large" />,
-    title: 'Agenda Inteligente',
-    description: 'Evita inasistencias con recordatorios automáticos. Tus clientes reservan 24/7 sin interrumpirte.',
-  },
-  {
-    icon: <PointOfSaleIcon fontSize="large" />,
-    title: 'Control de Caja',
-    description: 'Monitorea el efectivo, tarjeta y transferencias. Cierra caja al final del día sin errores.',
-  },
-  {
-    icon: <GroupIcon fontSize="large" />,
-    title: 'Gestión de Equipo',
-    description: 'Calcula comisiones automáticamente y mide el rendimiento de cada barbero individualmente.',
-  },
-  {
-    icon: <BarChartIcon fontSize="large" />,
-    title: 'Reportes Visuales',
-    description: 'Entiende tus números con gráficos claros. Conoce tus horas pico y servicios más rentables.',
-  },
-  {
-    icon: <ContentCutIcon fontSize="large" />,
-    title: 'Gestión de Servicios',
-    description: 'Personaliza tu menú de servicios, duraciones y precios por barbero si es necesario.',
-  }
-];
+import site from '../config/site';
+import SectionHeading from './common/SectionHeading';
+import Icon from './common/Icon';
+
 export default function Features() {
   const theme = useTheme();
+  const green = theme.palette.primary.main;
+  const { features } = site;
+
+  if (features.items.length === 0) return null;
 
   return (
     <Box
+      component="section"
       id="features"
       sx={{
-        py: { xs: 8, md: 12 },
-        backgroundColor: theme.palette.background.default,
-        position: 'relative'
+        position: 'relative',
+        py: { xs: 8, md: 13 },
+        bgcolor: site.colors.backgroundDeep,
       }}
     >
       <Container maxWidth="lg">
-        <Typography
-          variant="h6"
-          align="center"
-          color="primary"
-          gutterBottom
-          sx={{ fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}
-        >
-          Características
-        </Typography>
-        <Typography
-          variant="h2"
-          align="center"
-          gutterBottom
-          sx={{ mb: 8, color: '#fff' }}
-        >
-          Todo lo que necesitas para crecer
-        </Typography>
+        <SectionHeading
+          eyebrow={features.eyebrow}
+          title={features.title}
+          subtitle={features.subtitle}
+        />
 
-        <Grid
-          container
-          spacing={{ xs: 4, lg: 6 }}
-        >
-          {features.map((feature, idx) => (
-            <Grid item key={idx} size={{ xs: 12, md: 6 }}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
+        <Grid container spacing={{ xs: 2.5, md: 3 }}>
+          {features.items.map((feature, index) => (
+            <Grid key={feature.title} size={{ xs: 12, sm: 6, lg: 3 }}>
+              <Box
+                component={motion.div}
+                initial={{ opacity: 0, y: 26 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
-                style={{ height: '100%' }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.45, delay: (index % 4) * 0.08 }}
+                sx={{
+                  height: '100%',
+                  p: { xs: 3, md: 3.5 },
+                  borderRadius: 4,
+                  bgcolor: alpha('#FFFFFF', 0.035),
+                  border: `1px solid ${alpha('#FFFFFF', 0.07)}`,
+                  transition: 'transform .35s ease, border-color .35s ease, background-color .35s ease',
+                  '&:hover': {
+                    transform: 'translateY(-6px)',
+                    borderColor: alpha(green, 0.45),
+                    bgcolor: alpha(green, 0.05),
+                  },
+                }}
               >
-                <Paper
-                  elevation={0}
+                <Box
                   sx={{
-                    p: { xs: 4, lg: 5 },
-                    height: '100%',
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    borderRadius: 4,
-                    transition: 'all 0.4s ease',
-                    '&:hover': {
-                      background: 'rgba(255,255,255,0.06)',
-                      transform: { xs: 'translateY(-8px)', lg: 'translateY(-12px) scale(1.02)' },
-                      borderColor: theme.palette.primary.main,
-                      boxShadow: `0 20px 40px -10px rgba(0,0,0,0.6)`
-                    }
+                    width: 52,
+                    height: 52,
+                    borderRadius: 2.5,
+                    display: 'grid',
+                    placeItems: 'center',
+                    mb: 2.2,
+                    color: green,
+                    bgcolor: alpha(green, 0.12),
+                    border: `1px solid ${alpha(green, 0.22)}`,
                   }}
                 >
-                  <Box
-                    sx={{
-                      width: { xs: 60, lg: 70 },
-                      height: { xs: 60, lg: 70 },
-                      borderRadius: '50%',
-                      bgcolor: 'rgba(212, 175, 55, 0.1)',
-                      color: theme.palette.primary.main,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      mb: 3
-                    }}
-                  >
-                    {feature.icon}
-                  </Box>
-                  <Typography variant="h5" gutterBottom sx={{ color: '#fff', fontWeight: 600 }}>
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {feature.description}
-                  </Typography>
-                </Paper>
-              </motion.div>
+                  <Icon name={feature.icon} sx={{ fontSize: 27 }} />
+                </Box>
+
+                <Typography variant="h6" sx={{ mb: 1, fontSize: '1.08rem' }}>
+                  {feature.title}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  {feature.text}
+                </Typography>
+              </Box>
             </Grid>
           ))}
         </Grid>

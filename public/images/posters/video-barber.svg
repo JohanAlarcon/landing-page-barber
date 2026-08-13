@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1692" width="1080" height="1692" role="img"
+  aria-label="Carátula del video demo para barberías">
+  <title>ReservaBot · Video demo para barberías</title>
+  <defs>
+    <linearGradient id="pb-bg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#0C2438" />
+      <stop offset="0.5" stop-color="#08131F" />
+      <stop offset="1" stop-color="#050D16" />
+    </linearGradient>
+    <radialGradient id="pb-glow" cx="0.5" cy="0.16" r="0.62">
+      <stop offset="0" stop-color="#38BDF8" stop-opacity="0.32" />
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="pb-glow2" cx="0.15" cy="0.88" r="0.55">
+      <stop offset="0" stop-color="#22DE7A" stop-opacity="0.2" />
+      <stop offset="1" stop-color="#22DE7A" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="pb-dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.8" fill="#FFFFFF" opacity="0.06" />
+    </pattern>
+    <style>
+      .t { font-family: Montserrat, 'Segoe UI', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="1080" height="1692" fill="url(#pb-bg)" />
+  <rect width="1080" height="1692" fill="url(#pb-dots)" />
+  <rect width="1080" height="1692" fill="url(#pb-glow)" />
+  <rect width="1080" height="1692" fill="url(#pb-glow2)" />
+
+  <!-- Marca -->
+  <g transform="translate(390,120)">
+    <rect width="62" height="56" rx="17" fill="#22DE7A" />
+    <path d="M18 29 L26 37 L44 19" fill="none" stroke="#08131F" stroke-width="6.5" stroke-linecap="round"
+      stroke-linejoin="round" />
+    <text class="t" x="80" y="40" font-size="34" font-weight="800" fill="#F2F7FA">Reserva<tspan
+        fill="#22DE7A">Bot</tspan></text>
+  </g>
+
+  <!-- Etiqueta -->
+  <rect x="366" y="256" width="348" height="60" rx="30" fill="#38BDF8" fill-opacity="0.16" stroke="#38BDF8"
+    stroke-opacity="0.45" stroke-width="2" />
+  <circle cx="408" cy="286" r="7" fill="#38BDF8" />
+  <text class="t" x="434" y="295" font-size="22" font-weight="800" letter-spacing="2.5" fill="#7DD3FC">
+    DEMO · BARBERÍAS
+  </text>
+
+  <!-- Titular -->
+  <text class="t" x="540" y="452" font-size="86" font-weight="800" fill="#F2F7FA" text-anchor="middle">
+    Así se agenda
+  </text>
+  <text class="t" x="540" y="556" font-size="86" font-weight="800" fill="#22DE7A" text-anchor="middle">
+    un corte
+  </text>
+
+  <text class="t" x="540" y="628" font-size="30" font-weight="500" fill="#93AABD" text-anchor="middle">
+    Turnos por barbero · caja · comisiones
+  </text>
+
+  <!-- Botón de reproducción -->
+  <g>
+    <circle cx="540" cy="880" r="150" fill="#38BDF8" fill-opacity="0.08" />
+    <circle cx="540" cy="880" r="118" fill="#38BDF8" fill-opacity="0.16" />
+    <circle cx="540" cy="880" r="88" fill="#38BDF8" />
+    <path d="M516 838 L590 880 L516 922 Z" fill="#04131F" />
+  </g>
+  <text class="t" x="540" y="1046" font-size="30" font-weight="800" fill="#F2F7FA" text-anchor="middle">
+    Ver el video demo
+  </text>
+
+  <!-- Tarjetas de la agenda -->
+  <g>
+    <rect x="140" y="1130" width="800" height="120" rx="24" fill="#12283C" stroke="#1D3450" stroke-width="2" />
+    <rect x="140" y="1130" width="8" height="120" rx="4" fill="#22DE7A" />
+    <text class="t" x="188" y="1182" font-size="30" font-weight="800" fill="#F2F7FA">09:00 · Corte + barba</text>
+    <text class="t" x="188" y="1220" font-size="24" fill="#8CA3B8">Julián Ortega · $45.000</text>
+    <rect x="750" y="1166" width="150" height="40" rx="20" fill="#22DE7A" fill-opacity="0.2" />
+    <text class="t" x="825" y="1193" font-size="19" font-weight="700" fill="#22DE7A" text-anchor="middle">
+      CONFIRMADA
+    </text>
+
+    <rect x="140" y="1274" width="800" height="120" rx="24" fill="#12283C" stroke="#1D3450" stroke-width="2" />
+    <rect x="140" y="1274" width="8" height="120" rx="4" fill="#38BDF8" />
+    <text class="t" x="188" y="1326" font-size="30" font-weight="800" fill="#F2F7FA">10:30 · Fade clásico</text>
+    <text class="t" x="188" y="1364" font-size="24" fill="#8CA3B8">Mateo Ruiz · $30.000</text>
+  </g>
+
+  <!-- Sello del mes gratis -->
+  <g transform="translate(340,1470)">
+    <rect width="400" height="72" rx="36" fill="#22DE7A" />
+    <text class="t" x="200" y="47" font-size="27" font-weight="800" fill="#04241A" text-anchor="middle">
+      PRIMER MES GRATIS
+    </text>
+  </g>
+</svg>

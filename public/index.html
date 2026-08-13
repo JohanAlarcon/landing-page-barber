@@ -3,34 +3,42 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#121212" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08131F" />
+
+  <!--
+    Estas etiquetas son el valor por defecto para los buscadores y para
+    los enlaces compartidos. La aplicación las sobreescribe al cargar con
+    lo que haya en el archivo .env (REACT_APP_SEO_*).
+  -->
   <meta name="description"
-    content="StyleCloudBarber - El sistema definitivo de gestión para barberías. Control de citas, gestión de caja, pagos a barberos y reportes inteligentes. Prueba gratis." />
-
-  <!-- SEO Meta Tags -->
+    content="Tu barbería o salón de uñas agenda solo, 24/7. ReservaBot atiende por WhatsApp, reserva la cita, confirma y envía recordatorios. Menos plantones, más clientes. Primer mes gratis." />
   <meta name="keywords"
-    content="software barbería, sistema gestión barbería, app barberos, agenda online barbería, control de caja barbería, StyleCloudBarber, software peluquería" />
-  <meta name="author" content="StyleCloudBarber" />
+    content="software de reservas, agenda para barbería, app para salón de uñas, citas por WhatsApp, sistema de citas, reservas online, ReservaBot" />
+  <meta name="author" content="ReservaBot" />
+  <meta name="robots" content="index, follow" />
 
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="StyleCloudBarber - Domina tu Negocio de Barbería" />
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="ReservaBot" />
+  <meta property="og:title" content="ReservaBot · Tu recepcionista que nunca duerme" />
   <meta property="og:description"
-    content="Gestiona citas, cortes diarios y finanzas de tu barbería con el sistema más fácil y potente del mercado. Aumenta tus ganancias hoy." />
+    content="Reservas y agenda automática por WhatsApp para barberías y salones de uñas. Primer mes gratis." />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CO" />
   <meta property="og:url" content="https://stylecloud.online" />
-  <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+  <meta property="og:image" content="%PUBLIC_URL%/images/brand/og-reservabot.svg" />
 
-  <!-- Twitter Card Meta Tags -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="StyleCloudBarber - Gestión Profesional" />
+  <meta name="twitter:title" content="ReservaBot · Tu recepcionista que nunca duerme" />
   <meta name="twitter:description"
-    content="El software que tu barbería necesita para crecer. Citas, Caja y Reportes." />
+    content="Citas por WhatsApp 24/7 para barberías y salones de uñas. Menos plantones, más ingresos." />
+  <meta name="twitter:image" content="%PUBLIC_URL%/images/brand/og-reservabot.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
@@ -39,23 +47,25 @@
   <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest">
   <link rel="canonical" href="https://stylecloud.online/" />
 
-  <title>StyleCloudBarber - Sistema de Gestión para Barberías</title>
+  <title>ReservaBot · Reservas y agenda automática para barberías y salones de uñas</title>
 
-  <!-- Datos Estructurados (Schema.org) para Software App -->
+  <!-- Datos estructurados para buscadores -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "StyleCloudBarber",
-      "headline": "Sistema de Gestión Integral para Barberías y Salones",
+      "name": "ReservaBot",
+      "alternateName": "ReservaBot · Citas por WhatsApp 24/7",
+      "headline": "Reservas y agenda automática para barberías y salones de uñas",
       "operatingSystem": "Web, iOS, Android",
       "applicationCategory": "BusinessApplication",
+      "description": "ReservaBot agenda las citas de barberías y salones de uñas de forma automática: reservas online 24/7, confirmaciones y recordatorios por WhatsApp, control de caja y comisiones.",
       "offers": {
         "@type": "Offer",
-        "price": "110000",
-        "priceCurrency": "COP"
+        "price": "80000",
+        "priceCurrency": "COP",
+        "description": "Primer mes gratis, sin tarjeta de crédito."
       },
-      "description": "Software especializado para la gestión de barberías. Control de citas online, gestión de caja diaria, cálculo de comisiones para barberos y reportes financieros.",
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
@@ -63,15 +73,15 @@
       },
       "author": {
         "@type": "Organization",
-        "name": "StyleCloud Technologies"
+        "name": "ReservaBot"
       },
-      "image": "https://stylecloud.online/og-image.jpg"
+      "image": "https://stylecloud.online/images/brand/og-reservabot.svg"
     }
   </script>
 </head>
 
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <noscript>Necesitas habilitar JavaScript para ver esta página.</noscript>
   <div id="root"></div>
 </body>
 

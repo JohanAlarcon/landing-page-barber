@@ -1,104 +1,149 @@
-import { Box, Container, Typography, Grid, Paper, useTheme } from '@mui/material';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import SecurityIcon from '@mui/icons-material/Security';
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import { Box, Container, Grid, Stack, Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
-const benefits = [
-    {
-        icon: <TrendingUpIcon sx={{ fontSize: 50 }} />,
-        title: 'Crecimiento Real',
-        description: 'Deja de perder dinero en "gastos hormiga" y cortes no registrados. Aumenta tus ingresos un 30% en los primeros 3 meses.'
-    },
-    {
-        icon: <SecurityIcon sx={{ fontSize: 50 }} />,
-        title: 'Control Total',
-        description: 'Siente la paz mental de saber exactamente cuánto entra de tu negocio, incluso cuando no estás presente en el local.'
-    },
-    {
-        icon: <EmojiEmotionsIcon sx={{ fontSize: 50 }} />,
-        title: 'Profesionalismo',
-        description: 'Sorprende a tus clientes con un sistema moderno. Fideliza más clientes ofreciendo una experiencia de reserva premium.'
-    }
-];
+import site from '../config/site';
+import SectionHeading from './common/SectionHeading';
+import Icon from './common/Icon';
 
 export default function Benefits() {
-    const theme = useTheme();
+  const theme = useTheme();
+  const green = theme.palette.primary.main;
+  const { benefits, rating } = site;
 
-    return (
-        <Box id="benefits" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#1a1a1a' }}>
-            <Container maxWidth="lg">
-                <Grid container spacing={{ xs: 6, md: 8 }} alignItems="center">
-                    <Grid item xs={12} md={6}>
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <Box
-                                component="img"
-                                src={`${process.env.PUBLIC_URL}/images/software/imagen_ia_4.webp`}
-                                alt="Barbero profesional trabajando"
-                                sx={{
-                                    width: '100%',
-                                    maxHeight: { md: 440 },
-                                    objectFit: 'cover',
-                                    borderRadius: 4,
-                                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-                                }}
+  if (benefits.items.length === 0) return null;
 
-                            />
-                            {/* Fallback block if image missing */}
-                            <Box sx={{
-                                width: '100%',
-                                height: 400,
-                                bgcolor: '#333',
-                                borderRadius: 4,
-                                display: 'none', // Only show if img fails logic added properly, but simple fallback here
-                            }} />
-                        </motion.div>
-                    </Grid>
+  return (
+    <Box
+      component="section"
+      id="benefits"
+      sx={{ py: { xs: 8, md: 12 }, bgcolor: site.colors.background }}
+    >
+      <Container maxWidth="lg">
+        <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
+          {/* Imagen */}
+          {benefits.image && (
+            <Grid size={{ xs: 12, md: 5 }}>
+              <Box
+                component={motion.div}
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.65, ease: 'easeOut' }}
+                sx={{ position: 'relative' }}
+              >
+                <Box
+                  component="img"
+                  src={benefits.image}
+                  alt={benefits.title || site.brand.name}
+                  loading="lazy"
+                  sx={{
+                    width: '100%',
+                    display: 'block',
+                    borderRadius: 4,
+                    border: `1px solid ${alpha('#FFFFFF', 0.09)}`,
+                    boxShadow: '0 40px 90px -45px #000',
+                  }}
+                />
 
-                    <Grid item size={{ xs: 12, md: 7 }}>
-                        {benefits.map((benefit, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, x: 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.2, duration: 0.6 }}
-                            >
-                                <Paper
-                                    elevation={0}
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'flex-start',
-                                        p: 3,
-                                        mb: 3,
-                                        bgcolor: 'transparent',
-                                        borderLeft: `4px solid ${theme.palette.primary.main}`,
-                                        borderRadius: '0 8px 8px 0',
-                                        '&:hover': { bgcolor: 'rgba(255,255,255,0.02)' }
-                                    }}
-                                >
-                                    <Box sx={{ mr: 3, color: 'primary.main' }}>
-                                        {benefit.icon}
-                                    </Box>
-                                    <Box>
-                                        <Typography variant="h5" gutterBottom sx={{ color: '#fff', fontWeight: 600 }}>
-                                            {benefit.title}
-                                        </Typography>
-                                        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                                            {benefit.description}
-                                        </Typography>
-                                    </Box>
-                                </Paper>
-                            </motion.div>
-                        ))}
-                    </Grid>
-                </Grid>
-            </Container>
-        </Box>
-    );
+                {/* Sello de valoración sobre la imagen */}
+                {rating.value && (
+                  <Stack
+                    spacing={0.2}
+                    sx={{
+                      position: 'absolute',
+                      right: { xs: 12, md: -22 },
+                      bottom: { xs: -18, md: 28 },
+                      px: 2.5,
+                      py: 1.6,
+                      borderRadius: 3,
+                      textAlign: 'center',
+                      bgcolor: alpha(site.colors.surface, 0.95),
+                      border: `1px solid ${alpha(green, 0.3)}`,
+                      backdropFilter: 'blur(10px)',
+                      boxShadow: '0 24px 50px -24px #000',
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: theme.typography.h1.fontFamily,
+                        fontWeight: 900,
+                        color: green,
+                        fontSize: '1.6rem',
+                        lineHeight: 1,
+                      }}
+                    >
+                      ★ {rating.value}
+                    </Typography>
+                    <Typography sx={{ fontSize: '0.72rem', color: 'text.secondary', maxWidth: 130 }}>
+                      {rating.count && `+${rating.count} `}
+                      {rating.label}
+                    </Typography>
+                  </Stack>
+                )}
+              </Box>
+            </Grid>
+          )}
+
+          {/* Lista de beneficios */}
+          <Grid size={{ xs: 12, md: benefits.image ? 7 : 12 }}>
+            <SectionHeading
+              eyebrow={benefits.eyebrow}
+              title={benefits.title}
+              align="left"
+              maxWidth="100%"
+              sx={{ mb: { xs: 3, md: 4 } }}
+            />
+
+            <Stack spacing={2}>
+              {benefits.items.map((benefit, index) => (
+                <Stack
+                  key={benefit.title}
+                  component={motion.div}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  direction="row"
+                  spacing={2.2}
+                  sx={{
+                    p: { xs: 2.2, md: 2.6 },
+                    borderRadius: 3,
+                    bgcolor: alpha('#FFFFFF', 0.03),
+                    border: `1px solid ${alpha('#FFFFFF', 0.06)}`,
+                    borderLeft: `3px solid ${green}`,
+                    transition: 'background-color .3s ease',
+                    '&:hover': { bgcolor: alpha(green, 0.06) },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 44,
+                      height: 44,
+                      flexShrink: 0,
+                      borderRadius: 2,
+                      display: 'grid',
+                      placeItems: 'center',
+                      color: green,
+                      bgcolor: alpha(green, 0.12),
+                    }}
+                  >
+                    <Icon name={benefit.icon} sx={{ fontSize: 24 }} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontSize: '1.08rem', mb: 0.5 }}>
+                      {benefit.title}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      {benefit.text}
+                    </Typography>
+                  </Box>
+                </Stack>
+              ))}
+            </Stack>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
 }

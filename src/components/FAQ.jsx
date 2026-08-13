@@ -1,80 +1,92 @@
-import { Box, Container, Typography, Accordion, AccordionSummary, AccordionDetails, useTheme } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useState } from 'react';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-const faqs = [
-    {
-        question: '¿Necesito instalar algún programa en mi computadora?',
-        answer: 'No. StyleCloudBarber es 100% en la nube. Puedes acceder desde tu celular, tablet o computadora sin instalar nada, solo necesitas internet.'
-    },
-    {
-        question: '¿Cómo funciona la gestión de citas?',
-        answer: 'Te entregamos un link único para tu barbería. Tus clientes entran, eligen barbero, servicio y hora. Tú ves todo en tiempo real en tu calendario.'
-    },
-    {
-        question: '¿Mis datos están seguros?',
-        answer: 'Sí. Realizamos copias de seguridad diarias y utilizamos encriptación SSL para proteger toda la información de tu negocio y clientes.'
-    },
-    {
-        question: '¿Puedo cambiar de plan más adelante?',
-        answer: 'Por supuesto. Puedes empezar con el plan de Gestión de Cortes y luego agregar Citas, o viceversa. El cambio es inmediato.'
-    }
-];
+import site from '../config/site';
+import SectionHeading from './common/SectionHeading';
 
 export default function FAQ() {
-    const theme = useTheme();
+  const theme = useTheme();
+  const green = theme.palette.primary.main;
+  const { faq } = site;
+  const [expanded, setExpanded] = useState(0);
 
-    return (
-        <Box id="faq" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#121212' }}>
-            <Container maxWidth="md">
-                <Typography
-                    variant="h6"
-                    align="center"
-                    color="primary"
-                    gutterBottom
-                    sx={{ fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}
-                >
-                    Dudas Comunes
-                </Typography>
-                <Typography
-                    variant="h2"
-                    align="center"
-                    gutterBottom
-                    sx={{ mb: 6, color: '#fff' }}
-                >
-                    Preguntas Frecuentes
-                </Typography>
+  if (faq.items.length === 0) return null;
 
-                <Box component={motion.div} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-                    {faqs.map((faq, index) => (
-                        <Accordion
-                            key={index}
-                            disableGutters
-                            elevation={0}
-                            sx={{
-                                bgcolor: 'transparent',
-                                borderBottom: `1px solid rgba(255,255,255,0.1)`,
-                                '&:before': { display: 'none' },
-                                mb: 2
-                            }}
-                        >
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon sx={{ color: 'primary.main' }} />}
-                                sx={{ px: 0 }}
-                            >
-                                <Typography variant="h6" sx={{ color: '#fff', fontWeight: 500 }}>
-                                    {faq.question}
-                                </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails sx={{ px: 0, pb: 2 }}>
-                                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                                    {faq.answer}
-                                </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                    ))}
-                </Box>
-            </Container>
-        </Box>
-    );
+  return (
+    <Box
+      component="section"
+      id="faq"
+      sx={{ py: { xs: 8, md: 12 }, bgcolor: site.colors.backgroundDeep }}
+    >
+      <Container maxWidth="md">
+        <SectionHeading eyebrow={faq.eyebrow} title={faq.title} />
+
+        {faq.items.map((item, index) => {
+          const isOpen = expanded === index;
+          return (
+            <Box
+              key={item.question}
+              component={motion.div}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.4, delay: Math.min(index, 5) * 0.06 }}
+            >
+              <Accordion
+                disableGutters
+                elevation={0}
+                expanded={isOpen}
+                onChange={() => setExpanded(isOpen ? -1 : index)}
+                sx={{
+                  mb: 1.5,
+                  borderRadius: '16px !important',
+                  overflow: 'hidden',
+                  bgcolor: isOpen ? alpha(green, 0.06) : alpha('#FFFFFF', 0.03),
+                  border: `1px solid ${isOpen ? alpha(green, 0.35) : alpha('#FFFFFF', 0.07)}`,
+                  transition: 'background-color .3s ease, border-color .3s ease',
+                  '&:before': { display: 'none' },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={
+                    <AddRoundedIcon
+                      sx={{
+                        color: isOpen ? green : 'text.secondary',
+                        transition: 'transform .3s ease',
+                        transform: isOpen ? 'rotate(45deg)' : 'none',
+                      }}
+                    />
+                  }
+                  sx={{
+                    px: { xs: 2.2, md: 3 },
+                    py: { xs: 0.8, md: 1.2 },
+                    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': { transform: 'none' },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: { xs: '1rem', md: '1.08rem' },
+                      fontFamily: theme.typography.h1.fontFamily,
+                      pr: 2,
+                    }}
+                  >
+                    {item.question}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails sx={{ px: { xs: 2.2, md: 3 }, pb: 2.5, pt: 0 }}>
+                  <Typography sx={{ color: 'text.secondary', fontSize: '0.98rem' }}>
+                    {item.answer}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Box>
+          );
+        })}
+      </Container>
+    </Box>
+  );
 }

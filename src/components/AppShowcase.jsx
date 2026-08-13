@@ -1,160 +1,192 @@
-import { useState, useEffect } from 'react';
-import { Box, Container, Typography, IconButton, useTheme, Card, CardMedia } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
+import { Box, Container, IconButton, Stack, Typography } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import { motion, AnimatePresence } from 'framer-motion';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
-const images = [
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen_ia_2.webp`, alt: 'Panel de Control Principal' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen_ia_3.webp`, alt: 'Panel de Control Principal' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen1.webp`, alt: 'Panel de Control Principal' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen2.webp`, alt: 'Gestión de Citas' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen3.webp`, alt: 'Calendario Interactivo' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen4.webp`, alt: 'Reportes Financieros' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen5.webp`, alt: 'Base de Datos de Clientes' },
-    { src: `${process.env.PUBLIC_URL}/images/software/imagen6.webp`, alt: 'Configuración de Servicios' },
-];
+import site from '../config/site';
+import { useVertical } from '../context/VerticalContext';
+import SectionHeading from './common/SectionHeading';
 
+const AUTOPLAY_MS = 4500;
+
+/**
+ * Galería de pantallas del sistema. Muestra las imágenes de la vertical
+ * activa (REACT_APP_VERTICAL_*_GALLERY) y se puede arrastrar en móvil.
+ */
 export default function AppShowcase() {
-    const theme = useTheme();
-    const [activeIndex, setActiveIndex] = useState(0);
+  const { active, activeId, accent } = useVertical();
+  const gallery = (active && active.gallery) || [];
 
-    // Auto-play functionality
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex((prev) => (prev + 1) % images.length);
-        }, 4000);
-        return () => clearInterval(interval);
-    }, []);
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
-    const handleNext = () => {
-        setActiveIndex((prev) => (prev + 1) % images.length);
-    };
+  // Al cambiar de vertical volvemos a la primera imagen
+  useEffect(() => setIndex(0), [activeId]);
 
-    const handlePrev = () => {
-        setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
-    };
+  const go = useCallback(
+    (delta) => {
+      if (gallery.length === 0) return;
+      setIndex((prev) => (prev + delta + gallery.length) % gallery.length);
+    },
+    [gallery.length]
+  );
 
-    return (
-        <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: '#121212', overflow: 'hidden' }}>
-            <Container maxWidth="lg">
-                <Typography
-                    variant="h6"
-                    align="center"
-                    color="primary"
-                    gutterBottom
-                    sx={{ fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}
-                >
-                    Interfaz Intuitiva
+  useEffect(() => {
+    if (paused || gallery.length < 2) return undefined;
+    const timer = setInterval(() => go(1), AUTOPLAY_MS);
+    return () => clearInterval(timer);
+  }, [paused, gallery.length, go]);
+
+  if (gallery.length === 0) return null;
+
+  const current = gallery[index] || gallery[0];
+
+  return (
+    <Box
+      component="section"
+      id="showcase"
+      sx={{ py: { xs: 8, md: 12 }, bgcolor: site.colors.backgroundDeep, overflow: 'hidden' }}
+    >
+      <Container maxWidth="lg">
+        <SectionHeading
+          eyebrow="Por dentro"
+          title="Así se ve por dentro"
+          subtitle={`Pantallas reales del sistema configurado para ${active.label.toLowerCase()}.`}
+          accent={accent}
+        />
+
+        <Box
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          sx={{ position: 'relative', maxWidth: 960, mx: 'auto' }}
+        >
+          <Box
+            sx={{
+              position: 'relative',
+              width: '100%',
+              aspectRatio: { xs: '4 / 3', sm: '16 / 10' },
+              borderRadius: 4,
+              overflow: 'hidden',
+              bgcolor: alpha('#050D16', 0.9),
+              border: `1px solid ${alpha(accent, 0.25)}`,
+              boxShadow: `0 50px 100px -50px #000, 0 0 60px -30px ${alpha(accent, 0.5)}`,
+            }}
+          >
+            <AnimatePresence mode="wait">
+              <Box
+                key={`${active.id}-${index}`}
+                component={motion.div}
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.15}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -70) go(1);
+                  if (info.offset.x > 70) go(-1);
+                }}
+                sx={{ position: 'absolute', inset: 0, cursor: 'grab', '&:active': { cursor: 'grabbing' } }}
+              >
+                <Box
+                  component="img"
+                  src={current.src}
+                  alt={current.caption || `Pantalla ${index + 1} de ${site.brand.name}`}
+                  loading="lazy"
+                  draggable={false}
+                  sx={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                />
+              </Box>
+            </AnimatePresence>
+
+            {current.caption && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  px: { xs: 2, md: 3 },
+                  py: { xs: 1.4, md: 1.8 },
+                  background: `linear-gradient(transparent, ${alpha('#050D16', 0.92)})`,
+                  pointerEvents: 'none',
+                }}
+              >
+                <Typography sx={{ fontWeight: 700, fontSize: { xs: '0.85rem', md: '0.95rem' } }}>
+                  {current.caption}
                 </Typography>
-                <Typography
-                    variant="h2"
-                    align="center"
-                    gutterBottom
-                    sx={{ mb: 6, color: '#fff' }}
-                >
-                    Diseñado para ser fácil de usar
-                </Typography>
+              </Box>
+            )}
+          </Box>
 
-                <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {/* Flechas */}
+          {gallery.length > 1 && (
+            <>
+              <IconButton
+                onClick={() => go(-1)}
+                aria-label="Imagen anterior"
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: { xs: 6, md: -24 },
+                  transform: 'translateY(-50%)',
+                  bgcolor: alpha('#050D16', 0.75),
+                  color: '#fff',
+                  border: `1px solid ${alpha('#FFFFFF', 0.12)}`,
+                  '&:hover': { bgcolor: accent, color: '#04131F' },
+                }}
+              >
+                <ArrowBackIosNewRoundedIcon fontSize="small" />
+              </IconButton>
 
-                    {/* Navigation Buttons (Desktop) */}
-                    <IconButton
-                        onClick={handlePrev}
-                        sx={{
-                            position: 'absolute',
-                            left: { md: 20 },
-                            zIndex: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            bgcolor: 'rgba(0,0,0,0.5)',
-                            color: 'white',
-                            '&:hover': { bgcolor: theme.palette.primary.main }
-                        }}
-                    >
-                        <ArrowBackIosNewIcon />
-                    </IconButton>
+              <IconButton
+                onClick={() => go(1)}
+                aria-label="Imagen siguiente"
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  right: { xs: 6, md: -24 },
+                  transform: 'translateY(-50%)',
+                  bgcolor: alpha('#050D16', 0.75),
+                  color: '#fff',
+                  border: `1px solid ${alpha('#FFFFFF', 0.12)}`,
+                  '&:hover': { bgcolor: accent, color: '#04131F' },
+                }}
+              >
+                <ArrowForwardIosRoundedIcon fontSize="small" />
+              </IconButton>
+            </>
+          )}
 
-                    <IconButton
-                        onClick={handleNext}
-                        sx={{
-                            position: 'absolute',
-                            right: { md: 20 },
-                            zIndex: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            bgcolor: 'rgba(0,0,0,0.5)',
-                            color: 'white',
-                            '&:hover': { bgcolor: theme.palette.primary.main }
-                        }}
-                    >
-                        <ArrowForwardIosIcon />
-                    </IconButton>
-
-                    {/* Carousel Container */}
-                    <Box sx={{
-                        width: '100%',
-                        maxWidth: 900,
-                        height: { xs: 300, sm: 450, md: 550 },
-                        position: 'relative',
-                        perspective: '1000px'
-                    }}>
-                        <AnimatePresence mode='wait'>
-                            <motion.div
-                                key={activeIndex}
-                                initial={{ opacity: 0, scale: 0.9, x: 50 }}
-                                animate={{ opacity: 1, scale: 1, x: 0 }}
-                                exit={{ opacity: 0, scale: 0.9, x: -50 }}
-                                transition={{ duration: 0.5 }}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    position: 'absolute'
-                                }}
-                            >
-                                <Card
-                                    elevation={10}
-                                    sx={{
-                                        borderRadius: 4,
-                                        overflow: 'hidden',
-                                        height: '100%',
-                                        border: `1px solid rgba(255,255,255,0.1)`,
-                                        boxShadow: `0 0 40px rgba(212, 175, 55, 0.1)`
-                                    }}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        image={images[activeIndex].src}
-                                        alt={images[activeIndex].alt}
-                                        sx={{
-                                            width: '100%',
-                                            height: '100%',
-                                            objectFit: 'contain', // Changed to contain to show full UI
-                                            bgcolor: '#252525'
-                                        }}
-                                    />
-                                </Card>
-                            </motion.div>
-                        </AnimatePresence>
-                    </Box>
-                </Box>
-
-                {/* Dots Navigation */}
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, gap: 1 }}>
-                    {images.map((_, idx) => (
-                        <Box
-                            key={idx}
-                            onClick={() => setActiveIndex(idx)}
-                            sx={{
-                                width: 12,
-                                height: 12,
-                                borderRadius: '50%',
-                                bgcolor: activeIndex === idx ? 'primary.main' : 'rgba(255,255,255,0.2)',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease'
-                            }}
-                        />
-                    ))}
-                </Box>
-            </Container>
+          {/* Indicadores */}
+          {gallery.length > 1 && (
+            <Stack direction="row" spacing={1} justifyContent="center" sx={{ mt: 3 }}>
+              {gallery.map((image, idx) => (
+                <Box
+                  key={image.src}
+                  component="button"
+                  type="button"
+                  aria-label={`Ir a la imagen ${idx + 1}`}
+                  onClick={() => setIndex(idx)}
+                  sx={{
+                    p: 0,
+                    border: 'none',
+                    cursor: 'pointer',
+                    height: 6,
+                    width: idx === index ? 30 : 10,
+                    borderRadius: 999,
+                    bgcolor: idx === index ? accent : alpha('#FFFFFF', 0.2),
+                    transition: 'all .3s ease',
+                  }}
+                />
+              ))}
+            </Stack>
+          )}
         </Box>
-    );
+      </Container>
+    </Box>
+  );
 }

@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img"
+  aria-label="Catálogo de servicios y diseños de uñas en ReservaBot">
+  <title>ReservaBot · Catálogo de servicios y diseños</title>
+  <defs>
+    <linearGradient id="ns-bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#0D1B2B" />
+      <stop offset="1" stop-color="#081420" />
+    </linearGradient>
+    <linearGradient id="ns-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF5FA2" />
+      <stop offset="1" stop-color="#A855F7" />
+    </linearGradient>
+    <linearGradient id="d1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF9BC6" /><stop offset="1" stop-color="#FF5FA2" />
+    </linearGradient>
+    <linearGradient id="d2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#C4B5FD" /><stop offset="1" stop-color="#A855F7" />
+    </linearGradient>
+    <linearGradient id="d3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FDE68A" /><stop offset="1" stop-color="#FB923C" />
+    </linearGradient>
+    <linearGradient id="d4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#A7F3D0" /><stop offset="1" stop-color="#22DE7A" />
+    </linearGradient>
+    <style>
+      .t { font-family: Montserrat, 'Segoe UI', Arial, sans-serif; }
+      .muted { fill: #8CA3B8; }
+      .white { fill: #F2F7FA; }
+      .b7 { font-weight: 700; }
+      .b8 { font-weight: 800; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="800" rx="20" fill="url(#ns-bg)" />
+  <rect x="0.5" y="0.5" width="1199" height="799" rx="20" fill="none" stroke="#2A3550" />
+
+  <path d="M0 20a20 20 0 0 1 20-20h1160a20 20 0 0 1 20 20v32H0z" fill="#0A1826" />
+  <line x1="0" y1="52" x2="1200" y2="52" stroke="#2A3550" />
+  <circle cx="28" cy="27" r="5.5" fill="#46506E" />
+  <circle cx="48" cy="27" r="5.5" fill="#46506E" />
+  <circle cx="68" cy="27" r="5.5" fill="#46506E" />
+  <rect x="440" y="15" width="320" height="24" rx="12" fill="#1B2440" />
+  <text class="t muted" x="600" y="31" font-size="12" text-anchor="middle">app.reservabot.co/servicios</text>
+
+  <rect x="0" y="52" width="200" height="748" fill="#0A1725" />
+  <line x1="200" y1="52" x2="200" y2="800" stroke="#2A3550" />
+  <rect x="22" y="76" width="30" height="30" rx="9" fill="#22DE7A" />
+  <path d="M31 91.5 L35 95.5 L43 87" fill="none" stroke="#0A1725" stroke-width="3.4" stroke-linecap="round"
+    stroke-linejoin="round" />
+  <text class="t white b8" x="62" y="96" font-size="15">ReservaBot</text>
+  <text class="t muted" x="40" y="157" font-size="13.5">Agenda</text>
+  <text class="t muted" x="40" y="205" font-size="13.5">Clientas</text>
+  <rect x="16" y="228" width="168" height="40" rx="11" fill="#FF5FA2" opacity="0.16" />
+  <rect x="16" y="228" width="3" height="40" rx="2" fill="#FF5FA2" />
+  <text class="t white b7" x="40" y="253" font-size="13.5">Servicios</text>
+  <text class="t muted" x="40" y="301" font-size="13.5">Diseños</text>
+  <text class="t muted" x="40" y="349" font-size="13.5">Abonos</text>
+  <text class="t muted" x="40" y="397" font-size="13.5">Reportes</text>
+
+  <text class="t white b8" x="232" y="102" font-size="27">Servicios y diseños</text>
+  <text class="t muted" x="232" y="128" font-size="14">Cada servicio con su duración real y su precio</text>
+  <rect x="980" y="80" width="188" height="42" rx="21" fill="url(#ns-accent)" />
+  <text class="t b8" x="1074" y="106" font-size="14" fill="#160A14" text-anchor="middle">+ Nuevo servicio</text>
+
+  <!-- Lista de servicios -->
+  <g>
+    <rect x="232" y="160" width="560" height="86" rx="13" fill="#101F31" stroke="#2A3550" />
+    <rect x="252" y="180" width="46" height="46" rx="12" fill="url(#d1)" />
+    <text class="t white b8" x="316" y="194" font-size="15">Acrílicas nuevas</text>
+    <text class="t muted" x="316" y="216" font-size="12.5">Set completo con forma y esmaltado</text>
+    <rect x="316" y="226" width="82" height="18" rx="9" fill="#FF5FA2" opacity="0.18" />
+    <text class="t b7" x="357" y="239" font-size="9.5" fill="#FF9BC6" text-anchor="middle">2 h 30 min</text>
+    <text class="t white b8" x="768" y="212" font-size="19" text-anchor="end">$150.000</text>
+
+    <rect x="232" y="258" width="560" height="86" rx="13" fill="#101F31" stroke="#2A3550" />
+    <rect x="252" y="278" width="46" height="46" rx="12" fill="url(#d2)" />
+    <text class="t white b8" x="316" y="292" font-size="15">Semipermanente</text>
+    <text class="t muted" x="316" y="314" font-size="12.5">Esmaltado en gel de larga duración</text>
+    <rect x="316" y="324" width="82" height="18" rx="9" fill="#A855F7" opacity="0.2" />
+    <text class="t b7" x="357" y="337" font-size="9.5" fill="#C4B5FD" text-anchor="middle">1 h 30 min</text>
+    <text class="t white b8" x="768" y="310" font-size="19" text-anchor="end">$65.000</text>
+
+    <rect x="232" y="356" width="560" height="86" rx="13" fill="#101F31" stroke="#2A3550" />
+    <rect x="252" y="376" width="46" height="46" rx="12" fill="url(#d3)" />
+    <text class="t white b8" x="316" y="390" font-size="15">Retoque de acrílicas</text>
+    <text class="t muted" x="316" y="412" font-size="12.5">Relleno y limpieza de cutícula</text>
+    <rect x="316" y="422" width="70" height="18" rx="9" fill="#FB923C" opacity="0.2" />
+    <text class="t b7" x="351" y="435" font-size="9.5" fill="#FDE68A" text-anchor="middle">1 hora</text>
+    <text class="t white b8" x="768" y="408" font-size="19" text-anchor="end">$45.000</text>
+
+    <rect x="232" y="454" width="560" height="86" rx="13" fill="#101F31" stroke="#2A3550" />
+    <rect x="252" y="474" width="46" height="46" rx="12" fill="url(#d4)" />
+    <text class="t white b8" x="316" y="488" font-size="15">Pedicure spa</text>
+    <text class="t muted" x="316" y="510" font-size="12.5">Exfoliación, masaje y esmaltado</text>
+    <rect x="316" y="520" width="82" height="18" rx="9" fill="#22DE7A" opacity="0.18" />
+    <text class="t b7" x="357" y="533" font-size="9.5" fill="#A7F3D0" text-anchor="middle">1 h 30 min</text>
+    <text class="t white b8" x="768" y="506" font-size="19" text-anchor="end">$70.000</text>
+
+    <rect x="232" y="552" width="560" height="86" rx="13" fill="#101F31" stroke="#2A3550" />
+    <rect x="252" y="572" width="46" height="46" rx="12" fill="url(#d1)" opacity="0.7" />
+    <text class="t white b8" x="316" y="586" font-size="15">Diseño personalizado</text>
+    <text class="t muted" x="316" y="608" font-size="12.5">Por uña · encaje, 3D, francés invertido</text>
+    <rect x="316" y="618" width="82" height="18" rx="9" fill="#FF5FA2" opacity="0.18" />
+    <text class="t b7" x="357" y="631" font-size="9.5" fill="#FF9BC6" text-anchor="middle">+ 30 min</text>
+    <text class="t white b8" x="768" y="604" font-size="19" text-anchor="end">$8.000</text>
+  </g>
+
+  <!-- Galería de diseños -->
+  <rect x="816" y="160" width="352" height="478" rx="16" fill="#101F31" stroke="#2A3550" />
+  <text class="t white b8" x="844" y="196" font-size="16">Galería de diseños</text>
+  <text class="t muted" x="844" y="218" font-size="12.5">La clienta la ve al reservar</text>
+
+  <g>
+    <rect x="844" y="238" width="140" height="112" rx="12" fill="url(#d1)" opacity="0.85" />
+    <rect x="1000" y="238" width="140" height="112" rx="12" fill="url(#d2)" opacity="0.85" />
+    <rect x="844" y="364" width="140" height="112" rx="12" fill="url(#d3)" opacity="0.85" />
+    <rect x="1000" y="364" width="140" height="112" rx="12" fill="url(#d4)" opacity="0.85" />
+    <rect x="844" y="490" width="140" height="112" rx="12" fill="url(#d2)" opacity="0.6" />
+    <rect x="1000" y="490" width="140" height="112" rx="12" fill="url(#d1)" opacity="0.6" />
+    <text class="t b8" x="992" y="626" font-size="12.5" fill="#FF9BC6" text-anchor="middle">+ 32 diseños cargados</text>
+  </g>
+
+  <!-- Pie -->
+  <rect x="232" y="656" width="936" height="76" rx="14" fill="#0E2A22" stroke="#22DE7A" stroke-opacity="0.4" />
+  <circle cx="274" cy="694" r="18" fill="#22DE7A" opacity="0.2" />
+  <path d="M266 694 L272 700 L283 688" fill="none" stroke="#22DE7A" stroke-width="3.4" stroke-linecap="round"
+    stroke-linejoin="round" />
+  <text class="t white b8" x="306" y="689" font-size="14.5">La duración real evita que se te crucen las citas</text>
+  <text class="t muted" x="306" y="712" font-size="12.5">ReservaBot bloquea el tiempo exacto de cada servicio en tu agenda</text>
+</svg>

@@ -1,71 +1,186 @@
-import { Box, Container, Grid, Typography, Link, IconButton, useTheme } from '@mui/material';
+import { Box, Container, Divider, Grid, IconButton, Link, Stack, Typography } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import PlaceRoundedIcon from '@mui/icons-material/PlaceRounded';
+
+import site from '../config/site';
+import { openWhatsApp, scrollToId } from '../helpers';
+import Logo from './common/Logo';
+
+const SOCIAL_ICONS = {
+  facebook: FacebookRoundedIcon,
+  instagram: InstagramIcon,
+  tiktok: MusicNoteRoundedIcon,
+};
+
+/** Columna de enlaces del pie. */
+function LinkColumn({ title, links }) {
+  if (!links || links.length === 0) return null;
+  return (
+    <>
+      <Typography variant="h6" sx={{ fontSize: '1rem', mb: 2 }}>
+        {title}
+      </Typography>
+      <Stack spacing={1.2}>
+        {links.map((link) => (
+          <Link
+            key={link.label}
+            href={link.href}
+            underline="none"
+            onClick={(event) => {
+              if (link.href && link.href.startsWith('#')) {
+                event.preventDefault();
+                scrollToId(link.href);
+              }
+            }}
+            sx={{
+              color: 'text.secondary',
+              fontSize: '0.92rem',
+              width: 'fit-content',
+              '&:hover': { color: 'primary.main' },
+            }}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </Stack>
+    </>
+  );
+}
 
 export default function Footer() {
-  const theme = useTheme();
+  const { brand, contact, footer } = site;
+  const year = new Date().getFullYear();
 
   return (
     <Box
       component="footer"
       sx={{
-        py: 6,
-        bgcolor: '#0a0a0a',
-        color: 'text.secondary',
-        borderTop: '1px solid rgba(255,255,255,0.05)'
+        pt: { xs: 6, md: 8 },
+        pb: 4,
+        bgcolor: site.colors.backgroundDeep,
+        borderTop: `1px solid ${alpha('#FFFFFF', 0.07)}`,
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={4} justifyContent="space-between">
-          <Grid item xs={12} md={4}>
-            <Typography variant="h5" color="text.primary" gutterBottom sx={{ fontWeight: 700 }}>
-              StyleCloud<Box component="span" sx={{ color: 'primary.main' }}>Barber</Box>
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 2 }}>
-              El sistema de gestión líder para barberías y salones de belleza.
-              Simplificamos tu administración para que tú te enfoques en el arte.
-            </Typography>
-            <Box sx={{ mt: 2 }}>
-              <IconButton color="primary" href="https://wa.me/573176824754" target="_blank">
-                <WhatsAppIcon />
-              </IconButton>
-            </Box>
+        <Grid container spacing={{ xs: 4, md: 5 }}>
+          {/* Marca */}
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Logo onClick={() => scrollToId('#hero')} />
+            {brand.slogan && (
+              <Typography sx={{ mt: 1.5, color: 'primary.main', fontWeight: 700, fontSize: '0.95rem' }}>
+                {brand.slogan}
+              </Typography>
+            )}
+            {footer.about && (
+              <Typography variant="body2" sx={{ mt: 1.5, color: 'text.secondary', maxWidth: 380 }}>
+                {footer.about}
+              </Typography>
+            )}
+
+            <Stack direction="row" spacing={1} sx={{ mt: 2.5 }}>
+              {contact.whatsappNumber && (
+                <IconButton
+                  onClick={() => openWhatsApp()}
+                  aria-label="WhatsApp"
+                  sx={{
+                    color: 'primary.main',
+                    border: `1px solid ${alpha('#FFFFFF', 0.12)}`,
+                    '&:hover': { bgcolor: alpha(site.colors.primary, 0.12) },
+                  }}
+                >
+                  <WhatsAppIcon />
+                </IconButton>
+              )}
+              {contact.social.map((social) => {
+                const SocialIcon = SOCIAL_ICONS[social.key];
+                if (!SocialIcon) return null;
+                return (
+                  <IconButton
+                    key={social.key}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.key}
+                    sx={{
+                      color: 'text.secondary',
+                      border: `1px solid ${alpha('#FFFFFF', 0.12)}`,
+                      '&:hover': { color: 'primary.main' },
+                    }}
+                  >
+                    <SocialIcon />
+                  </IconButton>
+                );
+              })}
+            </Stack>
           </Grid>
 
-          <Grid item xs={6} md={2}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              Producto
-            </Typography>
-            <Link href="#features" color="inherit" display="block" underline="hover" sx={{ mb: 1 }}>Características</Link>
-            <Link href="#pricing" color="inherit" display="block" underline="hover" sx={{ mb: 1 }}>Precios</Link>
-            <Link href="#faq" color="inherit" display="block" underline="hover" sx={{ mb: 1 }}>Preguntas</Link>
+          <Grid size={{ xs: 6, md: 2 }}>
+            <LinkColumn title="Producto" links={footer.product} />
           </Grid>
 
-          <Grid item xs={6} md={2}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              Legal
-            </Typography>
-            <Link href="#" color="inherit" display="block" underline="hover" sx={{ mb: 1 }}>Privacidad</Link>
-            <Link href="#" color="inherit" display="block" underline="hover" sx={{ mb: 1 }}>Términos</Link>
+          <Grid size={{ xs: 6, md: 2 }}>
+            <LinkColumn title="Legal" links={footer.legal} />
           </Grid>
 
-          <Grid item xs={12} md={3}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
+          {/* Contacto */}
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h6" sx={{ fontSize: '1rem', mb: 2 }}>
               Contacto
             </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              Soporte: johandarioalarcon@gmail.com
-            </Typography>
-            <Typography variant="body2">
-              WhatsApp: +57 317 682 4754
-            </Typography>
+            <Stack spacing={1.4}>
+              {contact.whatsappDisplay && (
+                <Stack direction="row" spacing={1.2} alignItems="center">
+                  <WhatsAppIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+                  <Link
+                    component="button"
+                    type="button"
+                    onClick={() => openWhatsApp()}
+                    underline="none"
+                    sx={{
+                      color: 'text.secondary',
+                      fontSize: '0.92rem',
+                      textAlign: 'left',
+                      '&:hover': { color: 'primary.main' },
+                    }}
+                  >
+                    {contact.whatsappDisplay}
+                  </Link>
+                </Stack>
+              )}
+              {contact.email && (
+                <Stack direction="row" spacing={1.2} alignItems="center">
+                  <EmailRoundedIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+                  <Link
+                    href={`mailto:${contact.email}`}
+                    underline="none"
+                    sx={{ color: 'text.secondary', fontSize: '0.92rem', wordBreak: 'break-all', '&:hover': { color: 'primary.main' } }}
+                  >
+                    {contact.email}
+                  </Link>
+                </Stack>
+              )}
+              {contact.location && (
+                <Stack direction="row" spacing={1.2} alignItems="center">
+                  <PlaceRoundedIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+                  <Typography sx={{ color: 'text.secondary', fontSize: '0.92rem' }}>
+                    {contact.location}
+                  </Typography>
+                </Stack>
+              )}
+            </Stack>
           </Grid>
         </Grid>
 
-        <Box sx={{ mt: 8, pt: 4, borderTop: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
-          <Typography variant="body2">
-            © {new Date().getFullYear()} StyleCloudBarber. Todos los derechos reservados.
-          </Typography>
-        </Box>
+        <Divider sx={{ my: 4, borderColor: alpha('#FFFFFF', 0.07) }} />
+
+        <Typography sx={{ textAlign: 'center', color: 'text.secondary', fontSize: '0.85rem' }}>
+          © {year} {brand.legalName}. {footer.copyright}
+        </Typography>
       </Container>
     </Box>
   );
